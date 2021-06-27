@@ -17,6 +17,11 @@ module.exports = {
                   dark: '#3A5C90',
                 },
                 
+                graywhite: {
+                    100: '#f1f2f7',
+                    DEFAULT: '#f1f2f7',
+                    60: '#F6F6F6',
+                }
               }
         },
     },
