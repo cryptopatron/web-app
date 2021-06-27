@@ -1,10 +1,7 @@
-import {lazy, Suspense } from 'react'
+import {Suspense } from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import routes from './constants/routes' 
 
-
-const LandingPage = lazy( () => import('./pages/landing-page'))
-const NotFound = lazy( () => import('./pages/not-found'))
 
 function App() {
   return (
