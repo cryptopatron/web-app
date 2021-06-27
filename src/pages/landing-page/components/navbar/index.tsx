@@ -21,7 +21,7 @@ export default function NavbarComponent(){
                 <ul className="ml-auto">
                   <li className="nav-item">
                     <a
-                      className="items-center text-xs uppercase font-bold text-black hover:opacity-75"
+                      className="btn-primary"
                       href="#pablo"
                     >
                       <span>Sign In</span>
