@@ -25,9 +25,9 @@ export default function LandingPage() {
 
                 </form>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 place-content-center">
+                <div className="flex flex-col md:flex-row justify-center items-center">
 
-                    <div className="">
+                    <div className=" ">
                         <img src={ImageStartJourney} alt="start journey" />
                     </div>
 
@@ -36,11 +36,13 @@ export default function LandingPage() {
                         <p className="">Koen empowers creators to accept support,
                             memberships, and build a direct relationship with their fans, from anywhere across the planet.</p>
                     </div>
+                </div>
 
-                    <div className="col mx-auto">
+                <div className="flex flex-col md:flex-row justify-center items-center">
+                    <div className="">
                         <div className="ladybird mx-auto">
                             <img src={ImageLadyBird} className="img-responsive" />
-                            <div className="overlay-text">
+                            <div className="">
 
                                 <h3> Create your page in a jiffy. </h3>
                                 <p> Its absolutely free. No gas fees, No extra charges </p>
