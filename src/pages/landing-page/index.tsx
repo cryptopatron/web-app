@@ -19,15 +19,15 @@ export default function LandingPage() {
 
                 <form className="flex flex-col md:flex-row  justify-center items-center mt-7">
 
-                    <input className="input-primary w-3/5 text-center" type="text" aria-label="Enter your pagename" placeholder="pagename" />
+                    <input className="input-primary w-3/5 md:w-3/5 max-w-md text-center" type="text" aria-label="Enter your pagename" placeholder="pagename" />
 
-                    <button className="btn-primary w-3/5" type="submit">Create</button>
+                    <button className="btn-primary w-3/5 md:w-28 " type="submit">Create</button>
 
                 </form>
 
                 <div className="flex flex-col md:flex-row justify-center items-center">
 
-                    <div className=" ">
+                    <div className=" order-first md:order-last ">
                         <img src={ImageStartJourney} alt="start journey" />
                     </div>
 
@@ -39,7 +39,7 @@ export default function LandingPage() {
                 </div>
 
                 <div className="flex flex-col md:flex-row justify-center items-center">
-                    <div className="">
+                    <div className="order-first md:order-last">
                         <div className="ladybird mx-auto">
                             <img src={ImageLadyBird} className="img-responsive" />
                             <div className="">
