@@ -1,7 +1,5 @@
-import { Link } from 'react-router-dom'
 import NavbarComponent from './components/navbar'
-import { NOTFOUND_PATH } from '../../constants/paths'
-import { useState, useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import ImageStartJourney from './../../assets/images/start_journey.svg';
 import ImageLadyBird from './../../assets/images/ladybird.png'
@@ -14,6 +12,7 @@ export default function LandingPage() {
 
     return (
         <div>
+            <NavbarComponent />
             {/* Navbar goes here */}
 
             <div className="container mx-auto">
