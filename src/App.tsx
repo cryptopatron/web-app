@@ -1,6 +1,6 @@
 import {lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import * as ROUTES from './constants/routes' 
+import routes from './constants/routes' 
 
 
 const LandingPage = lazy( () => import('./pages/landing-page'))
@@ -11,8 +11,14 @@ function App() {
     <Router>
         <Suspense fallback={<p>Loading....</p>}>
             <Switch>
-                <Route path={'/'} exact component = {LandingPage}/>
-                <Route path={ROUTES.NOTFOUND} exact component = {NotFound}/>
+                {routes.map( route => (
+                    <Route
+                    key = {route.path}
+                    path = {route.path}
+                    component = {route.component}
+                    exact = {route.exact}
+                    />
+                ))}
             </Switch>
         </Suspense>
     </Router>

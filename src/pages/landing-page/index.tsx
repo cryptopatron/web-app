@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import * as ROUTES from '../../constants/routes'
+import { NOTFOUND_PATH } from '../../constants/paths'
 
 export default function LandingPage(){
 
@@ -7,7 +7,7 @@ export default function LandingPage(){
         <div>
             This is the Kōen.
             <br/>
-            <Link to={ROUTES.NOTFOUND}>
+            <Link to={NOTFOUND_PATH}>
                 <button> take me to not found</button>
             </Link>
         </div>
