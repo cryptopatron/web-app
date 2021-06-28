@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+    koen:
+        image: koen-test
+        build:
+          context: .
+          dockerfile: Dockerfile
+        ports:
+            - 8008:8008
