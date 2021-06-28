@@ -8,18 +8,17 @@ import { refreshTokenSetup } from "./refreshTokenSetup";
 
 import { NOTFOUND_PATH }  from './../../../../constants/paths'
 
-const clientId =
-  '116852492535-37n739s732ui71hkfm19n5r3agv6g9c5.apps.googleusercontent.com';
+const clientId = '116852492535-37n739s732ui71hkfm19n5r3agv6g9c5.apps.googleusercontent.com';
 
 export default function LoginOverlayComponent() {
 
     const history = useHistory();
 
     const googleLogIn = async googleData => {
-        const res = await fetch(window.origin + "/auth/google/jwt", {
+        const res = await fetch(window.origin + "/api/v1/google/users/get/", {
             method: "POST",
             body: JSON.stringify({
-                token: googleData.tokenId
+                idToken: googleData.tokenId
             }),
             headers: {
                 "Content-Type": "application/json"
@@ -29,14 +28,15 @@ export default function LoginOverlayComponent() {
         if(data.error) throw new Error(data.error)
 
         if(data){
-            history.push(NOTFOUND_PATH);
+            console.log(JSON.stringify(data))
+            // history.push(NOTFOUND_PATH);
         }
     }
 
     const responseGoogleOnSuccess = (response) => {
         console.log(JSON.stringify(response))
         googleLogIn(response)
-        refreshTokenSetup(response)
+        // refreshTokenSetup(response)
     }
 
 
