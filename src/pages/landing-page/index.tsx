@@ -1,5 +1,5 @@
 import NavbarComponent from './components/navbar'
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import ImageStartJourney from './../../assets/images/start_journey.svg';
 import ImageLadyBird from './../../assets/images/ladybird.png'
@@ -9,6 +9,13 @@ export default function LandingPage() {
     useEffect(() => {
         document.title = 'Kōen';
     }, []);
+
+    const onSubmit = (e) => {
+        e.PreventDefault();
+
+        
+
+    }
 
     return (
         <div>
@@ -20,7 +27,7 @@ export default function LandingPage() {
 
                     <input className="input-main w-full sm:w-4/5 md:w-3/5 max-w-lg text-center md:text-left md: pl-8" type="text" aria-label="Enter your pagename" placeholder="pagename" />
 
-                    <button className="btn-main w-full sm:w-4/5 md:w-28" type="submit">Create</button>
+                    <button className="btn-main w-full sm:w-4/5 md:w-28" onSubmit={onSubmit}>Create</button>
 
                 </form>
 
