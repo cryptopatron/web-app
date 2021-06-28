@@ -50,16 +50,17 @@ export default function LoginOverlayComponent() {
 
     return (
         <>
-            <div className="flex flex-row">
-                <div className="">
-                    <img className="hidden sm:block" src={ImageLoginWoman} alt="desperation" />
+            <div className="flex flex-row w-full">
+                <div className=" flex hidden sm:block w-5/12 bg-primary-light">
+                    <img className="flex hidden sm:block mx-auto" src={ImageLoginWoman} alt="desperation" />
                 </div>
-                <div className="flex flex-col mx-auto justify-center">
-                    <h3 className="text-center">Ready. Set. Koen.</h3>
+
+                <div className="flex flex-col mx-auto justify-center w-full max-w-sm sm:w-7/12 px-1 sm:px-8">
+                    <h2 className="text-center my-12">Ready. Set. Koen.</h2>
                     <GoogleLogin
                         clientId={clientId}
                         render={renderProps => (
-                            <button onClick={renderProps.onClick} disabled={renderProps.disabled} type="button" className="btn-sec" ><span><img className="inline-block w-7 mx-2" src={ImageGoogleIcon} alt="google" /></span> login with Google</button>
+                            <button onClick={renderProps.onClick} disabled={renderProps.disabled} type="button" className="flex btn-sec m-4  justify-center" ><span className="block text-left w-4/5 sm:w-11/12 sm:ml-4"><img className="inline-block w-7 mx-2" src={ImageGoogleIcon} alt="google" /> login with Google </span></button>
                         )}
                         buttonText="Login"
                         onSuccess={responseGoogleOnSuccess}
@@ -68,7 +69,7 @@ export default function LoginOverlayComponent() {
                         isSignedIn={true}
                     />
 
-                    <button type="button" className="btn-sec" ><span><img className="inline-block w-7 mx-2" src={ImageMetamaskIcon} alt="metamask" /></span> login with MetaMask</button>
+                    <button type="button" className="flex btn-sec m-4 justify-center sm:mb-14" ><span className="block text-left w-4/5 sm:w-11/12 sm:ml-4"><img className="inline-block w-7 mx-2" src={ImageMetamaskIcon} alt="metamask" /> login with MetaMask </span></button>
                     <GoogleLogout
                         clientId={clientId}
                         buttonText="Logout"

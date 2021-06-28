@@ -81,7 +81,7 @@ export default function NavbarComponent() {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="fixed mx-auto bottom-0 inset-x-0 w-full sm:bottom-1/3 sm:top-1/3 max-w-2xl p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-t-2xl sm:rounded-2xl">
+              <div className="fixed flex justify-center mx-auto bottom-0 inset-x-0 w-full p-0 sm:bottom-1/3 max-w-2xl overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-t-2xl sm:rounded-2xl">
                 
                 <LoginOverlayComponent/>
               </div>
