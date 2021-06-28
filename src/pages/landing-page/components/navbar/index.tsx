@@ -1,10 +1,16 @@
-import React from 'react';
+import { useState } from 'react';
 import logo from '../../../../assets/images/Logo(Latest).jpg';
+import Modal from "@material-tailwind/react/Modal";
+import ModalHeader from "@material-tailwind/react/ModalHeader";
+import ModalBody from "@material-tailwind/react/ModalBody";
+import ModalFooter from "@material-tailwind/react/ModalFooter";
+
+import LoginOverlayComponent from './../login-overlay/'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 export default function NavbarComponent(){
-    const [navbarOpen] = React.useState(true);
+    const [showLoginOverlay, setShowLoginOverlay] = useState(false);
     return (
         <>
           <nav className="relative flex items-center justify-between px-2 py-3 bg-white mb-5">
@@ -20,17 +26,30 @@ export default function NavbarComponent(){
               <div className="items-center">
                 <ul className="ml-auto">
                   <li className="nav-item">
-                    <a
-                      className="btn-primary"
-                      href="#pablo"
+                    <button
+                      className="btn-main"
+                      onClick={() => {
+                          setShowLoginOverlay(true)
+                      }}
                     >
                       <span>Sign In</span>
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </div>
             </div>
           </nav>
+          
+          <Modal size="regular" active={showLoginOverlay} toggler={() => setShowLoginOverlay(false)}>
+                <ModalHeader toggler={() => setShowLoginOverlay(false)}>
+                </ModalHeader>
+                <ModalBody>
+                    <LoginOverlayComponent/>
+                </ModalBody>
+                <ModalFooter>
+                </ModalFooter>
+            </Modal>
+
         </>
       );
 }

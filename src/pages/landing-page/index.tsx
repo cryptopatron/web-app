@@ -14,13 +14,13 @@ export default function LandingPage() {
         <div>
             <NavbarComponent />
 
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto sm:px-6">
 
                 <form className="flex flex-col md:flex-row justify-center items-center mt-5">
 
-                    <input className="input-primary w-full sm:w-4/5 md:w-3/5 max-w-lg text-center md:text-left md: pl-8" type="text" aria-label="Enter your pagename" placeholder="pagename" />
+                    <input className="input-main w-full sm:w-4/5 md:w-3/5 max-w-lg text-center md:text-left md: pl-8" type="text" aria-label="Enter your pagename" placeholder="pagename" />
 
-                    <button className="btn-primary w-full sm:w-4/5 md:w-28" type="submit">Create</button>
+                    <button className="btn-main w-full sm:w-4/5 md:w-28" type="submit">Create</button>
 
                 </form>
 
