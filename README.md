@@ -11,9 +11,11 @@ In the project directory, you can run:
 ### `npm install`
 
 For react router
+
 ### `npm i @types/react-router-dom`
 
 ## Development
+
 ### `npm start`
 
 Create `.env` in the same folder as `package.json`. Populate `.env` with `PORT=8008`. This is necessary for google authentication.
@@ -29,7 +31,14 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## Production
+## Production testing
+
+### `docker-compose up --build`
+
+Builds the app in production mode with Koen's Go [backend](https://github.com/cryptopatron/koen-backend). \
+Useful for integration testing. Access [here](http://localhost:8008/).
+`Ctrl-C` to stop running.
+
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\
