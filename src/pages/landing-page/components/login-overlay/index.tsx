@@ -6,30 +6,36 @@ import ImageGoogleIcon from "./../../../../assets/images/google-icon.svg"
 import ImageMetamaskIcon from "./../../../../assets/images/metamask-icon.svg"
 import { refreshTokenSetup } from "./refreshTokenSetup";
 
-import { NOTFOUND_PATH }  from './../../../../constants/paths'
+import * as PATHS from './../../../../constants/paths'
 
 const clientId = '116852492535-37n739s732ui71hkfm19n5r3agv6g9c5.apps.googleusercontent.com';
+
 
 export default function LoginOverlayComponent() {
 
     const history = useHistory();
 
     const googleLogIn = async googleData => {
-        const res = await fetch(window.origin + "/api/v1/google/users/get/", {
+        const res = await fetch( "http://localhost:8000/auth/login" ,{ //window.origin + "/api/v1/google/users/get/", {
             method: "POST",
             body: JSON.stringify({
-                idToken: googleData.tokenId
+                idToken: googleData.tokenId,
+                id: 1,
+                password: "bruno"
+    
             }),
             headers: {
                 "Content-Type": "application/json"
             }
         })
         const data = await res.json()
+        if (data.status === 401) {
+            history.push(PATHS.ONBOARD);
+        }
         if(data.error) throw new Error(data.error)
-
-        if(data){
-            console.log(JSON.stringify(data))
-            // history.push(NOTFOUND_PATH);
+        
+        if(data && data.email){
+            history.push(PATHS.PROFILE);
         }
     }
 
@@ -38,15 +44,15 @@ export default function LoginOverlayComponent() {
         googleLogIn(response)
         // refreshTokenSetup(response)
     }
-
-
+    
     const responseGoogleOnFailure = (response) => {
         console.log(JSON.stringify(response))
     }
-
+    
     const logout = () => {
         console.log("logged out")
     }
+
 
     return (
         <>

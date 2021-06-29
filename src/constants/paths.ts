@@ -1,1 +1,3 @@
-export const NOTFOUND_PATH = '/not-found'
+export const NOTFOUND = '/not-found'
+export const ONBOARD = '/create-page'
+export const PROFILE = '/:pagename' 

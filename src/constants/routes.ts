@@ -1,18 +1,28 @@
 import PAGES from '../pages'
-import { NOTFOUND_PATH } from './paths'
+import * as PATHS from './paths'
 
 export const LANDINGPAGE = {
     path: '/',
     component: PAGES.LandingPage,
     exact: true
-
 }
 
 export const NOTFOUND = {
-    path: NOTFOUND_PATH,
+    path: PATHS.NOTFOUND,
     component: PAGES.NotFound,
     exact: false
-
 }
 
-export default [LANDINGPAGE, NOTFOUND]
+export const ONBOARD = {
+    path: PATHS.ONBOARD,
+    component: PAGES.NotFound,
+    exact: false
+}
+
+export const PROFILE = {
+    path: PATHS.PROFILE,
+    component: PAGES.ProfilePage,
+    exact: false
+}
+
+export default [LANDINGPAGE, NOTFOUND, ONBOARD, PROFILE]

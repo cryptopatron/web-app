@@ -6,15 +6,14 @@ import ImageLadyBird from './../../assets/images/ladybird.png'
 import ImageLookForCreators from './../../assets/images/look_for_creators.svg'
 export default function LandingPage() {
 
+    const [pageName, setPageName] = useState<string>()
+
     useEffect(() => {
         document.title = 'Kōen';
     }, []);
 
-    const onSubmit = (e) => {
-        e.PreventDefault();
-
-        
-
+    const onSubmit = () => {
+        console.log(pageName)
     }
 
     return (
@@ -23,11 +22,19 @@ export default function LandingPage() {
 
             <div className="container mx-auto sm:px-6">
 
-                <form className="flex flex-col md:flex-row justify-center items-center mt-5">
+                <form className="flex flex-col md:flex-row justify-center items-center mt-5" onSubmit={(e) => {
+                    e.preventDefault();
+                    onSubmit();
+                    }}>
 
-                    <input className="input-main w-full sm:w-4/5 md:w-3/5 max-w-lg text-center md:text-left md: pl-8" type="text" aria-label="Enter your pagename" placeholder="pagename" />
+                    <input className="input-main w-full sm:w-4/5 md:w-3/5 max-w-lg text-center md:text-left md: pl-8"
+                        type="text"
+                        aria-label="Enter your pagename"
+                        placeholder="pagename"
+                        value={pageName} 
+                        onChange={(e) => setPageName(e.target.value)}/>
 
-                    <button className="btn-main w-full sm:w-4/5 md:w-28" onSubmit={onSubmit}>Create</button>
+                    <button className="btn-main w-full sm:w-4/5 md:w-28" >Create</button>
 
                 </form>
 
