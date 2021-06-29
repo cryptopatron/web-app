@@ -1,7 +1,7 @@
-export default function Step1Component(clickFunc) {
+export default function Step1Component({clickFunc}) {
 
     return (
-        <button onClick = {() => clickFunc()}>
+        <button className = "btn-main" onClick = {() => {clickFunc()}}>
             Click me
         </button>
     )

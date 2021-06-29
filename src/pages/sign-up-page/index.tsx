@@ -6,15 +6,12 @@ export default function SignUpPage(){
     let [count, setCount] = useState<number>(1);
 
     const somFunc = () => {
-        setCount(
-            count++
-        ) 
+        setCount(() => count++) 
     }
     return (
         <div>
-            Hello Above side
             <Step1Component clickFunc={somFunc}/>
-            Hello {{count}}
+            Hello {count}
         </div>
     )
 }
