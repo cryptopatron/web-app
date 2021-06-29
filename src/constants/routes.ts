@@ -15,8 +15,8 @@ export const NOTFOUND = {
 
 export const ONBOARD = {
     path: PATHS.ONBOARD,
-    component: PAGES.NotFound,
-    exact: false
+    component: PAGES.SignUpPage,
+    exact: true
 }
 
 export const PROFILE = {
