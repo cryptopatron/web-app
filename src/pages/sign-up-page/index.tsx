@@ -6,7 +6,8 @@ export default function SignUpPage(){
     let [count, setCount] = useState<number>(1);
 
     const somFunc = () => {
-        setCount(() => count++) 
+        let temp = count + 1
+        setCount(temp) 
     }
     return (
         <div>
