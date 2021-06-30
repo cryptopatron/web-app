@@ -7,14 +7,33 @@ export default function SignUpPage(){
     
     let [step, setStep] = useState<number>(1);
 
-    const moveToStep = () => {
-        setStep(() => step++) 
+    const moveToStep = (nextStep) => {
+        setStep(nextStep) 
+    }
+
+    const displayStepComponent = (step) =>{
+        if (step === 1){
+            return(
+                <Step1Component step={step} moveToStep={moveToStep}/>
+            )
+        }
+
+        if (step === 2){
+            return(
+                <Step2Component step={step} moveToStep={moveToStep}/>
+            )
+        }
+
+        if (step === 3){
+            return(
+                <Step3Component step={step} moveToStep={moveToStep}/>
+            )
+        }
+        
     }
     return (
         <div>
-            <Step1Component step={step} clickFunc={moveToStep}/>
-            {/* <Step2Component /> */}
-            {/* <Step3Component /> */}
+            {displayStepComponent(step)}
         </div>
     )
 }

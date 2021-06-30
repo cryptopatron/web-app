@@ -1,10 +1,6 @@
 import step1Image from '../../../assets/images/onboarding-step1.svg';
 
-function moveToStep(stepNumber: number) {
-    
-}
-
-export default function Step1Component({step, clickFunc}) {
+export default function Step1Component({step, moveToStep}) {
 
     return (
         <section className="text-gray-600 body-font">
@@ -18,13 +14,11 @@ export default function Step1Component({step, clickFunc}) {
                         <button className="inline-flex text-gray border-2 border-gray-700 py-2 px-6 focus:outline-none hover:shadow-xl text-lg" onClick={() => moveToStep(2)}>I am here as a Creator</button>
                     </div>
                     <div className="justify-center">
-                        <button className="inline-flex text-gray-700 border-2 hover:border-4 border-gray-700 py-2 px-4 focus:outline-none hover:shadow-xl text-lg">I am here as a Supporter</button>
+                        <button className="inline-flex text-gray-700 border-2 hover:border-4 border-gray-700 py-2 px-4 focus:outline-none hover:shadow-xl text-lg" onClick={() => moveToStep(3)}>I am here as a Supporter</button>
                     </div>
                 </div>
             </div>
         </section>
-        // <button className = "btn-main" onClick = {() => {clickFunc()}}>
-        //     Click me
-        // </button>
+
     )
 }

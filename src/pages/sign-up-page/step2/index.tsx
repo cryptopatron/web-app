@@ -1,6 +1,6 @@
 import creatorPic from '../../../assets/images/creator-default-pic.svg';
 
-export default function Step2Component() {
+export default function Step2Component({step, moveToStep}) {
     return (
         <section className="text-gray-600 body-font">
             <div className="container mx-auto flex flex-col px-5 py-24 justify-center items-center">
@@ -15,7 +15,7 @@ export default function Step2Component() {
                         </div>
                     </div>
                     <div className="flex w-full justify-center items-end">
-                        <button className="inline-flex border-0 py-2 px-6 text-lg btn-main">Create</button>
+                        <button className="inline-flex border-0 py-2 px-6 text-lg btn-main" onClick={() => moveToStep(3)} >Create</button>
                     </div>
                 </div>
 

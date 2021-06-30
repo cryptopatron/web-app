@@ -1,6 +1,6 @@
 import walletPic from '../../../assets/images/wallet-svg.svg'
 
-export default function Step3Component() {
+export default function Step3Component({step, moveToStep}) {
 
     let walletNo:string = '0x728***AB6';
 
