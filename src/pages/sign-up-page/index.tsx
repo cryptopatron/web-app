@@ -1,18 +1,20 @@
 import { useState } from "react";
 import Step1Component from "./step1";
+import Step2Component from "./step2";
+import Step3Component from "./step3";
 
 export default function SignUpPage(){
     
-    let [count, setCount] = useState<number>(1);
+    let [step, setStep] = useState<number>(1);
 
-    const somFunc = () => {
-        let temp = count + 1
-        setCount(temp) 
+    const moveToStep = () => {
+        setStep(() => step++) 
     }
     return (
         <div>
-            <Step1Component clickFunc={somFunc}/>
-            Hello {count}
+            <Step1Component step={step} clickFunc={moveToStep}/>
+            {/* <Step2Component /> */}
+            {/* <Step3Component /> */}
         </div>
     )
 }
