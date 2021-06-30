@@ -1,12 +1,71 @@
-import NavbarComponent from './components/navbar'
 import { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 
+import LoginOverlayComponent from './components/login-overlay/'
+import useTokenService from "./../../services/useTokenService";
+import NavbarComponent from './components/navbar'
+
+import * as PATHS from "./../../constants/paths";
+
+// images
 import ImageStartJourney from './../../assets/images/start_journey.svg';
 import ImageLadyBird from './../../assets/images/ladybird.png'
 import ImageLookForCreators from './../../assets/images/look_for_creators.svg'
 export default function LandingPage() {
 
     const [pageName, setPageName] = useState<string>()
+    const [showLoginOverlay, setShowLoginOverlay] = useState(false);
+
+    const { token, setToken } = useTokenService();
+    const history = useHistory();
+
+    const googleLogIn = async (token) => {
+        const res = await fetch(window.origin + "/api/v1/google/users/get", {
+            method: "POST",
+            body: JSON.stringify({
+                idToken: token,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const status = await res.status;
+        if (status === 200) {
+            // User exists!
+            console.log("Go to Profile");
+            // Go to profile page
+        } else if (status === 404) {
+            history.push(PATHS.ONBOARD)
+            console.log("Go to onboarding");
+            // history.push(NOTFOUND_PATH);
+        } else {
+            history.push('/')
+        }
+    };
+
+    const logIn = async (jwt) => {
+        if (!token) {
+            await setToken(jwt)
+        }
+        googleLogIn(token)
+    }
+
+    const clickSignIn = () => {
+        if(token){
+            logIn(token)
+        }
+        else{
+            openModal()
+        }
+    }
+
+    function closeModal() {
+        setShowLoginOverlay(false)
+    }
+
+    function openModal() {
+        setShowLoginOverlay(true)
+    }
 
     useEffect(() => {
         document.title = 'Kōen';
@@ -18,13 +77,13 @@ export default function LandingPage() {
 
     return (
         <div>
-            <NavbarComponent />
+            <NavbarComponent setToken={logIn} token={token} clickSignIn={clickSignIn} openModal={openModal} closeModal={closeModal} showLoginOverlay={showLoginOverlay}/>
 
             <div className="container mx-auto sm:px-6">
 
                 <form className="flex flex-col md:flex-row justify-center items-center mt-5" onSubmit={(e) => {
                     e.preventDefault();
-                    onSubmit();
+                    clickSignIn()
                     }}>
 
                     <input className="input-main w-full sm:w-4/5 md:w-3/5 max-w-lg text-center md:text-left md: pl-8"

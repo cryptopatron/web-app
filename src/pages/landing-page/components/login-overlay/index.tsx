@@ -1,50 +1,22 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import ImageLoginWoman from "./../../../../assets/images/login-woman.svg";
 import ImageGoogleIcon from "./../../../../assets/images/google-icon.svg";
 import ImageMetamaskIcon from "./../../../../assets/images/metamask-icon.svg";
 import { refreshTokenSetup } from "./refreshTokenSetup";
 
-
-import { NOTFOUND_PATH } from "./../../../../constants/paths";
-
-
 const clientId =
     "116852492535-37n739s732ui71hkfm19n5r3agv6g9c5.apps.googleusercontent.com";
 
 
-export default function LoginOverlayComponent() {
-    const history = useHistory();
-
-    const googleLogIn = async (googleData) => {
-        const res = await fetch(window.origin + "/api/v1/google/users/get", {
-            method: "POST",
-            body: JSON.stringify({
-                idToken: googleData.tokenId,
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const status = await res.status;
-        if (status === 200) {
-            // User exists!
-            console.log("Go to Profile");
-            // Go to profile page
-        } else if (status === 404) {
-            // User does not exist
-            console.log("Go to onboarding");
-            // history.push(NOTFOUND_PATH);
-        } else {
-            console.log("Usual error handling logic: Unauthorized and all");
-        }
-    };
+export default function LoginOverlayComponent({setToken}) {
+ 
 
     const responseGoogleOnSuccess = (response) => {
-        console.log(JSON.stringify(response));
-        googleLogIn(response);
-        // refreshTokenSetup(response)
+        console.log("request to google sents")
+        setToken(response.tokenId)
+        // console.log(response.tokenID)
+        // refreshTokenSetup(response)s
     };
 
     const responseGoogleOnFailure = (response) => {
@@ -91,7 +63,7 @@ export default function LoginOverlayComponent() {
                         onSuccess={responseGoogleOnSuccess}
                         onFailure={responseGoogleOnFailure}
                         cookiePolicy={"single_host_origin"}
-                        isSignedIn={true}
+                        isSignedIn={false}
                     />
 
                     <button
