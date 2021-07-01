@@ -1,13 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 
 export default function OneTimerComponent({addPayment}) {
 
-    const [amount, setAmount] = useState()
+    const [amount, setAmount] = useState<number>(5)
 
     const getAmount = (value) => {
-        setAmount(value)
+        if(value){
+        setAmount(parseFloat(value))
+        }
+        else{
+            setAmount(0) 
+        }
     }
+
+    useEffect( () => {
+        addPayment({amount: amount, isStreamIndefinite: null, type:2, streamPer: null, streamFor: null})},[amount])
+
 
     return (
         <div className="col-span-2 flex flex-col justify-center text-center shadow-float-800">

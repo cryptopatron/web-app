@@ -7,7 +7,7 @@ import {notLoggedinContent, LoggedinContent} from './dropdown-content'
 
 export default function NavbarComponent() {
 
-    let [dropdown, setDropdown] = useState( notLoggedinContent)
+    let [dropdown, setDropdown] = useState(notLoggedinContent)
 
     return (
         <header className="h-14 bg-white mb-4">

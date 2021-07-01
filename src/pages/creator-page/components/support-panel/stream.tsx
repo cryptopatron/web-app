@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faCheckSquare, faSquare } from '@fortawesome/free-regular-svg-icons';
 import StreamForComponent from './stream-for';
+
 const interval = [
     { per: 'week' },
     { per: 'month' },
@@ -14,19 +15,22 @@ const interval = [
 
 export default function StreamComponent({ addPayment }) {
 
-
     const [amount, setAmount] = useState(5)
     const [perSelected, setPerSelected] = useState(interval[1])
     const [isIndefinte, setIsIndefinte] = useState(true)
     const [forInterval, setForInterval] = useState<number>(4)
 
     const getAmount = (value) => {
-
-        setAmount(parseFloat(value))
+        if(value){
+            setAmount(parseFloat(value))
+            }
+            else{
+                setAmount(0) 
+            }
     }
 
     const changeCheck = () => {
-        { setIsIndefinte(!isIndefinte) }
+        {setIsIndefinte(!isIndefinte)}
     }
 
     useEffect( () => {

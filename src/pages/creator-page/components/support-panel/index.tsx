@@ -1,17 +1,36 @@
 import Skeleton from 'react-loading-skeleton'
 import { Link } from 'react-router-dom'
 import * as PATHS from '../../../../constants/paths'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import StreamComponent from './stream'
 import OneTimerComponent from './one-timer'
 
-export default function SupportPanelComponent({addPayment, paymentDetails}) {
+export default function SupportPanelComponent({creatorDetails}) {
 
-    let [streamButtomActive, setStreamButtonActive] = useState(true)
+    const [streamButtomActive, setStreamButtonActive] = useState(true)
+    const [paymentDetails, setPaymentDetails] = useState({
+        amount:5
+    })
+    const [makePayment, setMakePayment] = useState()
 
- 
+    const addPayment = (value) => {
+        console.log(value)
+        setPaymentDetails(value)
+    }
+
+    // this is logging the data you'll probably need
+    useEffect(() => {
+        console.log("creatorDetails >")
+        console.log(creatorDetails)
+        console.log("paymentDetails")
+        console.log(paymentDetails)
+    }, [paymentDetails])
+
+    ///---------------------------------
+
+
     return (
-        <div className=" flex flex-col w-5/6 mt-4 shadow-float-900 bg-white rounded-md text-center">
+        <div className="flex flex-col w-5/6 mt-4 shadow-float-900 bg-white rounded-md text-center">
 
             <p className="font-semibold">
                 Support me!
@@ -30,7 +49,7 @@ export default function SupportPanelComponent({addPayment, paymentDetails}) {
             {/* message box */}
 
             {/* pay button */}
-            <button className="btn-main">{(streamButtomActive)? 'stream' : 'send'}</button>
+            <button className="btn-main">{(streamButtomActive)? 'stream' : 'send'} <span>{(paymentDetails.amount) ? paymentDetails.amount: "" }</span> </button>
 
         </div>
     )
