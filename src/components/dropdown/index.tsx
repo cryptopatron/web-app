@@ -1,15 +1,15 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useRef, useState } from 'react'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 export default function DropdownComponent({ dropdownContent }) {
     return (
-        <div className="text-right fixed top-4">
-            <Menu as="div" className="relative inline-block text-left">
+        <div className="text-right top-4">
+            <Menu as="div" className="inline-block text-left">
                 <div>
                     <Menu.Button >
-                        Options
-
+                    <FontAwesomeIcon icon={faBars}/>
                     </Menu.Button>
                 </div>
                 <Transition

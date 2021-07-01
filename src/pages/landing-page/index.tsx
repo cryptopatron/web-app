@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 
 import LoginOverlayComponent from './components/login-overlay/'
-import useTokenService from "./../../services/useTokenService";
+import useTokenService from "../../hooks/useToken";
 import NavbarComponent from './components/navbar'
 
 import * as PATHS from "./../../constants/paths";

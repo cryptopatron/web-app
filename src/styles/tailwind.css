@@ -16,6 +16,10 @@
         @apply py-3 px-4 bg-white text-black text-center font-medium h-14 border-2 border-gray-600 rounded-md mt-2 hover:bg-primary-light hover:text-primary-dark focus:outline-none ;
     }
 
+    .shadow-float {
+        
+    }
+
   }
 
   @layer base {
