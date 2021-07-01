@@ -5,7 +5,7 @@ module.exports = {
 
         extend: {
 
-            fontFamily:{
+            fontFamily: {
                 body: ['Poppins', 'sans-serif']
             },
 
@@ -32,10 +32,10 @@ module.exports = {
             screens: {
                 'xxs': '360px',
             },
-            boxShadow:{
-
-                'float': '0px 0px 10px rgba(0, 0, 0, 0.13)',
-            }
+            boxShadow: {
+                'float-900': '0px 0px 10px rgba(0, 0, 0, 0.13)',
+                'float-800': '0px 0px 10px rgba(0, 0, 0, 0.25)',
+                }
         },
     },
     variants: {

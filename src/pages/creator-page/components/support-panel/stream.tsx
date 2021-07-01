@@ -1,5 +1,5 @@
 import React from 'react'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -14,21 +14,27 @@ const interval = [
 
 export default function StreamComponent({ addPayment }) {
 
-    const [amount, setAmount] = useState()
+
+    const [amount, setAmount] = useState(5)
     const [perSelected, setPerSelected] = useState(interval[1])
-    const [isIndefite, setIsIndefinte] = useState(true)
+    const [isIndefinte, setIsIndefinte] = useState(true)
     const [forInterval, setForInterval] = useState<number>(4)
 
     const getAmount = (value) => {
-        setAmount(value)
+
+        setAmount(parseFloat(value))
     }
 
     const changeCheck = () => {
-        { setIsIndefinte(!isIndefite) }
+        { setIsIndefinte(!isIndefinte) }
     }
 
+    useEffect( () => {
+        addPayment({amount: amount, isStreamIndefinite: isIndefinte, type:1, streamPer: perSelected.per, streamFor: (!isIndefinte) ? forInterval: 0 })
+    },[amount, perSelected, isIndefinte, forInterval])
+
     return (
-        <div className="col-span-2 flex flex-col justify-center text-center ">
+        <div className="col-span-2 flex flex-col justify-center text-center shadow-float-800">
             <div className="font-light text-sm">An effortless way to support in the long run</div>
 
             {/* Input field */}
@@ -101,7 +107,7 @@ export default function StreamComponent({ addPayment }) {
 
             {/* check indefintely */}
             <div>
-                {(isIndefite) ? (
+                {(isIndefinte) ? (
                     <div>
                         <FontAwesomeIcon icon={faCheckSquare} onClick={() => changeCheck()} className="text-primary-light w-1 mr-3" />
                         <span className="text-sm">stream indefintely</span>

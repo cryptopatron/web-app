@@ -14,11 +14,14 @@ import { Creator } from './creator-test'
 export default function CreatorPage() {
 
     const [creator, setCreator] = useState(Creator)
-    let [paymentDetails, setPaymentDetails] = useState<Payment>()
+    let [paymentDetails, setPaymentDetails] = useState()
 
     const addPayment = (value) => {
         console.log(value)
+        setPaymentDetails(value.amount)
     }
+
+
 
 
     return (
@@ -26,7 +29,7 @@ export default function CreatorPage() {
             <NavbarComponent/>
             <CreatorComponent creator={creator}/>
             <div className="flex justify-center">
-                <SupportPanelComponent addPayment={addPayment}/>
+                <SupportPanelComponent addPayment={addPayment} paymentDetails={paymentDetails}/>
             </div>
         </>
     )
