@@ -1,4 +1,3 @@
-import Skeleton from 'react-loading-skeleton'
 import { Link } from 'react-router-dom'
 import * as PATHS from '../../../../constants/paths'
 import React, { useState, useEffect } from 'react'
@@ -30,7 +29,7 @@ export default function SupportPanelComponent({creatorDetails}) {
 
 
     return (
-        <div className="flex flex-col w-5/6 mt-4 shadow-float-900 bg-white rounded-md text-center">
+        <div className="flex flex-col w-50   mt-4 shadow-float-900 bg-white rounded-md text-center">
 
             <p className="font-semibold">
                 Support me!
