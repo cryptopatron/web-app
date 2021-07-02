@@ -114,14 +114,13 @@ export default function StreamComponent({ addPayment }) {
                 {(isIndefinte) ? (
                     <div>
                         <FontAwesomeIcon icon={faCheckSquare} onClick={() => changeCheck()} className="text-primary-light w-1 mr-3" />
-                        <span className="text-sm">stream indefintely</span>
+                        <span className="text-sm">stream indefinitely</span>
                     </div>) : (
                     <div>
                          <StreamForComponent interval = {perSelected} forInterval={forInterval} setForInterval = {setForInterval}/>
                         <FontAwesomeIcon icon={faSquare} onClick={() => changeCheck()} className="text-gray-300 w-1 mr-3" />
                         <span className="text-gray-300 text-sm">stream indefinitely</span>
                     </div>
-
                 )
                 }
             </div>

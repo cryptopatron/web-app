@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react'
 import StreamComponent from './stream'
 import OneTimerComponent from './one-timer';
 import { handle_txn } from "./handle-txn";
+import { Metamask_Mumbai_mint_fDAI } from "../../../../Web3_Interaction/streamDonate";
 
 export default function SupportPanelComponent({creatorDetails}) {
 
@@ -59,6 +60,12 @@ export default function SupportPanelComponent({creatorDetails}) {
                 {(streamButtomActive)? 'stream ' : 'send '}
                 <span>{(paymentDetails.amount) ? paymentDetails.amount: "" }</span>
             </button>
+            <button className="btn-main" onClick={() => {
+                Metamask_Mumbai_mint_fDAI(setMsg, setError)
+            }}>
+                Mint fDAI on Mumbai for Testing
+            </button>
+
             {msg}
             <h6 style={{ color: "red" }}>{error}</h6>
             <br></br>

@@ -1,0 +1,10 @@
+{
+    "ropsten": {
+        "expected_network_type": "ropsten",
+        "wrong_network_error": "[Switch to the Ethereum Ropsten Testnet]"
+    },
+    "mumbai": {
+        "expected_network_type": "private",
+        "wrong_network_error": "[Switch to the Matic Mumbai Testnet]"
+    }
+}

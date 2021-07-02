@@ -1,7 +1,6 @@
 
 
 export default function StreamForComponent({interval, forInterval, setForInterval}) {
-    
     return (
         <div>
             <span> for </span>

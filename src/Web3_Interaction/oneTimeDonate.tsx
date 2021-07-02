@@ -1,26 +1,20 @@
 import React from 'react';
 import { Metamask_connect_and_execute } from "./walletConnect";
+import { txn_link_msg } from "./Utils";
 import contracts from './contracts.json';
+import networks from './networks.json';
 
 // executes one time donation through Metamask.
 export async function Metamask_Mumbai_Donation(setMsg, setErr, params) {
-    const network = {
-        "expected_network_type": "private",
-        "wrong_network_error": "[Switch to the Matic Mumbai Testnet]",
-    }
     params["default_gas_amount"] = "1000000";
     params["default_gas_price"] = "20000000000";
-    Metamask_connect_and_execute(setMsg, setErr, network, donate, params);
+    Metamask_connect_and_execute(setMsg, setErr, networks['mumbai'], donate, params);
 }
 
 export async function Metamask_Ropsten_Donation(setMsg, setErr, params) {
-    const network = {
-        "expected_network_type": "ropsten",
-        "wrong_network_error": "[Switch to the Ethereum Ropsten Testnet]"
-    };
     params["default_gas_amount"] = "1000000";
     params["default_gas_price"] = "20000000000";
-    Metamask_connect_and_execute(setMsg, setErr, network, donate, params);
+    Metamask_connect_and_execute(setMsg, setErr, networks['ropsten'], donate, params);
 }
 
 // params = {
@@ -36,7 +30,7 @@ async function donate(setMsg, setErr, web3Provider, accounts, params) {
     web3Provider.eth.defaultAccount = accounts[0];
 
     let payment_token = new web3Provider.eth.Contract(
-        contracts["erc20_abi"],
+        contracts["erc20_contract_abi"],
         params["payment_token_address"]
     );
 
@@ -69,25 +63,4 @@ async function donate(setMsg, setErr, web3Provider, accounts, params) {
         }).catch((error) => {
             setErr("Failed to Connect to Metamask");
         });
-}
-
-function txn_link_msg(txn_hash: string, network: string, msg: string) {
-    let link = "/";
-    let link_msg = "";
-    if (network === "ropsten") {
-        link = "https://ropsten.etherscan.io/tx/" + txn_hash;
-        link_msg = "View Transaction on Ropsten Testnet Block Explorer";
-    }
-    else if (network === "mumbai") {
-        link = "https://mumbai.polygonscan.com/tx/" + txn_hash;
-        link_msg = "View Transaction on Mumbai Testnet Block Explorer";
-    }
-    return (<div>
-        <h6>{msg}</h6>
-        <br></br>
-        <br></br>
-        <a href={link} target="_blank" rel="noopener noreferrer">
-            <h6>{link_msg}</h6>
-        </a>
-    </div>);
 }
