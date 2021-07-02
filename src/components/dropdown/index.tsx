@@ -5,7 +5,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 export default function DropdownComponent({ dropdownContent }) {
     return (
-        <div className="text-right top-4">
+        <div className="text-right top-4 z-50">
             <Menu as="div" className="inline-block text-left">
                 <div>
                     <Menu.Button >

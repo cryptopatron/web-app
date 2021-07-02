@@ -1,17 +1,36 @@
 import React, { useState, useEffect } from 'react'
 
+const minimum = 3 //minimum amount in one-time
 
 export default function OneTimerComponent({addPayment}) {
 
-    const [amount, setAmount] = useState<number>(5)
+    const [amount, setAmount] = useState<number>(3)
 
     const getAmount = (value) => {
-        if(value){
-        setAmount(parseFloat(value))
+        
+        if (value) {
+            const num = parseFloat(value)
+            if (num >= minimum) {
+                setAmount(num)
+            }
+            else{
+                setAmount(minimum) 
+            }
         }
-        else{
-            setAmount(0) 
+        else {
+            setAmount(minimum)
         }
+    }
+
+    const incrementAmount = () => {
+        const value = amount + 1
+        setAmount(value)
+    }
+
+    const decrementAmount = () => {
+
+        const value = amount > minimum ? amount - 1 : minimum
+        setAmount(value)
     }
 
     useEffect( () => {
@@ -25,11 +44,11 @@ export default function OneTimerComponent({addPayment}) {
 
             {/* Input field */}
             <div className="text-center">
-                <button className=" px-3 py-2 text-gray-500 bg-graywhite-100 hover:text-gray-700 hover:bg-gray-200 focus:outline-none rounded-l-md">-</button>
+                <button className=" px-3 py-2 text-gray-500 bg-graywhite-100 hover:text-gray-700 hover:bg-gray-200 focus:outline-none rounded-l-md" onClick={() => { decrementAmount() }}>-</button>
                 <input type="text" className="appearance-none px-3 text-center focus:outline-none py-2 bg-graywhite-100 w-3/5 mx-auto rounded-none"
                     value={amount}
                     onChange={(e) => getAmount(e.target.value)} />
-                <button className=" px-3 py-2 text-gray-500 bg-graywhite-100 hover:bg-gray-200 hover:text-gray-700 focus:outline-none  rounded-r-md">+</button>
+                <button className=" px-3 py-2 text-gray-500 bg-graywhite-100 hover:bg-gray-200 hover:text-gray-700 focus:outline-none  rounded-r-md" onClick={() => { incrementAmount() }}>+</button>
             </div>
 
             {/* per period */}

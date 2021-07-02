@@ -5,8 +5,7 @@ import NavbarComponent from "../../components/navbar";
 import CreatorComponent from "./components/creator";
 import SupportPanelComponent from "./components/support-panel";
 import * as PATHS from '../../constants/paths'
-// Interfacce 
-import { Payment } from "./payment";
+
 
 //test object ---> update the wallet address here
 import {defaultCreator} from '../../contexts/logged-in-user'
@@ -35,10 +34,9 @@ export default function CreatorPage() {
     }, [pagename, history])
 
     return (
-        // console.log("Creator>")
-        // console.log(creator.pageName)
-
-        (creator?.pageName && (creator?.generatedMaticWalletPublicKey || creator?.metaMaskWalletPublicKey)) ? (
+        // Todo
+        // Todo -----> remove the forced 'true'
+        (true || creator?.pageName && (creator?.generatedMaticWalletPublicKey || creator?.metaMaskWalletPublicKey)) ? (
             <>
                 <NavbarComponent />
                 <CreatorComponent creator={creator} />
