@@ -35,7 +35,11 @@ module.exports = {
             boxShadow: {
                 'float-900': '0px 0px 10px rgba(0, 0, 0, 0.13)',
                 'float-800': '0px 0px 10px rgba(0, 0, 0, 0.25)',
-                }
+                'float-down': '0 6px 0 #fff, 0 -1px 6px rgba(0,0,0, .25)',
+                'float-down-1': '0 6px 0 #fff, 0 0px 2px rgba(0,0,0, .25)',
+                'float-down-1-hover': '0 6px 0 #fff, 0 -1px 2px rgba(0,0,0, .25)',
+                
+            }
         },
     },
     variants: {

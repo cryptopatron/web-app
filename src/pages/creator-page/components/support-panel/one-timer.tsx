@@ -39,7 +39,7 @@ export default function OneTimerComponent({addPayment}) {
 
 
     return (
-        <div className="col-span-2 flex flex-col justify-center text-center shadow-float-800">
+        <div className="col-span-2 flex flex-col justify-center rounded-b-md rounded-tl-md shadow-float-800 text-center z-20">
             <div className="font-light text-sm"> Make a one-time donation.</div>
 
             {/* Input field */}

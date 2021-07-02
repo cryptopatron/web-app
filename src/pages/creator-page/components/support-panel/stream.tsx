@@ -60,13 +60,13 @@ export default function StreamComponent({ addPayment }) {
     }, [amount, perSelected, isIndefinte, forInterval])
 
     return (
-        <div className="col-span-2 flex flex-col justify-center text-center shadow-float-800">
+        <div className="bg-white col-span-2 bflex p-4 rounded-b-md rounded-tr-md flex-col justify-center text-center shadow-float-800 z-20">
             <div className="font-light text-sm">An effortless way to support in the long run</div>
 
             {/* Input field */}
             <div className="text-center">
-                <button className=" px-3 py-2 text-gray-500 bg-graywhite-100 hover:text-gray-700 hover:bg-gray-200 focus:outline-none rounded-l-md" onClick={() => { decrementAmount() }}>-</button>
-                <input type="text" className="appearance-none px-3 text-center focus:outline-none py-2 bg-graywhite-100 w-3/5 mx-auto rounded-none"
+                <button className=" px-3 py-2 text-gray-500 bg-graywhite-100 rounded-l-md hover:text-gray-700 hover:bg-gray-200 focus:outline-none " onClick={() => { decrementAmount() }}>-</button>
+                <input type="text" className="appearance-none px-3 text-center py-2 bg-graywhite-100 w-3/5 mx-auto rounded-none focus:outline-none"
                     value={amount}
                     onChange={(e) => getAmount(e.target.value)} />
                 <button className=" px-3 py-2 text-gray-500 bg-graywhite-100 hover:bg-gray-200 hover:text-gray-700 focus:outline-none  rounded-r-md" onClick={() => { incrementAmount() }}>+</button>

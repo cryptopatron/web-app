@@ -32,17 +32,16 @@ export default function SupportPanelComponent({creatorDetails}) {
 
 
     return (
-        <div className="flex flex-col w-50   mt-4 shadow-float-900 bg-white rounded-md text-center">
+        <div className="flex flex-col mt-4 shadow-float-900 bg-white rounded-md text-center justify-center" style={{width:'21rem'}}>
 
             <p className="font-semibold">
                 Support me!
             </p>
             {/* Stream and one time */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-y-0 gap-2 w-10/12 mx-auto">
 
-                <button className="shadow-float-800 bg-white rounded-md text-center mb-5" onClick={() => {setStreamButtonActive(true)}}>stream</button>
-                <button className="shadow-float-800 bg-white rounded-md text-center mb-5" onClick={() => {setStreamButtonActive(false)}}> one-timer</button>
-                
+                <button className={(streamButtomActive)? (" tab-active ") :(" tab-inactive ") } onClick={() => {setStreamButtonActive(true)}}>stream</button>
+                <button className={(streamButtomActive)? (" tab-inactive ") :(" tab-active ") } onClick={() => {setStreamButtonActive(false)}}> one-timer</button>
                 {(streamButtomActive)?(<StreamComponent addPayment={addPayment}/>) : (<OneTimerComponent addPayment={addPayment}/>)}
 
             </div>

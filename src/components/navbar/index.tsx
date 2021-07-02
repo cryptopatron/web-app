@@ -10,16 +10,16 @@ export default function NavbarComponent() {
 
     return (
         <header className="h-14 bg-white mb-4">
-            <div className="container mx-auto max-w-screen-lg h-full">
+            <div className="container mx-auto max-w-screen-xl h-full">
                 <div className="flex justify-between h-full">
-                    <div className="text-gray-700 text-center flex items-center align-items cursor-pointer">
+                    <div className="text-gray-700 text-center flex items-center align-items cursor-pointer mx-8">
                         <h1 className="flex justify-center w-full">
                             koen
                             {/* <img src="/images/logo.png" alt="Instagram" className="mt-2 w-6/12" /> */}
 
                         </h1>
                     </div>
-                    <div className="text-gray-700 text-center flex items-center align-items">
+                    <div className="text-gray-700 text-center flex items-center align-items mx-8">
 
                         <DropdownComponent dropdownContent={dropdown} />
 
