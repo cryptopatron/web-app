@@ -5,15 +5,15 @@ import { randomPastelColourService } from '../../../../services/randomPastelColo
 
 export default function CreatorComponent({ creator }) {
 
-    const profileBg: string = randomPastelColourService()
+    const profileBg = randomPastelColourService()
     // Todo
     // Todo -----> removed forced flasae
     return ((false && !creator.pageName) ? (<Skeleton count={1} height={200} />) : (
         <Link to={`/${creator.pageName}`} className="" >
             {/* if profile pic is not present */}
             <div className="flex flex-col justify-center">
-                <div className=" flex justify-center items-center w-full bg-red-300 h-36 relative">
-                    <div className=" flex mx-auto justify-center absolute top-16 w-32 h-32 rounded-full" style={{ background: `${profileBg}` }}>
+                <div className=" flex justify-center items-center w-full h-36 relative" style={{ background: `${profileBg[1]}` }} >
+                    <div className=" flex mx-auto justify-center absolute top-16 w-32 h-32 rounded-full" style={{ background: `${profileBg[0]}` }}>
                         <img className="w-2/5 transform translate-y-3" src={ImageDefaultProfile1} alt="place_holder_image" />
                     </div>
                 </div>
