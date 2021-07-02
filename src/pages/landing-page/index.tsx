@@ -24,7 +24,8 @@ export default function LandingPage() {
     const { token, setToken } = useToken({isLoggedIn});
     const {setResponse} = useAuthUser()
 
-    const googleLogIn= () => {
+    const googleLogIn= (token) => {
+        console.log(token)
         const endpoint = "/api/v1/google/users/get"
         setResponse(endpoint)
     }
@@ -34,7 +35,8 @@ export default function LandingPage() {
         if (!token) {
             await setToken(jwt)
         }
-        googleLogIn()
+        console.log(token)
+        googleLogIn(token)
     }
 
     const clickSignIn = () => {
