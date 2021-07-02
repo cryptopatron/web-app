@@ -26,7 +26,14 @@ export const PROFILE = {
     path: PATHS.PROFILE,
     component: PAGES.ProfilePage,
     exact: true,
+    protected: false
+}
+
+export const DASHBOARD = {
+    path: '/',
+    component: PAGES.LandingPage,
+    exact: true,
     protected: true
 }
 
-export default [LANDINGPAGE, NOTFOUND, ONBOARD, PROFILE]
+export default [LANDINGPAGE, NOTFOUND, ONBOARD, PROFILE, DASHBOARD]
