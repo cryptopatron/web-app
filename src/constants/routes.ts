@@ -25,7 +25,7 @@ export const ONBOARD = {
 export const PROFILE = {
     path: PATHS.PROFILE,
     component: PAGES.ProfilePage,
-    exact: true,
+    exact: false,
     protected: false
 }
 

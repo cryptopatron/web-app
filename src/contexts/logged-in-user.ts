@@ -8,7 +8,7 @@ export type loggedInUserContextType = {
 
 }
 
-export const creator = {
+export const defaultCreator = {
     email: "",
     name: "",
     pageName: "",
@@ -17,5 +17,5 @@ export const creator = {
     summary: "",
 }
 
-const LoggedInUserContext = createContext<loggedInUserContextType>({user: creator, setUser:()=>{}});
+const LoggedInUserContext = createContext<loggedInUserContextType>({user: defaultCreator, setUser:()=>{}});
 export default LoggedInUserContext;

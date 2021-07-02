@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useContext } from "react";
 import UserContext from "../contexts/user";
+import LoggedInUserContext from '../contexts/logged-in-user';
 import { useHistory } from 'react-router';
 import * as PATHS from '../constants/paths'
 
 export default function useAuthUser() {
     const { token } = useContext(UserContext)
+    const {user, setUser} = useContext(LoggedInUserContext)
     const [response, saveResponse] = useState<any>();
     const history = useHistory();
 
@@ -24,6 +26,7 @@ export default function useAuthUser() {
             const data = res.json()
             console.log(data)
             if (status === 200) {
+
                 history.push(PATHS.PROFILE)
                 console.log('go to user dashboard')
             } else if (status === 404) {
@@ -40,8 +43,7 @@ export default function useAuthUser() {
             // do nothing
             history.push('/')
             console.log("token is null")
-        }
-
+        } 
 
     }
 

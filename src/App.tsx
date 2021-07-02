@@ -4,7 +4,7 @@ import routes from './constants/routes'
 import { LANDINGPAGE } from './constants/routes';
 import "@material-tailwind/react/tailwind.css";
 import UserContext from "./contexts/user"
-import LoggedInUserContext, { creator } from './contexts/logged-in-user';
+import LoggedInUserContext, { defaultCreator } from './contexts/logged-in-user';
 import useToken from './hooks/useToken';
 import { useState } from 'react';
 
@@ -13,7 +13,7 @@ import { Creator } from './constants/models';
 function App() {
 
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
-    const [user, setUser] = useState<Creator>(creator)
+    const [user, setUser] = useState<Creator>(defaultCreator)
     const { token, setToken } = useToken({ isLoggedIn })
 
     return (

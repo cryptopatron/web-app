@@ -18,17 +18,17 @@ export default function SupportPanelComponent({creatorDetails}) {
     const [makePayment, setMakePayment] = useState()
 
     const addPayment = (value) => {
-        console.log(value);
+        // console.log(value);
         setPaymentDetails(value)
     }
 
     // this is logging the data you'll probably need
-    useEffect(() => {
-        console.log("creatorDetails >")
-        console.log(creatorDetails)
-        console.log("paymentDetails")
-        console.log(paymentDetails)
-    }, [paymentDetails])
+    // useEffect(() => {
+    //     console.log("creatorDetails >")
+    //     console.log(creatorDetails)
+    //     console.log("paymentDetails")
+    //     console.log(paymentDetails)
+    // }, [paymentDetails])
 
     ///---------------------------------
 

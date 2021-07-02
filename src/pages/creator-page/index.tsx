@@ -1,28 +1,51 @@
 import { useState, useEffect } from "react"
+import { useParams, useHistory } from "react-router";
+
 import NavbarComponent from "../../components/navbar";
-import moduleName from 'react-loading-skeleton'
 import CreatorComponent from "./components/creator";
-
 import SupportPanelComponent from "./components/support-panel";
-
+import * as PATHS from '../../constants/paths'
 // Interfacce 
 import { Payment } from "./payment";
 
 //test object ---> update the wallet address here
-import { Creator } from './creator-test'
+import {defaultCreator} from '../../contexts/logged-in-user'
+import { getUserByPageName } from "../../services/backendService";
 
 
 export default function CreatorPage() {
+    const { pagename } = useParams<{ pagename?: string }>()
+    const [creator, setCreator] = useState(defaultCreator)
+    const history = useHistory()
 
-    const [creator, setCreator] = useState(Creator)
+    useEffect(() => {
+        const checkPageExists = async () => {
+            // check usename is present in db
+            const page = await getUserByPageName(pagename)
+
+            console.log(page)
+            if (page && page.pageName) {
+                setCreator(page)
+            } else {
+                //route to not-found
+                history.push(PATHS.NOTFOUND)
+            }
+        }
+        checkPageExists()
+    }, [pagename, history])
 
     return (
-        <> 
-            <NavbarComponent/>
-            <CreatorComponent creator={creator}/>
-            <div className="flex justify-center">
-                <SupportPanelComponent creatorDetails={creator}/>
-            </div>
-        </>
+        // console.log("Creator>")
+        // console.log(creator.pageName)
+
+        (creator?.pageName && (creator?.generatedMaticWalletPublicKey || creator?.metaMaskWalletPublicKey)) ? (
+            <>
+                <NavbarComponent />
+                <CreatorComponent creator={creator} />
+                <div className="flex justify-center">
+                    <SupportPanelComponent creatorDetails={creator} />
+                </div>
+            </>) : (null)
+
     )
 }
