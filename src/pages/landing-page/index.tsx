@@ -17,33 +17,30 @@ import ImageLookForCreators from './../../assets/images/look_for_creators.svg'
 
 export default function LandingPage() {
 
-    const {user, isLoggedIn} = useContext(UserContext)
+    const {token, setToken} = useContext(UserContext)
     const [pageName, setPageName] = useState<string>()
     const [showLoginOverlay, setShowLoginOverlay] = useState(false);
 
-    const { token, setToken } = useToken({isLoggedIn});
-    const {setResponse} = useAuthUser()
+    const { setResponse } = useAuthUser()
 
-    const googleLogIn= (token) => {
-        console.log(token)
-        const endpoint = "/api/v1/google/users/get"
+    const googleSignIn = () => {
+        const endpoint=  '/api/vi/google/user/get'
         setResponse(endpoint)
     }
-    
 
-    const logIn = async (jwt) => {
+    const logIn = (jwt) => {
         if (!token) {
-            await setToken(jwt)
+            setToken(jwt)
         }
-        console.log(token)
-        googleLogIn(token)
+
+        googleSignIn()
     }
 
     const clickSignIn = () => {
-        if(token){
+        if (token) {
             logIn(token)
         }
-        else{
+        else {
             openModal()
         }
     }
@@ -58,25 +55,27 @@ export default function LandingPage() {
 
     useEffect(() => {
         document.title = 'Kōen';
-    }, []);
+        const endpoint = "/api/v1/google/users/get"
+        setResponse(endpoint)
+    }, [token]);
 
     return (
         <div>
-            <NavbarComponent setToken={logIn} token={token} clickSignIn={clickSignIn} openModal={openModal} closeModal={closeModal} showLoginOverlay={showLoginOverlay}/>
+            <NavbarComponent setToken={logIn} token={token} clickSignIn={clickSignIn} openModal={openModal} closeModal={closeModal} showLoginOverlay={showLoginOverlay} />
 
             <div className="container mx-auto sm:px-6">
 
                 <form className="flex flex-col md:flex-row justify-center items-center mt-5" onSubmit={(e) => {
                     e.preventDefault();
                     clickSignIn()
-                    }}>
+                }}>
 
                     <input className="input-main w-full sm:w-4/5 md:w-3/5 max-w-lg text-center md:text-left md: pl-8"
                         type="text"
                         aria-label="Enter your pagename"
                         placeholder="pagename"
-                        value={pageName} 
-                        onChange={(e) => setPageName(e.target.value)}/>
+                        value={pageName}
+                        onChange={(e) => setPageName(e.target.value)} />
 
                     <button className="btn-main w-full sm:w-4/5 md:w-28" >Create</button>
 

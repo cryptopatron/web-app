@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import routes from './constants/routes'
 import { LANDINGPAGE } from './constants/routes';
 import "@material-tailwind/react/tailwind.css";
-import UserContext, { creator } from "./contexts/user"
+import UserContext from "./contexts/user"
+import LoggedInUserContext, {creator} from './contexts/logged-in-user';
 import useToken from './hooks/useToken';
 import { useState } from 'react';
 
@@ -16,7 +17,7 @@ function App() {
     const {token, setToken} = useToken({isLoggedIn})
     
     return (
-        <UserContext.Provider value={{user, setUser, isLoggedIn, setIsLoggedIn}}>
+        <UserContext.Provider value={{isLoggedIn, setIsLoggedIn, token, setToken}}>
             <Router>
                 <Suspense fallback={<p>Loading....</p>}>
                     <Switch>

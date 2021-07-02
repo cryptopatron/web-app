@@ -11,7 +11,7 @@ export default function useToken({ isLoggedIn }) {
 
     const saveToken = userToken => {
         localStorage.setItem('token', JSON.stringify(userToken));
-        setToken(userToken.token);
+        setToken(userToken);
     };
 
     useEffect(() => {

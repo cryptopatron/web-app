@@ -1,23 +1,12 @@
 import { createContext } from 'react';
 
-import { Creator } from '../constants/models';
-
 export type userContextType = {
-    user: Creator
-    setUser: (user: Creator) => void
     isLoggedIn: boolean;
     setIsLoggedIn: (isLoggedIn: boolean) => void;
+    token: string | null
+    setToken: (token) => void
 
 }
 
-export const creator = {
-    email: "",
-    name: "",
-    pageName: "",
-    generatedMaticWalletPublicKey: "",
-    metaMaskWalletPublicKey: "",
-    summary: "",
-}
-
-const UserContext = createContext<userContextType>({user: creator, setUser:()=>{}, isLoggedIn:true, setIsLoggedIn:()=>{}});
+const UserContext = createContext<userContextType>({isLoggedIn:false, setIsLoggedIn:()=>{}, token:"string", setToken:()=>{}});
 export default UserContext;
