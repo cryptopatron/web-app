@@ -6,8 +6,8 @@ export async function handle_txn(setMsg, setErr, paymentDetails, creatorDetails)
     if (paymentDetails.type === 2) {
         // one time payment
         let params = {
-            "recipient_name": creatorDetails.Name,
-            "recipient_address": creatorDetails.MetaMaskWalletPublicKey,
+            "recipient_name": creatorDetails.name,
+            "recipient_address": creatorDetails.metaMaskWalletPublicKey,
             "donation_amount": paymentDetails.amount,
             "network": paymentDetails.network
         };

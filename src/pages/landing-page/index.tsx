@@ -1,53 +1,40 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 
-import LoginOverlayComponent from './components/login-overlay/'
-import useTokenService from "../../hooks/useToken";
+import useToken from "../../hooks/useToken";
 import NavbarComponent from './components/navbar'
 
 import * as PATHS from "./../../constants/paths";
+import useAuthUser from '../../hooks/useAuthUser';
+
+//context
+import UserContext from '../../contexts/user';
 
 // images
 import ImageStartJourney from './../../assets/images/start_journey.svg';
 import ImageLadyBird from './../../assets/images/ladybird.png'
 import ImageLookForCreators from './../../assets/images/look_for_creators.svg'
+
 export default function LandingPage() {
 
+    const {user, isLoggedIn} = useContext(UserContext)
     const [pageName, setPageName] = useState<string>()
     const [showLoginOverlay, setShowLoginOverlay] = useState(false);
 
-    const { token, setToken } = useTokenService();
-    const history = useHistory();
+    const { token, setToken } = useToken({isLoggedIn});
+    const {setResponse} = useAuthUser()
 
-    const googleLogIn = async (token) => {
-        const res = await fetch(window.origin + "/api/v1/google/users/get", {
-            method: "POST",
-            body: JSON.stringify({
-                idToken: token,
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const status = await res.status;
-        if (status === 200) {
-            // User exists!
-            console.log("Go to Profile");
-            // Go to profile page
-        } else if (status === 404) {
-            history.push(PATHS.ONBOARD)
-            console.log("Go to onboarding");
-            // history.push(NOTFOUND_PATH);
-        } else {
-            history.push('/')
-        }
-    };
+    const googleLogIn= () => {
+        const endpoint = "/api/v1/google/users/get"
+        setResponse(endpoint)
+    }
+    
 
     const logIn = async (jwt) => {
         if (!token) {
             await setToken(jwt)
         }
-        googleLogIn(token)
+        googleLogIn()
     }
 
     const clickSignIn = () => {
@@ -70,10 +57,6 @@ export default function LandingPage() {
     useEffect(() => {
         document.title = 'Kōen';
     }, []);
-
-    const onSubmit = () => {
-        console.log(pageName)
-    }
 
     return (
         <div>
