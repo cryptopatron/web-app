@@ -1,6 +1,5 @@
 import Skeleton from 'react-loading-skeleton'
 import { Link } from 'react-router-dom'
-import * as PATHS from '../../../../constants/paths'
 import ImageDefaultProfile1 from './../../../../assets/images/default_profile_1.svg';
 import { randomPastelColourService } from '../../../../services/randomPastelColourService';
 

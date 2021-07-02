@@ -1,11 +1,7 @@
 
-import * as PATHS from '../constants/paths'
-
-
 export const getUserByPageName = async (pageName) => {
 
-    const endpoint = window.origin + `/api/v1/users?pageName=${pageName}`
-    const origin = 'localhost:8000' //window.origin
+    const endpoint = window.origin + `/api/v1/users?pageName=${pageName}` //window.origin
     const res  = await fetch(endpoint, {
         method: "GET",
     });

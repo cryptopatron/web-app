@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom'
-import * as PATHS from '../../../../constants/paths'
-import React, { useState, useEffect } from 'react'
+
+import { useState} from 'react'
 import StreamComponent from './stream'
 import OneTimerComponent from './one-timer';
 import { handle_txn } from "./handle-txn";
@@ -15,7 +14,6 @@ export default function SupportPanelComponent({creatorDetails}) {
     const [msg, setMsg] = useState();
     const [error, setError] = useState();
 
-    const [makePayment, setMakePayment] = useState()
 
     const addPayment = (value) => {
         // console.log(value);

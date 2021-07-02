@@ -36,4 +36,5 @@ export const DASHBOARD = {
     protected: true
 }
 
-export default [LANDINGPAGE, NOTFOUND, ONBOARD, PROFILE, DASHBOARD]
+const ROUTES = [LANDINGPAGE, NOTFOUND, ONBOARD, PROFILE, DASHBOARD]
+export default ROUTES

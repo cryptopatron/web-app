@@ -1,9 +1,8 @@
-import { useContext, useState } from 'react';
-import * as ROUTES from './../../constants/routes';
-import { Link } from 'react-router-dom';
+import {useState } from 'react';
+
 
 import DropdownComponent from "../../components/dropdown"
-import {notLoggedinContent, LoggedinContent} from './dropdown-content'
+import {notLoggedinContent} from './dropdown-content'
 
 export default function NavbarComponent() {
 
