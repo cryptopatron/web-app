@@ -15,7 +15,8 @@ export default function OneTimerComponent({addPayment}) {
     }
 
     useEffect( () => {
-        addPayment({amount: amount, isStreamIndefinite: null, type:2, streamPer: null, streamFor: null})},[amount])
+        addPayment({amount: amount, network: 'mumbai', isStreamIndefinite: null, type:2, streamPer: null, streamFor: null})
+    },[amount])
 
 
     return (
@@ -34,9 +35,8 @@ export default function OneTimerComponent({addPayment}) {
             {/* per period */}
             <div className="flex flex-col justify-center">
                 <div className="text-gray-400 text-sm">Have you heard of stream?</div>
-                <div className="text-primary-light text-sm">Wanna know more?</div>
-
-             
+                {/*TODO: Update Link below*/}
+                <a href="/"><div className="text-primary-light text-sm">Wanna know more?</div></a>
             </div>
 
             {/* check indefintely */}

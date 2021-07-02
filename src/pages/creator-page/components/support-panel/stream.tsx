@@ -34,7 +34,7 @@ export default function StreamComponent({ addPayment }) {
     }
 
     useEffect( () => {
-        addPayment({amount: amount, isStreamIndefinite: isIndefinte, type:1, streamPer: perSelected.per, streamFor: (!isIndefinte) ? forInterval: 0 })
+        addPayment({amount: amount, network: 'ropsten', isStreamIndefinite: isIndefinte, type:1, streamPer: perSelected.per, streamFor: (!isIndefinte) ? forInterval: 0 })
     },[amount, perSelected, isIndefinte, forInterval])
 
     return (
@@ -119,7 +119,7 @@ export default function StreamComponent({ addPayment }) {
                     <div>
                          <StreamForComponent interval = {perSelected} forInterval={forInterval} setForInterval = {setForInterval}/>
                         <FontAwesomeIcon icon={faSquare} onClick={() => changeCheck()} className="text-gray-300 w-1 mr-3" />
-                        <span className="text-gray-300 text-sm">stream indefintely</span>
+                        <span className="text-gray-300 text-sm">stream indefinitely</span>
                     </div>
 
                 )
