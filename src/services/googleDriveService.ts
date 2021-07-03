@@ -11,7 +11,7 @@ export class GoogleDriveService {
     this.accessToken = accessToken;
   }
 
-  public uploadFile(fileName: string, fileContents: string): Observable<any> {
+  public uploadFile(fileName: string, fileContents: string): Promise<AxiosPromise> {
     const file = new Blob([fileContents], { type: "text/plain" });
     const metadata = {
       name: fileName,
@@ -26,11 +26,17 @@ export class GoogleDriveService {
     );
     form.append("file", file);
 
-    return this.httpClient.post<any>(
-      "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id",
-      form,
-      { headers: { Authorization: `Bearer ${this.accessToken}` } }
-    );
+    return axios.post("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id",
+      form, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+    })
+    // this.httpClient.post<any>(
+    //   "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id",
+    //   form,
+    //   { headers: { Authorization: `Bearer ${this.accessToken}` } }
+    // );
   }
 
   public listFiles(fileName: string): Promise<AxiosPromise> {
