@@ -30,12 +30,14 @@ export default function LoginOverlayComponent({setToken}) {
     return (
         <>
             <div className="flex flex-row w-full">
-                <div className=" flex hidden sm:block w-5/12 bg-primary-light">
+                <div className="hidden sm:flex w-5/12 bg-primary-light justify-center items-center">
+                    <div className="">
                     <img
-                        className="flex hidden sm:block mx-auto"
+                        className=""
                         src={ImageLoginWoman}
-                        alt="desperation"
+                        alt="login woman"
                     />
+                    </div>
                 </div>
 
                 <div className="flex flex-col mx-auto justify-center w-full max-w-sm sm:w-7/12 px-1 sm:px-8">
@@ -79,11 +81,11 @@ export default function LoginOverlayComponent({setToken}) {
                             login with MetaMask{" "}
                         </span>
                     </button>
-                    <GoogleLogout
+                    {/* <GoogleLogout
                         clientId={clientId}
                         buttonText="Logout"
                         onLogoutSuccess={logout}
-                    ></GoogleLogout>
+                    ></GoogleLogout> */}
                 </div>
             </div>
         </>

@@ -22,14 +22,14 @@ export default function DropdownComponent({ dropdownContent }) {
                     leaveTo="transform opacity-0 scale-95"
                 >
                     <Menu.Items as='ul' className="absolute right-8 w-32 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <div className="px-1 py-1 ">
+                        <div className=" py-1 ">
 
                             { dropdownContent.map((content) => { return (
                                 <Menu.Item as='div'>
                                     {({ active }) => (
                                         <button
-                                            className={`${active ? 'bg-primary-light text-black' : 'text-gray-900'
-                                                } group flex rounded-md text-center items-center w-full px-2 py-2 text-sm`}
+                                            className={`${active ? 'bg-primary-hover text-black' : 'text-gray-900'
+                                                } group flex text-center items-center w-full px-2 py-2 text-sm focus:outline-none`}
                                         >
                                             {/* {active ? (
                                                 <EditActiveIcon

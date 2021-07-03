@@ -9,7 +9,7 @@ export default function NavbarComponent() {
     let [dropdown, setDropdown] = useState(notLoggedinContent)
 
     return (
-        <header className="h-14 bg-white mb-4">
+        <header className="h-14 bg-white">
             <div className="container mx-auto max-w-screen-xl h-full">
                 <div className="flex justify-between h-full">
                     <div className="text-gray-700 text-center flex items-center align-items cursor-pointer mx-8">

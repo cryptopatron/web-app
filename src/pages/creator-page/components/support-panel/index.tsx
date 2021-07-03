@@ -34,7 +34,7 @@ export default function SupportPanelComponent({creatorDetails}) {
     return (
         <div className="flex flex-col mt-4 shadow-float-900 bg-white rounded-md text-center justify-center" style={{width:'21rem'}}>
 
-            <p className="font-semibold">
+            <p className="font-semibold my-5">
                 Support me!
             </p>
             {/* Stream and one time */}

@@ -61,25 +61,25 @@ export default function StreamComponent({ addPayment }) {
 
     return (
         <div className="bg-white col-span-2 bflex p-4 rounded-b-md rounded-tr-md flex-col justify-center text-center shadow-float-800 z-20">
-            <div className="font-light text-sm">An effortless way to support in the long run</div>
+            <div className="font-light text-xs mb-3">An effortless way to support long-term</div>
 
             {/* Input field */}
-            <div className="text-center">
-                <button className=" px-3 py-2 text-gray-500 bg-graywhite-100 rounded-l-md hover:text-gray-700 hover:bg-gray-200 focus:outline-none " onClick={() => { decrementAmount() }}>-</button>
-                <input type="text" className="appearance-none px-3 text-center py-2 bg-graywhite-100 w-3/5 mx-auto rounded-none focus:outline-none"
+            <div className="my-1">
+                <button className=" px-3 py-1 text-gray-500 bg-graywhite-100 rounded-l-md hover:text-gray-700 hover:bg-gray-200 focus:outline-none " onClick={() => { decrementAmount() }}>-</button>
+                <input type="text" className="px-3 py-1 w-3/5 appearance-none  text-center bg-graywhite-100  mx-auto rounded-none focus:outline-none"
                     value={amount}
                     onChange={(e) => getAmount(e.target.value)} />
-                <button className=" px-3 py-2 text-gray-500 bg-graywhite-100 hover:bg-gray-200 hover:text-gray-700 focus:outline-none  rounded-r-md" onClick={() => { incrementAmount() }}>+</button>
+                <button className=" px-3 py-1 text-gray-500 bg-graywhite-100 hover:bg-gray-200 hover:text-gray-700 focus:outline-none  rounded-r-md" onClick={() => { incrementAmount() }}>+</button>
             </div>
 
             {/* per period */}
-            <div className="flex flex-row justify-center">
-                <div className="">per</div>
+            <div className="flex flex-row justify-center items-center my-4">
+                <div className="text-sm mx-3">per</div>
 
-                <div className="w-28">
+                <div className="w-28 h-8 mx-3 ">
                     <Listbox value={perSelected} onChange={setPerSelected}>
                         <div className="relative">
-                            <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+                            <Listbox.Button className="relative w-full h-8 pl-3 pr-10 text-left bg-gray-100 rounded-lg cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
                                 <span className="block truncate">{perSelected.per}</span>
                                 <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                     <FontAwesomeIcon
@@ -98,7 +98,7 @@ export default function StreamComponent({ addPayment }) {
                                         <Listbox.Option
                                             key={personIdx}
                                             className={({ active }) =>
-                                                `${active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'}
+                                                `${active ? 'text-gray-900 bg-primary-hover' : 'text-gray-900'}
                           cursor-default select-none relative py-2 pl-10 pr-4`
                                             }
                                             value={person}
@@ -106,8 +106,7 @@ export default function StreamComponent({ addPayment }) {
                                             {({ selected, active }) => (
                                                 <>
                                                     <span
-                                                        className={`${selected ? 'font-medium' : 'font-normal'
-                                                            } block truncate`}
+                                                        className='font-normal block truncate'
                                                     >
                                                         {person.per}
                                                     </span>
@@ -136,12 +135,12 @@ export default function StreamComponent({ addPayment }) {
                 {(isIndefinte) ? (
                     <div>
                         <FontAwesomeIcon icon={faCheckSquare} onClick={() => changeCheck()} className="text-primary-light w-1 mr-3" />
-                        <span className="text-sm">stream indefintely</span>
+                        <span className="text-xs">stream indefintely</span>
                     </div>) : (
                     <div>
                         <StreamForComponent interval={perSelected} forInterval={forInterval} setForInterval={setForInterval} />
                         <FontAwesomeIcon icon={faSquare} onClick={() => changeCheck()} className="text-gray-300 w-1 mr-3" />
-                        <span className="text-gray-300 text-sm">stream indefinitely</span>
+                        <span className="text-gray-300 text-xs">stream indefinitely</span>
                     </div>
 
                 )
