@@ -34,8 +34,15 @@ export async function handle_txn(setMsg, setErr, paymentDetails, creatorDetails)
             "recipient_address": creatorDetails.MetaMaskWalletPublicKey,
             "network": paymentDetails.network,
             "base_token_address": paymentDetails.base_token_address,
-            "super_token_address": paymentDetails.super_token_address
+            "super_token_address": paymentDetails.super_token_address,
+            "flow_rate": getFlowRate(paymentDetails)
         };
         Metamask_Mumbai_Stream(setMsg, setErr, params);
     }
+}
+
+
+// TODO: Calculate amount to flow per second;
+function getFlowRate(paymentDetails) {
+    return "1000";
 }

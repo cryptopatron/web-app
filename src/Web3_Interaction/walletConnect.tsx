@@ -21,7 +21,12 @@ export async function Metamask_connect_and_execute(setMsg, setError, network, to
                 } else {
                     console.log("Here");
                     ethereum.enable().then((accounts) => {
-                        to_execute(setMsg, setError, web3Provider, accounts, params);
+                        web3Provider.eth.getGasPrice().then((gas_price) => {
+                            params["default_gas_price"] = String(gas_price);
+                            to_execute(setMsg, setError, web3Provider, accounts, params);
+                        }).catch((err) => {
+                            setError('Failed to Connect to Metamask')
+                        })
                     }).catch((err) => {
                         setError('Failed to Connect to Metamask')
                     })

@@ -38,33 +38,24 @@ async function donate(setMsg, setErr, web3Provider, accounts, params) {
         params["payment_token_address"]
     );
 
-    web3Provider.eth.getGasPrice()
-        .then(function (gp) {
-            if (typeof (gp) === typeof (100)) {
-                params["default_gas_price"] = String(gp);
+    let not_called = true;
+    payment_token.methods.transfer(params["recipient_address"], params["donation_amount"])
+        .send({
+            from: accounts[0],
+            gasPrice: params["default_gas_price"], gas: params["default_gas_amount"]
+        })
+        .on('error', function (error) {
+            setErr("Failed to get permission to send donation");
+        })
+        .on('transactionHash', function (txn_hash) {
+            // TODO: properly show transaction hash
+            setMsg(txn_link_msg(txn_hash, params["network"], "Sending Donation..."));
+        })
+        .on('confirmation', function (confirmationNumber, receipt) {
+            if (confirmationNumber === 2 && (not_called)) {
+                not_called = false;
+                let msg = params["recipient_name"] + " has received your Donation!"
+                setMsg(<h6>{msg}</h6>)
             }
-
-            let not_called = true;
-            payment_token.methods.transfer(params["recipient_address"], params["donation_amount"])
-                .send({
-                    from: accounts[0],
-                    gasPrice: params["default_gas_price"], gas: params["default_gas_amount"]
-                })
-                .on('error', function (error) {
-                    setErr("Failed to get permission to send donation");
-                })
-                .on('transactionHash', function (txn_hash) {
-                    // TODO: properly show transaction hash
-                    setMsg(txn_link_msg(txn_hash, params["network"], "Sending Donation..."));
-                })
-                .on('confirmation', function (confirmationNumber, receipt) {
-                    if (confirmationNumber === 2 && (not_called)) {
-                        not_called = false;
-                        let msg = params["recipient_name"] + " has received your Donation!"
-                        setMsg(<h6>{msg}</h6>)
-                    }
-                })
-        }).catch((error) => {
-            setErr("Failed to Connect to Metamask");
-        });
+        })
 }
