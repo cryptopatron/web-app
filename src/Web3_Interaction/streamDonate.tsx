@@ -26,75 +26,17 @@ export async function Metamask_Mumbai_approve_fDAI(setMsg, setErr) {
     Metamask_connect_and_execute(setMsg, setErr, networks['mumbai'], approve_fDAI, params);
 }
 
-
-// Assumes user has the base currency. Then, this function does the following:
-// 1. Approves the Superfluid host to access the user's base currency
-// 2. Upgrades the base currency to a supertoken
-// 3. Starts streaming
-export async function Metamask_Mumbai_Stream(setMsg, setErr, params) {
-    params["default_gas_amount"] = "1000000";
-    params["default_gas_price"] = "20000000000";
-    Metamask_connect_and_execute(setMsg, setErr, networks['mumbai'], start_stream, params);
-}
-
-
-// Assumes user has the base currency. Then, this function does the following:
-// 1. Approves the Superfluid host to access the user's base currency
-// 2. Upgrades the base currency to a supertoken
-// 3. Start streaming
-async function start_stream(setMsg, setErr, web3Provider, accounts, params) {
-    web3Provider.eth.defaultAccount = accounts[0];
-    const host = new web3Provider.eth.Contract(
-        contracts["superfluid_contract_abi"],
-        contracts["superfluid_mumbai_host_address"]
-    );
-
-    const supertoken = new web3Provider.eth.Contract(
-        contracts["supertoken_contract_abi"],
-        params.super_token_address
-    );
-    let not_called = true;
-    const to_upgrade_amount = await base_tokens_to_upgrade(setMsg, setErr, web3Provider, accounts, params);
-
-    const upgrade_operation_data = web3Provider.eth.abi.encodeParameters(['uint256'], [to_upgrade_amount])
-    const upgrade_operation = {
-        "operationType": 101,
-        "target": params.super_token_address,
-        "data": upgrade_operation_data
+export async function Metamask_Mumbai_upgrade_fdai(setMsg, setErr) {
+    const params = {
+        "default_gas_amount": "1000000",
+        "default_gas_price": "20000000000",
+        "network": "mumbai",
+        "super_token_address": contracts["fdaix_mumbai_address"],
+        "amount": "10000000000"
     };
-
-    const operations = [upgrade_operation];
-
-    const operation_tuples = operations.map(
-        (operation) => ([operation.operationType, operation.target, operation.data])
-    );
-    console.log(operation_tuples);
-    host.methods.batchCall(operation_tuples)
-        .send({
-            from: accounts[0],
-            gasPrice: params["default_gas_price"], gas: params["default_gas_amount"]
-        })
-        .on('error', function (error) {
-            setErr("Failed to get permission to send donation");
-        })
-        .on('transactionHash', function (txn_hash) {
-            // TODO: properly show transaction hash
-            setMsg(txn_link_msg(txn_hash, params["network"], "Starting Donation Stream..."));
-        })
-        .on('confirmation', function (confirmationNumber, receipt) {
-            if (confirmationNumber === 2 && (not_called)) {
-                not_called = false;
-                let msg = "Donation Stream to " + params["recipient_name"] + " has begun!";
-                setMsg(<h6>{msg}</h6>)
-            }
-        })
-
+    Metamask_connect_and_execute(setMsg, setErr, networks['mumbai'], upgrade_base_tokens, params);
 }
 
-// TODO: how many base tokens should be upgraded?
-async function base_tokens_to_upgrade(setMsg, setErr, web3Provider, accounts, params) {
-    return "1000000000";
-}
 
 // mint fDAI to accounts[0].
 // params = {
@@ -167,4 +109,49 @@ async function approve_fDAI(setMsg, setErr, web3Provider, accounts, params) {
                 setMsg(<h6>{msg}</h6>)
             }
         })
+}
+
+// upgrades base_token into super_token
+async function upgrade_base_tokens(setMsg, setErr, web3Provider, accounts, params) {
+    web3Provider.eth.defaultAccount = accounts[0];
+    const host = new web3Provider.eth.Contract(
+        contracts["superfluid_contract_abi"],
+        contracts["superfluid_mumbai_host_address"]
+    );
+
+    let not_called = true;
+
+    const upgrade_operation_data = web3Provider.eth.abi.encodeParameters(['uint256'], [params.amount])
+    const upgrade_operation = {
+        "operationType": 101,
+        "target": params.super_token_address,
+        "data": upgrade_operation_data
+    };
+
+    const operations = [upgrade_operation];
+
+    const operation_tuples = operations.map(
+        (operation) => ([operation.operationType, operation.target, operation.data])
+    );
+
+    host.methods.batchCall(operation_tuples)
+        .send({
+            from: accounts[0],
+            gasPrice: params["default_gas_price"], gas: params["default_gas_amount"]
+        })
+        .on('error', function (error) {
+            setErr("Failed to get permission to send donation");
+        })
+        .on('transactionHash', function (txn_hash) {
+            // TODO: properly show transaction hash
+            setMsg(txn_link_msg(txn_hash, params["network"], "Upgrading Tokens..."));
+        })
+        .on('confirmation', function (confirmationNumber, receipt) {
+            if (confirmationNumber === 2 && (not_called)) {
+                not_called = false;
+                let msg = "Tokens have been upgraded!";
+                setMsg(<h6>{msg}</h6>)
+            }
+        })
+
 }

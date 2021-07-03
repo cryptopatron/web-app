@@ -5,7 +5,10 @@ import React, { useState, useEffect } from 'react'
 import StreamComponent from './stream'
 import OneTimerComponent from './one-timer';
 import { handle_txn } from "./handle-txn";
-import { Metamask_Mumbai_mint_fDAI, Metamask_Mumbai_approve_fDAI } from "../../../../Web3_Interaction/streamDonate";
+import { Metamask_Mumbai_mint_fDAI,
+    Metamask_Mumbai_approve_fDAI,
+    Metamask_Mumbai_upgrade_fdai } from "../../../../Web3_Interaction/streamDonate";
+import { Metamask_Mumbai_stream_fDAIx } from "../../../../Web3_Interaction/superfluid_streaming";
 
 export default function SupportPanelComponent({creatorDetails}) {
 
@@ -60,16 +63,32 @@ export default function SupportPanelComponent({creatorDetails}) {
                 {(streamButtomActive)? 'stream ' : 'send '}
                 <span>{(paymentDetails.amount) ? paymentDetails.amount: "" }</span>
             </button>
+            {(streamButtomActive)?(<div>
             <button className="btn-main" onClick={() => {
                 Metamask_Mumbai_mint_fDAI(setMsg, setError)
             }}>
-                Mint fDAI on Mumbai for Testing
+                Mint fDAI (on Mumbai)
             </button>
+                    <br></br>
             <button className="btn-main" onClick={() => {
                 Metamask_Mumbai_approve_fDAI(setMsg, setError)
             }}>
-                Approve fDAIx to spend your fDAI
+                Approve upgrading your fDAI
             </button>
+                    <br></br>
+            <button className="btn-main" onClick={() => {
+                Metamask_Mumbai_upgrade_fdai(setMsg, setError)
+            }}>
+                Upgrade fDAI into fDAIx
+            </button>
+                    <br></br>
+            <button className="btn-main" onClick={() => {
+                Metamask_Mumbai_stream_fDAIx(setMsg, setError)
+            }}>
+                Start Streaming fDAI
+            </button>
+            </div>
+            ): (<div></div>) }
             {msg}
             <h6 style={{ color: "red" }}>{error}</h6>
             <br></br>
