@@ -4,7 +4,7 @@ import { GoogleDriveService } from "./googleDriveService";
 export class WalletGenerationService {
   private static NETWORK_URL = "https://rpc-mumbai.maticvigil.com";
 
-  constructor(private googleDriveService: GoogleDriveService) {}
+  private googleDriveService = new GoogleDriveService();
 
   private generateWallet() {
     // Connect to matic testnet
@@ -16,32 +16,26 @@ export class WalletGenerationService {
     return web3.eth.accounts.create();
   }
 
-  private secureStoreWallet(wallet, accessToken): boolean {
+  private async secureStoreWallet(wallet, accessToken): Promise<string> {
     //connect to Google drive and store wallet credentials
     // Return true if success
     this.googleDriveService.setAccessToken(accessToken);
-    let res = this.googleDriveService.uploadFile(
-      `${WalletGenerationService.NETWORK_URL}.json`,
-      JSON.stringify(wallet)
-    );
-    res
-      .then(() => {
-        console.log("Wallet stored successfully!");
-        return true;
-      })
-      .catch(() => {
-        console.log("Wallet storage failed");
-      });
-    return false;
+    try {
+      const result = await this.googleDriveService.uploadFile(
+        `${WalletGenerationService.NETWORK_URL}.json`,
+        JSON.stringify(wallet)
+      );
+      console.log("Wallet stored successfully!");
+      return wallet.address;
+    } catch (error) {
+      console.log("Wallet storage failed");
+      console.log(error);
+    }
+    return "";
   }
 
-  public setupMaticWallet(): string {
+  public setupMaticWallet(driveAccessToken: string): any {
     let wallet = this.generateWallet();
-    // TODO: Where do we get Drive access token from?
-    if (this.secureStoreWallet(wallet, driveAccessToken)) {
-      return wallet.address;
-    } else {
-      return "";
-    }
+    return this.secureStoreWallet(wallet, driveAccessToken);
   }
 }
