@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 import StreamComponent from './stream'
 import OneTimerComponent from './one-timer';
 import { handle_txn } from "./handle-txn";
-import { Metamask_Mumbai_mint_fDAI } from "../../../../Web3_Interaction/streamDonate";
+import { Metamask_Mumbai_mint_fDAI, Metamask_Mumbai_approve_fDAI } from "../../../../Web3_Interaction/streamDonate";
 
 export default function SupportPanelComponent({creatorDetails}) {
 
@@ -65,7 +65,11 @@ export default function SupportPanelComponent({creatorDetails}) {
             }}>
                 Mint fDAI on Mumbai for Testing
             </button>
-
+            <button className="btn-main" onClick={() => {
+                Metamask_Mumbai_approve_fDAI(setMsg, setError)
+            }}>
+                Approve fDAIx to spend your fDAI
+            </button>
             {msg}
             <h6 style={{ color: "red" }}>{error}</h6>
             <br></br>

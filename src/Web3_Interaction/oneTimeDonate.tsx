@@ -11,11 +11,14 @@ export async function Metamask_Mumbai_Donation(setMsg, setErr, params) {
     Metamask_connect_and_execute(setMsg, setErr, networks['mumbai'], donate, params);
 }
 
+
+// executes one time donation through Metamask.
 export async function Metamask_Ropsten_Donation(setMsg, setErr, params) {
     params["default_gas_amount"] = "1000000";
     params["default_gas_price"] = "20000000000";
     Metamask_connect_and_execute(setMsg, setErr, networks['ropsten'], donate, params);
 }
+
 
 // params = {
 //     "recipient_name": "name",
@@ -24,6 +27,7 @@ export async function Metamask_Ropsten_Donation(setMsg, setErr, params) {
 //     "payment_token_address": "0x...",
 //     "default_gas_amount": "1000",
 //     "default_gas_price": "2000",
+//     "network": "mumbai"
 //     }
 // One time donation to recipient_address
 async function donate(setMsg, setErr, web3Provider, accounts, params) {

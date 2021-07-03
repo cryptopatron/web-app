@@ -34,7 +34,15 @@ export default function StreamComponent({ addPayment }) {
     }
 
     useEffect( () => {
-        addPayment({amount: amount, network: 'ropsten', isStreamIndefinite: isIndefinte, type:1, streamPer: perSelected.per, streamFor: (!isIndefinte) ? forInterval: 0 })
+        addPayment({
+            amount: amount,
+            network: 'mumbai',
+            base_token_address: '0x15f0ca26781c3852f8166ed2ebce5d18265cceb7', // fDAI on Mumbai
+            super_token_address: '0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f', // fDAIx on Mumbai
+            isStreamIndefinite: isIndefinte,
+            type: 1,
+            streamPer: perSelected.per,
+            streamFor: (!isIndefinte) ? forInterval: 0 })
     },[amount, perSelected, isIndefinte, forInterval])
 
     return (
