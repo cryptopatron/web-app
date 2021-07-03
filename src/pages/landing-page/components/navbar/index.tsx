@@ -1,4 +1,5 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
+import { Link } from 'react-router-dom';
 import logo from '../../../../assets/images/Logo(Latest).jpg';
 import { Dialog, Transition } from '@headlessui/react'
 
@@ -19,29 +20,33 @@ export default function NavbarComponent({
 
     return (
         <>
-            <nav className="relative flex items-center justify-between px-2 py-3 bg-white mb-5">
-                <div className="container px-4 mx-auto flex items-center justify-between">
-                    <div className="w-auto relative flex justify-start static lg:block">
-                        <a
-                            className="leading-relaxedmr-4 py-2 whitespace-nowrap"
-                            href="#pablo"
-                        >
-                            <img src={logo} alt="Navbar Kōen logo" />
-                        </a>
-                    </div>
-                    <div className="items-center">
-                        <ul className="ml-auto">
-                            <li className="nav-item">
-                                <button
-                                    className="btn-main"
-                                    onClick={() => {
-                                        clickSignIn()
-                                    }}
+            <nav className="h-14 bg-white">
+                <div className="container mx-auto max-w-screen-xl h-full">
+                    <div className="flex justify-between h-full">
+                        <div className="w-auto flex justify-start items-center mx-2">
+                            <div>
+                                <Link
+                                    to="/"
                                 >
-                                    <span>Sign In</span>
-                                </button>
-                            </li>
-                        </ul>
+                                    <img src={logo} alt="Navbar Kōen logo" />
+                                </Link>
+                            </div>
+                        </div>
+
+                        <div className="items-center mx-2">
+                            <ul className="ml-auto">
+                                <li className="nav-item">
+                                    <button
+                                        className="btn-main"
+                                        onClick={() => {
+                                            clickSignIn()
+                                        }}
+                                    >
+                                        <span>Sign In</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </nav>

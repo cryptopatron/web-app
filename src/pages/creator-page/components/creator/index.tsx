@@ -6,9 +6,8 @@ import { randomPastelColourService } from '../../../../services/randomPastelColo
 export default function CreatorComponent({ creator }) {
 
     const profileBg = randomPastelColourService()
-    // Todo
-    // Todo -----> removed forced flasae
-    return ((false && !creator.pageName) ? (<Skeleton count={1} height={200} />) : (
+
+    return ((!creator.pageName) ? (<Skeleton count={1} height={200} />) : (
         <Link to={`/${creator.pageName}`} className="" >
             {/* if profile pic is not present */}
             <div className="flex flex-col justify-center">

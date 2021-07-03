@@ -34,9 +34,8 @@ export default function CreatorPage() {
     }, [pagename, history])
 
     return (
-        // Todo
-        // Todo -----> remove the forced 'true'
-        (true || creator?.pageName && (creator?.generatedMaticWalletPublicKey || creator?.metaMaskWalletPublicKey)) ? (
+
+        (creator?.pageName && (creator?.generatedMaticWalletPublicKey || creator?.metaMaskWalletPublicKey)) ? (
             <>
                 <NavbarComponent />
                 <CreatorComponent creator={creator} />
