@@ -59,7 +59,7 @@ export default function LandingPage() {
             }
        return () => listener()
 
-    }, [isLoggedIn]);
+    },[]);
 
     return (
         <div>

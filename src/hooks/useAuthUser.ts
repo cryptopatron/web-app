@@ -54,5 +54,7 @@ export default function useAuthUser() {
 
     }
 
+    
+
     return { setResponse }
 }
