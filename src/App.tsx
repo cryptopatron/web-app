@@ -5,7 +5,7 @@ import { LANDINGPAGE } from './constants/routes';
 import UserContext from "./contexts/user"
 import LoggedInUserContext, { defaultCreator } from './contexts/logged-in-user';
 import useToken from './hooks/useToken';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Creator } from './constants/models';
 

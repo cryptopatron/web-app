@@ -21,13 +21,16 @@ export default function SupportPanelComponent({ creatorDetails }) {
     const [error, setError] = useState();
 
     const addPayment = (value) => {
-        // console.log(value);
-        setPaymentDetails(value)
+        if (creatorDetails.metaMaskWalletPublicKey) {
+            setPaymentDetails({ ...value, name:creatorDetails.name, wallet:creatorDetails.metaMaskWalletPublicKey })
+        }
+        
+        if (creatorDetails.generatedMaticWalletPublicKey) {
+            setPaymentDetails({ ...value, name:creatorDetails.name, wallet:creatorDetails.generatedMaticWalletPublicKey })
+        }
     }
 
     // useEffect(() => {
-    //     console.log("creatorDetails >")
-    //     console.log(creatorDetails)
     //     console.log("paymentDetails")
     //     console.log(paymentDetails)
     // }, [paymentDetails])
@@ -54,7 +57,7 @@ export default function SupportPanelComponent({ creatorDetails }) {
             {/* pay button */}
             <div className="w-10/12 mx-auto">
                 <button className="btn-main mt-5 w-full" onClick={() => {
-                    handle_txn(setMsg, setError, paymentDetails, creatorDetails)
+                    handle_txn(setMsg, setError, paymentDetails)
                 }}>
                     {(streamButtomActive) ? 'stream ' : 'send '}
                     <span>{(paymentDetails.amount) ? paymentDetails.amount : ""}</span>
@@ -79,7 +82,7 @@ export default function SupportPanelComponent({ creatorDetails }) {
                     </button>
                     <br></br>
                     <button className="btn-main m-3" onClick={() => {
-                        Metamask_Mumbai_stream_fDAIx(setMsg, setError)
+                        Metamask_Mumbai_stream_fDAIx(setMsg, setError, paymentDetails)
                     }}>
                         Start Streaming fDAI
                     </button>

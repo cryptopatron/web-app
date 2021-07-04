@@ -35,7 +35,8 @@ export default function CreatorPage() {
     }, [pagename, history])
 
     return (
-        (creator?.pageName && (creator?.generatedMaticWalletPublicKey || creator?.metaMaskWalletPublicKey)) ? (
+        // todod -> remove this
+        (true || creator?.pageName && (creator?.generatedMaticWalletPublicKey || creator?.metaMaskWalletPublicKey)) ? (
             <>
                 <NavbarComponent />
                 <CreatorComponent creator={creator} />
