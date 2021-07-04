@@ -60,7 +60,6 @@ export default function useAuthUser() {
             }
 
         }
-
         return () => {
             listener()
         }
