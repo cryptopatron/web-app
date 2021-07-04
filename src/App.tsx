@@ -2,7 +2,6 @@ import { Suspense } from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import routes from './constants/routes'
 import { LANDINGPAGE } from './constants/routes';
-import "@material-tailwind/react/tailwind.css";
 import UserContext from "./contexts/user"
 import LoggedInUserContext, { defaultCreator } from './contexts/logged-in-user';
 import useToken from './hooks/useToken';
