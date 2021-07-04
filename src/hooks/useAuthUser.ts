@@ -1,4 +1,3 @@
-import { useState, useEffect} from 'react';
 import { useContext } from "react";
 import UserContext from "../contexts/user";
 import LoggedInUserContext from '../contexts/logged-in-user';
@@ -6,64 +5,54 @@ import { useHistory } from 'react-router';
 import * as PATHS from '../constants/paths'
 
 export default function useAuthUser() {
-    const { token, setIsLoggedIn, isLoggedIn } = useContext(UserContext)
-    const {setUser} = useContext(LoggedInUserContext)
+    const { setIsLoggedIn } = useContext(UserContext)
+    const { setUser } = useContext(LoggedInUserContext)
     const history = useHistory();
 
-    const setResponse = async (endpoint: string) => {
-        if (token) {
+    const setResponse = async (endpoint: string, jwt: string) => {
+        if (jwt) {
             const res = await fetch(window.origin + endpoint, {
                 method: "POST",
                 body: JSON.stringify({
-                    idToken: token,
+                    idToken: jwt,
                 }),
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
             const status = await res.status
-            if (status === 200) {
-                setIsLoggedIn(true)
-                const data = await res.json()
-                // save auth user info
-                setUser(data)
-                console.log('go to user dashboard')
-                history.push(PATHS.DASHBOARD)
-            } else if (status === 404) {
-                console.log("go to onboard")
-                // save auth user info
-                history.push(PATHS.ONBOARD)
-            }
-            else {
-                //
+            // save auth user info
+            if (status !== 200) {
                 setIsLoggedIn(false)
+                localStorage.removeItem('token')
                 console.log("Login failed")
                 history.push('/')
+            }
+            else {
                 
+                const data = await res.json()
+                if (data) {
+                    setIsLoggedIn(true)
+                    // save auth user info
+                    setUser(data)
+                    console.log('go to user dashboard')
+                    history.push(PATHS.DASHBOARD)
+                }
+                else {
+                    console.log("go to onboard")
+                    // save auth user info
+                    history.push(PATHS.ONBOARD)
+                }
+
             }
         }
         else {
             // do nothing
             history.push('/')
             console.log("token is null")
-        } 
+        }
 
     }
-
-    useEffect(() => {
-        const listener = () => {
-            // on logout remove token
-            console.log(isLoggedIn)
-            if (!isLoggedIn) {
-                console.log("removing user Token")
-                localStorage.removeItem('token')
-            }
-
-        }
-        return () => {
-            listener()
-        }
-    }, [isLoggedIn])
 
     return { setResponse }
 }

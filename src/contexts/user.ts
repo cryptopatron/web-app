@@ -9,5 +9,5 @@ export type userContextType = {
     setPublicKey: (publicKey) => void;
 }
 
-const UserContext = createContext<userContextType>({isLoggedIn:false, setIsLoggedIn:()=>{}, token:"string", setToken:()=>{}, publicKey: '', setPublicKey:() => {}});
+const UserContext = createContext<userContextType>({isLoggedIn:false, setIsLoggedIn:()=>{}, token:"string", setToken:()=>{}, publicKey:'', setPublicKey:() => {}});
 export default UserContext;

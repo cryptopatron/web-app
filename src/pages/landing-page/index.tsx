@@ -18,22 +18,18 @@ import ImageLookForCreators from './../../assets/images/look_for_creators.svg'
 export default function LandingPage() {
 
     const { token, setToken, isLoggedIn } = useContext(UserContext)
-    const [pageName, setPageName] = useState<string>()
-    const [showLoginOverlay, setShowLoginOverlay] = useState(false);
+    const [ pageName, setPageName ] = useState<string>()
+    const [ showLoginOverlay, setShowLoginOverlay ] = useState(false);
 
     const { setResponse } = useAuthUser()
-
-    const googleSignIn = () => {
-        const endpoint = '/api/vi/google/user/get'
-        setResponse(endpoint)
-    }
 
     const logIn = (jwt) => {
         if (!token) {
             setToken(jwt)
         }
 
-        googleSignIn()
+        const endpoint = '/api/v1/google/user/get'
+        setResponse(endpoint, jwt)
     }
 
     const clickSignIn = () => {
@@ -56,21 +52,14 @@ export default function LandingPage() {
     useEffect(() => {
         document.title = 'Kōen';
         const listener = () => {
-            if (isLoggedIn) {
-                <Redirect to={PATHS.DASHBOARD} />
-
-            } else {
                 if (token) {
                     const endpoint = "/api/v1/google/users/get"
-                    setResponse(endpoint)
-
+                    setResponse(endpoint, token)
                 }
             }
-        }
+       return () => listener()
 
-        listener()
-
-    }, [token, isLoggedIn]);
+    }, [isLoggedIn]);
 
     return (
         <div>
