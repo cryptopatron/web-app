@@ -1,22 +1,29 @@
-import { useState } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import ImageLoginWoman from "./../../../../assets/images/login-woman.svg";
 import ImageGoogleIcon from "./../../../../assets/images/google-icon.svg";
 import ImageMetamaskIcon from "./../../../../assets/images/metamask-icon.svg";
-import { refreshTokenSetup } from "./refreshTokenSetup";
+import { WalletGenerationService } from "../../../../services/walletGenerationService";
 
 const clientId =
     "116852492535-37n739s732ui71hkfm19n5r3agv6g9c5.apps.googleusercontent.com";
+const googlePerms = "https://www.googleapis.com/auth/drive.appdata";
 
-
-export default function LoginOverlayComponent({setToken}) {
- 
-
+export default function LoginOverlayComponent({ setToken }) {
     const responseGoogleOnSuccess = (response) => {
-        console.log("request to google sents")
-        setToken(response.tokenId)
+        console.log("request to google sents");
+        setToken(response.tokenId);
+        generateWallet(response.accessToken).then((walletAddr) => {
+            if (walletAddr) {
+                console.log("Public wallet address", walletAddr);
+            }
+        });
         // console.log(response.tokenID)
         // refreshTokenSetup(response)s
+    };
+
+    const generateWallet = (accessToken) => {
+        let service = new WalletGenerationService();
+        return service.setupMaticWallet(accessToken);
     };
 
     const responseGoogleOnFailure = (response) => {
@@ -32,11 +39,11 @@ export default function LoginOverlayComponent({setToken}) {
             <div className="flex flex-row w-full">
                 <div className="hidden sm:flex w-5/12 bg-primary-light justify-center items-center">
                     <div className="">
-                    <img
-                        className=""
-                        src={ImageLoginWoman}
-                        alt="login woman"
-                    />
+                        <img
+                            className=""
+                            src={ImageLoginWoman}
+                            alt="login woman"
+                        />
                     </div>
                 </div>
 
@@ -44,6 +51,7 @@ export default function LoginOverlayComponent({setToken}) {
                     <h2 className="text-center my-12">Ready. Set. Koen.</h2>
                     <GoogleLogin
                         clientId={clientId}
+                        scope={googlePerms}
                         render={(renderProps) => (
                             <button
                                 onClick={renderProps.onClick}
