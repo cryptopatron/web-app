@@ -1,6 +1,84 @@
+import { useState } from 'react';
 import creatorPic from '../../../assets/images/creator-default-pic.svg';
+import classNames from 'classnames';
+import { checkIfUserExists, getUserByPageName } from '../../../services/backendService';
+import { registerPage } from '../../../services/registerPageName';
+import { useContext } from 'react';
+import UserContext from '../../../contexts/user';
 
-export default function Step2Component({step, moveToStep}) {
+export default function Step2Component({step, moveToStep, publicKey}) {
+    const [pageName, setPageName] = useState('');
+    const [isValid, setValid] = useState(false);
+    const [isNeutral, setNeutral] = useState(true);
+    const [isNamePresent, setIsNamePresent] = useState(true);
+    const {token} = useContext(UserContext);
+
+    let pageChangeCSS = classNames({
+        'w-full':true,
+        'bg-gray-100':true,
+        'bg-opacity-50':true,
+        'focus:ring-2':true,
+        'focus:bg-transparent':true,
+        'border':true,
+        'border-gray-300':true,
+        'focus:border-blue-500':true,
+        'text-base':true,
+        'outline-none':true,
+        'text-gray-700':true,
+        'py-1':true,
+        'px-3':true,
+        'leading-8':true,
+        'transition-colors':true,
+        'duration-200':true,
+        'ease-in-out':true,
+        'text-center':true,
+        'focus:ring-blue-200':isNeutral,
+        'focus:ring-green-200':isValid,
+        'focus:ring-red-200': !isValid
+    });
+
+    let nameLengthCSS = classNames({
+        'text-sm': true,
+        'text-center': true,
+        'hidden': isValid
+    });
+
+    let userPresentCSS = classNames({
+        'text-sm':true,
+        'text-center': true,
+        'hidden': isNamePresent,
+        'text-red-400': true
+    });
+
+    const handleChange = (name) => {
+        if(name.length == 0) {
+            setValid(false);
+            setNeutral(true);
+            setPageName(name);
+        }
+        else if(name.length < 4 && name.length > 0) {
+            setValid(false);
+            setNeutral(false);
+            setPageName(name);
+        }
+        else {
+            setValid(true);
+            setNeutral(false);
+            setPageName(name);
+        }
+
+    }
+
+    const onCreateClick = async () => {
+        if(checkIfUserExists(pageName)) {
+            registerPage(pageName,publicKey,token);
+            moveToStep(3);
+        }
+        else{
+            setIsNamePresent(false);
+        }
+    }
+
     return (
         <section className="text-gray-600 body-font">
             <div className="container mx-auto flex flex-col px-5 py-24 justify-center items-center">
@@ -11,11 +89,13 @@ export default function Step2Component({step, moveToStep}) {
                     <img className="w-1/6 mb-10 object-cover object-center rounded hover:opacity-30 transition-colors duration-200 ease-in-out" alt="creator picture" src={creatorPic} />
                     <div className="flex w-full justify-center items-end mb-4 mt-8">
                         <div className="relative sm:w-2/4 w-full">
-                            <input type="text" id="hero-field" name="hero-field" placeholder="Page Name" className="w-full bg-gray-100 bg-opacity-50 focus:ring-2 focus:ring-blue-200 focus:bg-transparent border border-gray-300 focus:border-blue-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out text-center" />
+                            <input type="text" value={pageName} id="hero-field" onChange = {(e) => handleChange(e.target.value)} name="hero-field" placeholder="Page Name" className={pageChangeCSS} />
+                            <label className={nameLengthCSS}>Page name must have 4 or more characters</label>
+                            <label className={userPresentCSS}>Apologies! This name has already been taken.</label>
                         </div>
                     </div>
                     <div className="flex w-full justify-center items-end">
-                        <button className="inline-flex border-0 py-2 px-6 text-lg btn-main" onClick={() => moveToStep(3)} >Create</button>
+                        <button className="inline-flex border-0 py-2 px-6 text-lg btn-main" onClick={() => onCreateClick()} >Create</button>
                     </div>
                 </div>
 
