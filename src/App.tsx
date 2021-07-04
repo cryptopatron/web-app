@@ -14,10 +14,11 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
     const [user, setUser] = useState<Creator>(defaultCreator)
     const { token, setToken } = useToken({ isLoggedIn })
+    const [publicKey, setPublicKey] = useState('');
 
     return (
 
-        <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn, token, setToken }}>
+        <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn, token, setToken, publicKey, setPublicKey }}>
             <LoggedInUserContext.Provider value={{ user, setUser }}>
                 <Router>
                     <Suspense fallback={<p>Loading....</p>}>

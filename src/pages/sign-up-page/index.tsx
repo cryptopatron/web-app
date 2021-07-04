@@ -24,7 +24,7 @@ export default function SignUpPage(){
 
         if (step === 2){
             return(
-                <Step2Component publicKey={publicKey} moveToStep={moveToStep}/>
+                <Step2Component  step={step} publicKey={publicKey} moveToStep={moveToStep}/>
             )
         }
 

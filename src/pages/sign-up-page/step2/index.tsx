@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { checkIfUserExists, getUserByPageName } from '../../../services/backendService';
 import { registerPage } from '../../../services/registerPageName';
 
-export default function Step2Component({moveToStep, publicKey}) {
+export default function Step2Component({step, moveToStep, publicKey}) {
     const [pageName, setPageName] = useState('');
     const [isValid, setValid] = useState(false);
     const [isNeutral, setNeutral] = useState(true);
@@ -88,7 +88,7 @@ export default function Step2Component({moveToStep, publicKey}) {
                     <img className="w-1/6 mb-10 object-cover object-center rounded hover:opacity-30 transition-colors duration-200 ease-in-out" alt="creator picture" src={creatorPic} />
                     <div className="flex w-full justify-center items-end mb-4 mt-8">
                         <div className="relative sm:w-2/4 w-full">
-                            <input type="text" value={pageName} id="hero-field" onChange = {() => handleChange} name="hero-field" placeholder="Page Name" className={pageChangeCSS} />
+                            <input type="text" value={pageName} id="hero-field" onChange = {(e) => handleChange(e.target.value)} name="hero-field" placeholder="Page Name" className={pageChangeCSS} />
                             <label className={nameLengthCSS}>Page name must have 4 or more characters</label>
                             <label className={userPresentCSS}>Apologies! This name has already been taken.</label>
                         </div>
