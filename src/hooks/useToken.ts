@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 
-export default function useToken({ isLoggedIn }) {
+export default function useToken() {
 
     const getToken = () => {
         const tokenString = localStorage.getItem('token');
@@ -13,20 +13,6 @@ export default function useToken({ isLoggedIn }) {
         localStorage.setItem('token', JSON.stringify(userToken));
         setToken(userToken);
     };
-
-    useEffect(() => {
-        const listener = () => {
-            // on logout remove token
-            if (!isLoggedIn) {
-                localStorage.removeItem('token')
-            }
-
-        }
-
-        return () => {
-            listener()
-        }
-    }, [isLoggedIn])
 
     return {
         setToken: saveToken,

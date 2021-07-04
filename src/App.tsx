@@ -5,7 +5,7 @@ import { LANDINGPAGE } from './constants/routes';
 import UserContext from "./contexts/user"
 import LoggedInUserContext, { defaultCreator } from './contexts/logged-in-user';
 import useToken from './hooks/useToken';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Creator } from './constants/models';
 
@@ -13,7 +13,22 @@ function App() {
 
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
     const [user, setUser] = useState<Creator>(defaultCreator)
-    const { token, setToken } = useToken({ isLoggedIn })
+    const { token, setToken } = useToken()
+    useEffect(() => {
+        const listener = () => {
+            // on logout remove token
+            if (!isLoggedIn) {
+                console.log("removing user Token")
+                localStorage.removeItem('token')
+            }
+
+        }
+
+        return () => {
+            console.log("does is log")
+            listener()
+        }
+    }, [isLoggedIn])
 
     return (
 
