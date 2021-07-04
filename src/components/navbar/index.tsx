@@ -1,13 +1,27 @@
-import {useState } from 'react';
-
+import { useState, useEffect, useContext } from 'react';
 
 import DropdownComponent from "../../components/dropdown"
-import {notLoggedinContent} from './dropdown-content'
+import {notLoggedinContent, loggedinContent} from './dropdown-content'
+import UserContext from '../../contexts/user';
 
 export default function NavbarComponent() {
 
     let [dropdown, setDropdown] = useState(notLoggedinContent)
+    const {isLoggedIn} = useContext(UserContext)
 
+    useEffect(() => {
+        const listener = () =>{
+            if(isLoggedIn){
+                setDropdown(loggedinContent)
+            }
+            else{
+                setDropdown(notLoggedinContent)
+            }
+        }
+
+        listener()
+        
+    }, [isLoggedIn])
     return (
         <header className="h-14 bg-white">
             <div className="container mx-auto max-w-screen-xl h-full">
