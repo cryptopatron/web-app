@@ -13,7 +13,7 @@ function App() {
 
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
     const [user, setUser] = useState<Creator>(defaultCreator)
-    const { token, setToken } = useToken({ isLoggedIn })
+    const { token, setToken } = useToken();
     const [publicKey, setPublicKey] = useState('');
 
     return (

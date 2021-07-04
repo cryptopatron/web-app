@@ -3,12 +3,15 @@ import creatorPic from '../../../assets/images/creator-default-pic.svg';
 import classNames from 'classnames';
 import { checkIfUserExists, getUserByPageName } from '../../../services/backendService';
 import { registerPage } from '../../../services/registerPageName';
+import { useContext } from 'react';
+import UserContext from '../../../contexts/user';
 
 export default function Step2Component({step, moveToStep, publicKey}) {
     const [pageName, setPageName] = useState('');
     const [isValid, setValid] = useState(false);
     const [isNeutral, setNeutral] = useState(true);
     const [isNamePresent, setIsNamePresent] = useState(true);
+    const {token} = useContext(UserContext);
 
     let pageChangeCSS = classNames({
         'w-full':true,
@@ -67,10 +70,8 @@ export default function Step2Component({step, moveToStep, publicKey}) {
     }
 
     const onCreateClick = async () => {
-        let response = await getUserByPageName(pageName);
-        console.log(response.body);
         if(checkIfUserExists(pageName)) {
-            registerPage(pageName,publicKey);
+            registerPage(pageName,publicKey,token);
             moveToStep(3);
         }
         else{
@@ -94,7 +95,7 @@ export default function Step2Component({step, moveToStep, publicKey}) {
                         </div>
                     </div>
                     <div className="flex w-full justify-center items-end">
-                        <button className="inline-flex border-0 py-2 px-6 text-lg btn-main" onClick={() => onCreateClick} >Create</button>
+                        <button className="inline-flex border-0 py-2 px-6 text-lg btn-main" onClick={() => onCreateClick()} >Create</button>
                     </div>
                 </div>
 

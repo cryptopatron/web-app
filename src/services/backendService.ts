@@ -23,6 +23,7 @@ export const checkIfUserExists = async (pageName) => {
     });
     const status = await res.status
     const response = await res.json();
+    console.log(status);
     if(status === 200) {
         return false;
     }
