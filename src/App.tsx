@@ -14,21 +14,6 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
     const [user, setUser] = useState<Creator>(defaultCreator)
     const { token, setToken } = useToken()
-    useEffect(() => {
-        const listener = () => {
-            // on logout remove token
-            if (!isLoggedIn) {
-                console.log("removing user Token")
-                localStorage.removeItem('token')
-            }
-
-        }
-
-        return () => {
-            console.log("does is log")
-            listener()
-        }
-    }, [isLoggedIn])
 
     return (
 
