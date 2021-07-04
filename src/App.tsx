@@ -24,10 +24,10 @@ function App() {
                     <Suspense fallback={<p>Loading....</p>}>
                         <Switch>
                             {routes.map((route) => (
-                                // Added ccondtions for route guarding 
-                                (route.protected) ? (
+                                // Added condtions for route guarding  //  
+                                (route.protected && !((isLoggedIn) && (user.pageName))) ? (
                                     <Route
-                                        path={LANDINGPAGE.path}
+                                        path={route.path}
                                         component={LANDINGPAGE.component}
                                         exact={LANDINGPAGE.exact}
                                     />

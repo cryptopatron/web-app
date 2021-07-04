@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 import * as PATHS from '../constants/paths'
 
 export default function useAuthUser() {
-    const { token } = useContext(UserContext)
+    const { token, setIsLoggedIn } = useContext(UserContext)
     const {user, setUser} = useContext(LoggedInUserContext)
     const [response, saveResponse] = useState<any>();
     const history = useHistory();
@@ -23,20 +23,23 @@ export default function useAuthUser() {
                 },
             });
             const status = await res.status
-            const data = res.json()
-            console.log(data)
+            const data = await res.json()
+            // save auth user info
+            setUser(data)
             if (status === 200) {
-
-                history.push(PATHS.PROFILE)
+                setIsLoggedIn(true)
                 console.log('go to user dashboard')
+                history.push(PATHS.DASHBOARD)
             } else if (status === 404) {
-                history.push(PATHS.ONBOARD)
+
                 console.log("go to onboard")
+                history.push(PATHS.ONBOARD)
             }
             else {
                 // do nothing
-                history.push('/')
                 console.log("some other error")
+                history.push('/')
+                
             }
         }
         else {

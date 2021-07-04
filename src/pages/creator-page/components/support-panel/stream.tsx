@@ -1,18 +1,8 @@
 
-import { Fragment, useState, useEffect } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { faCheckSquare, faSquare } from '@fortawesome/free-regular-svg-icons';
-import StreamForComponent from './stream-for';
-
-const interval = [
-    { per: 'week' },
-    { per: 'month' },
-    { per: 'year' }
-
-]
-
+import {useState, useEffect } from 'react'
+import ListboxComponent from '../../../../components/listbox';
+// import StreamForComponent from './stream-for';
+import { interval } from './intervals';
 const minimum = 5 //minimum amount in stream
 
 export default function StreamComponent({ addPayment }) {
@@ -63,16 +53,16 @@ export default function StreamComponent({ addPayment }) {
             super_token_address: '0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f', // fDAIx on Mumbai
             isStreamIndefinite: isIndefinte,
             type: 1,
-            streamPer: perSelected.per,
+            streamPer: perSelected.value,
             streamFor: (!isIndefinte) ? forInterval: 0 })
     },[amount, perSelected, isIndefinte, forInterval])
 
     return (
-        <div className="bg-white col-span-2 bflex p-4 rounded-b-md rounded-tr-md flex-col justify-center text-center shadow-float-800 z-20">
-            <div className="font-light text-xs mb-3">An effortless way to support long-term</div>
+        <div className="flex flex-col justify-center text-center">
+            <div className="font-light text-xs my-1">An effortless way to support long-term</div>
 
             {/* Input field */}
-            <div className="my-1">
+            <div className="my-2">
                 <button className=" px-3 py-1 text-gray-500 bg-graywhite-100 rounded-l-md hover:text-gray-700 hover:bg-gray-200 focus:outline-none " onClick={() => { decrementAmount() }}>-</button>
                 <input type="text" className="px-3 py-1 w-3/5 appearance-none  text-center bg-graywhite-100  mx-auto rounded-none focus:outline-none"
                     value={amount}
@@ -84,66 +74,17 @@ export default function StreamComponent({ addPayment }) {
             <div className="flex flex-row justify-center items-center my-4">
                 <div className="text-sm mx-3">per</div>
 
-                <div className="w-28 h-8 mx-3 ">
-                    <Listbox value={perSelected} onChange={setPerSelected}>
-                        <div className="relative">
-                            <Listbox.Button className="relative w-full h-8 pl-3 pr-10 text-left bg-gray-100 rounded-lg cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                                <span className="block truncate">{perSelected.per}</span>
-                                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                    <FontAwesomeIcon
-                                        icon={faCaretDown}
-                                    />
-                                </span>
-                            </Listbox.Button>
-                            <Transition
-                                as={Fragment}
-                                leave="transition ease-in duration-100"
-                                leaveFrom="opacity-100"
-                                leaveTo="opacity-0"
-                            >
-                                <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                    {interval.map((person, personIdx) => (
-                                        <Listbox.Option
-                                            key={personIdx}
-                                            className={({ active }) =>
-                                                `${active ? 'text-gray-900 bg-primary-hover' : 'text-gray-900'}
-                          cursor-default select-none relative py-2 pl-10 pr-4`
-                                            }
-                                            value={person}
-                                        >
-                                            {({ selected, active }) => (
-                                                <>
-                                                    <span
-                                                        className='font-normal block truncate'
-                                                    >
-                                                        {person.per}
-                                                    </span>
-                                                    {selected ? (
-                                                        <span
-                                                            className={`${active ? 'text-amber-600' : 'text-amber-600'
-                                                                }
-                                absolute inset-y-0 left-0 flex items-center pl-3`}
-                                                        >
-                                                            <FontAwesomeIcon icon={faCheck} />
-                                                        </span>
-                                                    ) : null}
-                                                </>
-                                            )}
-                                        </Listbox.Option>
-                                    ))}
-                                </Listbox.Options>
-                            </Transition>
-                        </div>
-                    </Listbox>
+                <div className="w-24 h-8 mx-3 ">
+                    <ListboxComponent content={perSelected} setContent={setPerSelected} ListboxContent={interval}/>
                 </div>
             </div>
 
             {/* check indefintely */}
-            <div>
+            {/* <div>
                 {(isIndefinte) ? (
                     <div>
                         <FontAwesomeIcon icon={faCheckSquare} onClick={() => changeCheck()} className="text-primary-light w-1 mr-3" />
-                        <span className="text-sm">stream indefinitely</span>
+                        <span className="text-xs">stream indefinitely</span>
                     </div>) : (
                     <div>
                         <StreamForComponent interval={perSelected} forInterval={forInterval} setForInterval={setForInterval} />
@@ -152,7 +93,7 @@ export default function StreamComponent({ addPayment }) {
                     </div>
                 )
                 }
-            </div>
+            </div> */}
         </div>
     )
 }

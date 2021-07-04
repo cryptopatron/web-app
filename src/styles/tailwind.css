@@ -6,7 +6,7 @@
 
 @layer components {
     .btn-main {
-        @apply transition duration-200 ease-in-out py-3 px-4 bg-primary-light text-secondary-dark font-semibold rounded-md m-3 hover:bg-secondary-light hover:text-primary-light focus:outline-none ;
+        @apply transition duration-200 ease-in-out py-3 px-4 bg-primary-light text-secondary-dark font-semibold rounded-md hover:bg-secondary-light hover:text-primary-light focus:outline-none ;
     }
     .input-main {
         @apply py-3 px-4 bg-graywhite-100 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-hover focus:border-transparent;

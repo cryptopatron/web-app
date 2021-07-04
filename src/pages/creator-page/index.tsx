@@ -27,6 +27,7 @@ export default function CreatorPage() {
                 setCreator(page)
             } else {
                 //route to not-found
+                console.log("not found")
                 history.push(PATHS.NOTFOUND)
             }
         }
@@ -34,7 +35,6 @@ export default function CreatorPage() {
     }, [pagename, history])
 
     return (
-
         (creator?.pageName && (creator?.generatedMaticWalletPublicKey || creator?.metaMaskWalletPublicKey)) ? (
             <>
                 <NavbarComponent />

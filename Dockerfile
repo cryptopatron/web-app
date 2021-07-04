@@ -1,7 +1,7 @@
-FROM node:12.11 AS REACT_BUILD
+FROM node:14.15.3 AS REACT_BUILD
 
 COPY ./package.json /tmp/
-RUN cd /tmp && npm install
+RUN cd /tmp && npm install && npm install yarn && yarn
 RUN mkdir -p /webapp && cp -a /tmp/node_modules /webapp/
 
 COPY . /webapp

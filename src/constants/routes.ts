@@ -8,6 +8,13 @@ export const LANDINGPAGE = {
     protected: false
 }
 
+export const DASHBOARD = {
+    path: PATHS.DASHBOARD,
+    component: PAGES.DashboardPage,
+    exact: false,
+    protected: true
+}
+
 export const NOTFOUND = {
     path: PATHS.NOTFOUND,
     component: PAGES.NotFound,
@@ -29,12 +36,5 @@ export const PROFILE = {
     protected: false
 }
 
-export const DASHBOARD = {
-    path: '/',
-    component: PAGES.LandingPage,
-    exact: true,
-    protected: true
-}
-
-const ROUTES = [LANDINGPAGE, NOTFOUND, ONBOARD, PROFILE, DASHBOARD]
+const ROUTES = [LANDINGPAGE, DASHBOARD,  NOTFOUND, ONBOARD, PROFILE]
 export default ROUTES

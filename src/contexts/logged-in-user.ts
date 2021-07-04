@@ -14,7 +14,7 @@ export const defaultCreator = {
     pageName: "",
     generatedMaticWalletPublicKey: "",
     metaMaskWalletPublicKey: "",
-    summary: "",
+    bio: "",
 }
 
 const LoggedInUserContext = createContext<loggedInUserContextType>({user: defaultCreator, setUser:()=>{}});
