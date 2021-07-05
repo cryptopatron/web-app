@@ -12,7 +12,6 @@ export default function OneTimerComponent({ addPayment }) {
 
 
     const getAmount = (value) => {
-
         if (value) {
             const num = parseFloat(value)
             if (num >= minimum) {

@@ -17,7 +17,7 @@
     }
 
     .tab-active {
-        @apply shadow-float-down bg-white rounded-t-md text-center p-3 z-40 focus:outline-none
+        @apply shadow-float-down bg-white rounded-t-md text-center p-3 z-30 focus:outline-none
     }
 
     .tab-inactive {

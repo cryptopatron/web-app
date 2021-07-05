@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useParams, useHistory } from "react-router";
 
 import NavbarComponent from "../../components/navbar";
 import CreatorComponent from "./components/creator";
 import SupportPanelComponent from "./components/support-panel";
 import * as PATHS from '../../constants/paths'
-
+import UserContext from "../../contexts/user";
 
 //test object ---> update the wallet address here
 import {defaultCreator} from '../../contexts/logged-in-user'
@@ -13,6 +13,7 @@ import { getUserByPageName } from "../../services/backendService";
 
 
 export default function CreatorPage() {
+    const {isLoggedIn} = useContext(UserContext)
     const { pagename } = useParams<{ pagename?: string }>()
     const [creator, setCreator] = useState(defaultCreator)
     const history = useHistory()
@@ -35,11 +36,10 @@ export default function CreatorPage() {
     }, [pagename, history])
 
     return (
-        // todod -> remove this
         (creator?.pageName && (creator?.generatedMaticWalletPublicKey || creator?.metaMaskWalletPublicKey)) ? (
             <>
                 <NavbarComponent />
-                <CreatorComponent creator={creator} />
+                <CreatorComponent creator={creator} isLoggedIn={isLoggedIn}/>
                 <div className="flex justify-center">
                     <SupportPanelComponent creatorDetails={creator} />
                 </div>

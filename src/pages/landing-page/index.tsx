@@ -1,10 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Redirect, useHistory } from "react-router-dom";
-
-import useToken from "../../hooks/useToken";
 import NavbarComponent from "./components/navbar";
-
-import * as PATHS from "./../../constants/paths";
 import useAuthUser from "../../hooks/useAuthUser";
 
 //context

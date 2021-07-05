@@ -30,10 +30,10 @@ export default function SupportPanelComponent({ creatorDetails }) {
         }
     }
 
-    // useEffect(() => {
-    //     console.log("paymentDetails")
-    //     console.log(paymentDetails)
-    // }, [paymentDetails])
+    useEffect(() => {
+        console.log("paymentDetails")
+        console.log(paymentDetails)
+    }, [paymentDetails])
 
 
     return (
