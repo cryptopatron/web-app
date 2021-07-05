@@ -1,8 +1,8 @@
 export const tokens = [
     
     { 
-        value: "ETH",
-        contractAddress: "ETH_contact_address" 
+        value: "USDC",
+        contractAddress: "USDC_contact_address"
     },
 
     { 

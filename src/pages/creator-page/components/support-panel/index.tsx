@@ -46,28 +46,30 @@ export default function SupportPanelComponent({ creatorDetails }) {
     function getStreamingButton() {
         switch (status.step) {
             case 0: {
-                return (<button className="btn-main" onClick={() => {
+                return (<button className="btn-main m-5" onClick={() => {
                     Metamask_Mumbai_approve_fDAI(setMsg, setError, setStatus)
                 }}>
                     Stream: Approve upgrading your fDAI
                 </button>)
             }
             case 1: {
-                return (<button className="btn-main" onClick={() => {
+                return (<button className="btn-main m-5" onClick={() => {
                     Metamask_Mumbai_upgrade_fdai(setMsg, setError, setStatus)
                 }}>
                     Stream: Upgrade fDAI into fDAIx
                 </button>)
             }
             case 2: {
-                return (<button className="btn-main" onClick={() => {
+                return (<button className="btn-main m-5" onClick={() => {
                     Metamask_Mumbai_stream_fDAIx(setMsg, setError, setStatus, paymentDetails)
                 }}>
                     Stream: Start Streaming fDAI
                 </button>);
             }
             case 3: {
-                return (<h6>Reload to send another stream </h6>)
+                return (<button className="btn-main m-5 hover:bg-gray-300 bg-gray-300 text-gray-400 hover:text-gray-400 pointer-events-none">
+                    Stream: Txn to Stream fDAI sent
+                </button>)
             }
             default: {
                 return (<h6>-</h6>);

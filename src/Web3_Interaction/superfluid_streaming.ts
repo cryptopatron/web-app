@@ -26,7 +26,7 @@ export async function Metamask_Mumbai_stream_fDAIx(setMsg, setError, setStatus, 
     });
 
     await usr.flow({
-        recipient: paymentDetails.wallet, // creator addresss
+        recipient: paymentDetails.wallet, // creator address
         flowRate: '10000'
     });
     setStatus({percent: 100, step: 3});

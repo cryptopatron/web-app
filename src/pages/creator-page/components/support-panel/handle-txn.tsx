@@ -36,8 +36,7 @@ export async function handle_txn(setMsg, setErr, setStatus, paymentDetails, crea
             "super_token_address": paymentDetails.super_token_address,
             "flow_rate": getFlowRate(paymentDetails)
         };
-        Metamask_Mumbai_full_stream(setMsg, setErr, setStatus);
-        // setErr("not implemented yet...")
+        setErr("not implemented yet...")
     }
 }
 
