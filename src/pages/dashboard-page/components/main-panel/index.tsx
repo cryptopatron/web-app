@@ -1,14 +1,19 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function MainPanelComponent({transaction, user}) {
     
     const [totalEarning, setTotalEarnings] = useState()
 
-    const totalEarnings = () => {
+    useEffect(() => {
+        const totalEarnings = () => {
 
+            //add service here
 
+        }
+        totalEarnings()
 
-    }
+    }, [])
+        
     return (
 
         <div className="flex flex-col justify-center w-9/12 max-w-lg mx-auto">
