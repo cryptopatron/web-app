@@ -5,18 +5,18 @@ import contracts from './contracts.json';
 import networks from './networks.json';
 
 // executes one time donation through Metamask.
-export async function Metamask_Mumbai_Donation(setMsg, setErr, params) {
+export async function Metamask_Mumbai_Donation(setMsg, setErr, setStatus, params) {
     params["default_gas_amount"] = "1000000";
     params["default_gas_price"] = "20000000000";
-    Metamask_connect_and_execute(setMsg, setErr, networks['mumbai'], donate, params);
+    Metamask_connect_and_execute(setMsg, setErr, setStatus, networks['mumbai'], donate, params);
 }
 
 
 // executes one time donation through Metamask.
-export async function Metamask_Ropsten_Donation(setMsg, setErr, params) {
+export async function Metamask_Ropsten_Donation(setMsg, setErr, setStatus, params) {
     params["default_gas_amount"] = "1000000";
     params["default_gas_price"] = "20000000000";
-    Metamask_connect_and_execute(setMsg, setErr, networks['ropsten'], donate, params);
+    Metamask_connect_and_execute(setMsg, setErr, setStatus, networks['ropsten'], donate, params);
 }
 
 
@@ -30,7 +30,7 @@ export async function Metamask_Ropsten_Donation(setMsg, setErr, params) {
 //     "network": "mumbai"
 //     }
 // One time donation to recipient_address
-async function donate(setMsg, setErr, web3Provider, accounts, params) {
+async function donate(setMsg, setErr, setStatus, web3Provider, accounts, params) {
     web3Provider.eth.defaultAccount = accounts[0];
 
     let payment_token = new web3Provider.eth.Contract(

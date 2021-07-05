@@ -5,6 +5,8 @@ import React, { useState, useEffect } from 'react'
 import StreamComponent from './stream'
 import OneTimerComponent from './one-timer';
 import { handle_txn } from "./handle-txn";
+import {stepprogressbar} from "./progress_bar";
+
 import { Metamask_Mumbai_mint_fDAI,
     Metamask_Mumbai_approve_fDAI,
     Metamask_Mumbai_upgrade_fdai } from "../../../../Web3_Interaction/streamDonate";
@@ -19,6 +21,10 @@ export default function SupportPanelComponent({creatorDetails}) {
 
     const [msg, setMsg] = useState();
     const [error, setError] = useState();
+    const [status, setStatus] = useState({
+        step: 0,
+        percent: 0
+    });
 
     const [makePayment, setMakePayment] = useState()
 
@@ -37,9 +43,41 @@ export default function SupportPanelComponent({creatorDetails}) {
 
     ///---------------------------------
 
+    function getStreamingButton() {
+        switch (status.step) {
+            case 0: {
+                return (<button className="btn-main" onClick={() => {
+                    Metamask_Mumbai_approve_fDAI(setMsg, setError, setStatus)
+                }}>
+                    Stream: Approve upgrading your fDAI
+                </button>)
+            }
+            case 1: {
+                return (<button className="btn-main" onClick={() => {
+                    Metamask_Mumbai_upgrade_fdai(setMsg, setError, setStatus)
+                }}>
+                    Stream: Upgrade fDAI into fDAIx
+                </button>)
+            }
+            case 2: {
+                return (<button className="btn-main" onClick={() => {
+                    Metamask_Mumbai_stream_fDAIx(setMsg, setError, setStatus)
+                }}>
+                    Stream: Start Streaming fDAI
+                </button>);
+            }
+            case 3: {
+                return (<h6>Reload to send another stream </h6>)
+            }
+            default: {
+                return (<h6>-</h6>);
+            }
+        }
+    }
+
 
     return (
-        <div className="flex flex-col w-5/6 mt-4 shadow-float-900 bg-white rounded-md text-center">
+        <div className="flex flex-col w-5/6 mt-4 shadow-float-900 bg-white rounded-md text-center justify-center">
 
             <p className="font-semibold">
                 Support me!
@@ -57,42 +95,16 @@ export default function SupportPanelComponent({creatorDetails}) {
             {/* message box */}
 
             {/* pay button */}
-            <button className="btn-main" onClick={() => {
-                handle_txn(setMsg, setError, paymentDetails, creatorDetails)
+            {(streamButtomActive)?(getStreamingButton()) : (<button className="btn-main" onClick={() => {
+                handle_txn(setMsg, setError, setStatus, paymentDetails, creatorDetails)
             }}>
                 {(streamButtomActive)? 'stream ' : 'send '}
                 <span>{(paymentDetails.amount) ? paymentDetails.amount: "" }</span>
-            </button>
-            {(streamButtomActive)?(<div>
-            <button className="btn-main" onClick={() => {
-                Metamask_Mumbai_mint_fDAI(setMsg, setError)
-            }}>
-                Mint fDAI (on Mumbai)
-            </button>
-                    <br></br>
-            <button className="btn-main" onClick={() => {
-                Metamask_Mumbai_approve_fDAI(setMsg, setError)
-            }}>
-                Approve upgrading your fDAI
-            </button>
-                    <br></br>
-            <button className="btn-main" onClick={() => {
-                Metamask_Mumbai_upgrade_fdai(setMsg, setError)
-            }}>
-                Upgrade fDAI into fDAIx
-            </button>
-                    <br></br>
-            <button className="btn-main" onClick={() => {
-                Metamask_Mumbai_stream_fDAIx(setMsg, setError)
-            }}>
-                Start Streaming fDAI
-            </button>
-            </div>
-            ): (<div></div>) }
+            </button>)}
+            <div className="w-40 text-center">{stepprogressbar(status)}</div>
             {msg}
             <h6 style={{ color: "red" }}>{error}</h6>
             <br></br>
         </div>
     )
-
 }
