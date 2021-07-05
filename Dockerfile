@@ -7,6 +7,7 @@ RUN mkdir -p /webapp && cp -a /tmp/node_modules /webapp/
 COPY . /webapp
 WORKDIR /webapp
 RUN ls
+ENV NODE_ENV=dev
 RUN npm run build
 
 FROM golang:1.14.7-alpine AS GO_BUILD
