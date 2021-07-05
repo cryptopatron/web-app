@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import "@material-tailwind/react/tailwind.css"
 import './styles/tailwind.css'
 
 ReactDOM.render(
