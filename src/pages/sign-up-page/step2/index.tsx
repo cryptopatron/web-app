@@ -54,6 +54,14 @@ export default function Step2Component({ step,
         'text-red-400': true
     });
 
+    let buttonInactiveCSS = classNames({
+        
+        'inline-flex border-0 py-2 px-6 text-lg btn-main': true,
+        'bg-gray-300': !(isValid),
+        'hover:bg-gray-300': !(isValid),
+
+    });
+
     const handleChange = (name) => {
         if (name.length == 0) {
             setValid(false);
@@ -79,18 +87,20 @@ export default function Step2Component({ step,
     };
 
     const onCreateClick = async () => {
-        if (checkIfUserExists(pageName)) {
-            generateWallet(accessToken).then((walletAddr) => {
-                if (walletAddr) {
-                    console.log("Public wallet address ", walletAddr);
-                    setPublicKey(walletAddr)
-                    registerPage(pageName, walletAddr, token);
-                    moveToStep(3);
-                }
-            });
-        }
-        else {
-            setIsNamePresent(false);
+        if(isValid){
+            if (checkIfUserExists(pageName)) {
+                generateWallet(accessToken).then((walletAddr) => {
+                    if (walletAddr) {
+                        console.log("Public wallet address ", walletAddr);
+                        setPublicKey(walletAddr)
+                        registerPage(pageName, walletAddr, token);
+                        moveToStep(3);
+                    }
+                });
+            }
+            else {
+                setIsNamePresent(false);
+            }
         }
     }
 
@@ -110,7 +120,7 @@ export default function Step2Component({ step,
                         </div>
                     </div>
                     <div className="flex w-full justify-center items-end">
-                        <button className="inline-flex border-0 py-2 px-6 text-lg btn-main" onClick={() => onCreateClick()} >Create</button>
+                        <button className={buttonInactiveCSS} onClick={() => onCreateClick()} >Create</button>
                     </div>
                 </div>
 
