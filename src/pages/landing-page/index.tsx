@@ -81,7 +81,7 @@ export default function LandingPage() {
                         value={pageName}
                         onChange={(e) => setPageName(e.target.value)} />
 
-                    <button className="btn-main w-full mx-3 sm:w-4/5 md:w-28" >Create</button>
+                    <button className="btn-main w-full m-3 sm:w-4/5 md:w-28" >Create</button>
 
                 </form>
 
