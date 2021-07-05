@@ -1,39 +1,50 @@
 import { useContext } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useHistory } from "react-router";
 import UserContext from "../../contexts/user";
 import Step1Component from "./step1";
 import Step2Component from "./step2";
 import Step3Component from "./step3"
+import * as PATHS from '../../constants/paths'
 
-export default function SignUpPage(){
+export default function SignUpPage() {
+    const history = useHistory()
 
-    const {publicKey} = useContext(UserContext);
-    
+    useEffect(() => {
+        console.log(history)
+        console.log("added replace")
+        history.push(PATHS.ONBOARD)
+        console.log(history.action)
+
+    }, [history])
+
+    const { publicKey } = useContext(UserContext);
+
     const [step, setStep] = useState<number>(1);
-    
+
     const moveToStep = (nextStep) => {
-        setStep(nextStep) 
+        setStep(nextStep)
     }
 
-    const displayStepComponent = (step) =>{
-        if (step === 1){
-            return(
-                <Step1Component step={step} moveToStep={moveToStep}/>
+    const displayStepComponent = (step) => {
+        if (step === 1) {
+            return (
+                <Step1Component step={step} moveToStep={moveToStep} />
             )
         }
 
-        if (step === 2){
-            return(
-                <Step2Component  step={step} publicKey={publicKey} moveToStep={moveToStep}/>
+        if (step === 2) {
+            return (
+                <Step2Component step={step} publicKey={publicKey} moveToStep={moveToStep} />
             )
         }
 
-        if (step === 3){
-            return(
-                <Step3Component publicKey={publicKey} step={step} moveToStep={moveToStep}/>
+        if (step === 3) {
+            return (
+                <Step3Component publicKey={publicKey} step={step} moveToStep={moveToStep} />
             )
         }
-        
+
     }
     return (
         <div>

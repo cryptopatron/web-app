@@ -18,8 +18,8 @@ import ImageLookForCreators from './../../assets/images/look_for_creators.svg'
 export default function LandingPage() {
 
     const { token, setToken, isLoggedIn } = useContext(UserContext)
-    const [ pageName, setPageName ] = useState<string>()
-    const [ showLoginOverlay, setShowLoginOverlay ] = useState(false);
+    const [pageName, setPageName] = useState<string>()
+    const [showLoginOverlay, setShowLoginOverlay] = useState(false);
 
     const { setResponse } = useAuthUser()
 
@@ -28,7 +28,7 @@ export default function LandingPage() {
             setToken(jwt)
         }
 
-        const endpoint = '/api/v1/google/user/get'
+        const endpoint = '/api/v1/google/users/get'
         setResponse(endpoint, jwt)
     }
 
@@ -51,15 +51,17 @@ export default function LandingPage() {
 
     useEffect(() => {
         document.title = 'Kōen';
-        const listener = () => {
-                if (token) {
-                    const endpoint = "/api/v1/google/users/get"
-                    setResponse(endpoint, token)
-                }
-            }
-       return () => listener()
+        console.log("useEffect listener")
 
-    },[]);
+        if (token) {
+            console.log("token present - calling api")
+            const endpoint = "/api/v1/google/users/get"
+            setResponse(endpoint, token)
+        }
+
+
+
+    }, []);
 
     return (
         <div>
