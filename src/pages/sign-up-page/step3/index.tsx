@@ -3,9 +3,15 @@ import { Link } from 'react-router-dom';
 import * as PATHS from '../../../constants/paths'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import UserContext from '../../../contexts/user';
+import { useContext, useEffect } from 'react';
 
 export default function Step3Component({ step, moveToStep, publicKey, pageName }) {
+    const { setIsLoggedIn } = useContext(UserContext)
 
+    useEffect(() => {
+        setIsLoggedIn(true)
+    }, [])
     return (
         <section className="text-gray-600 body-font">
             <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
@@ -25,13 +31,13 @@ export default function Step3Component({ step, moveToStep, publicKey, pageName }
                     <div className="text-center w-auto">
                         <p className="mb-6 relaxed font-semibold">
                             {publicKey}
-                        </p> 
+                        </p>
                     </div>
                     <div className="">
-                        <Link to={`/${pageName}`}> 
-                            <button className="btn-sec">Continue to your page <FontAwesomeIcon icon={faArrowRight}/></button>
+                        <Link to={`/${pageName}`}>
+                            <button className="btn-sec">Continue to your page <FontAwesomeIcon icon={faArrowRight} /></button>
                         </Link>
-                         
+
                     </div>
                 </div>
             </div>
