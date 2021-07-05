@@ -5,7 +5,8 @@ export const registerPage = async (pageName, publicKey, token) => {
         pageName: pageName,
         metaMaskWalletPublicKey: "",
         generatedMaticWalletPublicKey: publicKey,
-        idToken: token 
+        idToken: token,
+        ref: "" // TODO Need 5 fields for backend decoding --- fix soon 
     };
 
     const endpoint = window.origin + `/api/v1/users/create`;
