@@ -1,6 +1,10 @@
 import walletPic from '../../../assets/images/wallet-svg.svg'
+import { Link } from 'react-router-dom';
+import * as PATHS from '../../../constants/paths'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-export default function Step3Component({ step, moveToStep, publicKey }) {
+export default function Step3Component({ step, moveToStep, publicKey, pageName }) {
 
     return (
         <section className="text-gray-600 body-font">
@@ -10,15 +14,25 @@ export default function Step3Component({ step, moveToStep, publicKey }) {
                     <p className="text-gray-700 leading-relaxed">Your Wallet Integration</p>
                     <p className="text-gray-400 leading-relaxed">This is where your cryptocurrency will reside. Safely at that too!</p>
                 </div>
-                <img className="lg:w-1/6 sm:w-1/6 w-2/6 mb-14 object-cover object-center" alt="create page step1 image" src={walletPic} />
-                <div className="text-center w-auto">
-                    <p className="mb-4 leading-relaxed">We went ahead and made a wallet for you.</p>
+                <div className="my-8 w-2/6 sm:w-40">
+                    <img className="w-full object-cover object-center" alt="create page step1 image" src={walletPic} />
                 </div>
-                <div className="text-center w-auto">
-                    <p className="mb-6 relaxed font-semibold">
-                        {publicKey}
-                    </p>
-                    <p className="">Dont worry you don't have to remember it. We'll manage that.</p>
+
+                <div className=" flex flex-col sm:w-60 justify-center ">
+                    <div className="text-center w-auto">
+                        <p className="mb-4 leading-relaxed">We went ahead and made a wallet for you.</p>
+                    </div>
+                    <div className="text-center w-auto">
+                        <p className="mb-6 relaxed font-semibold">
+                            {publicKey}
+                        </p> 
+                    </div>
+                    <div className="">
+                        <Link to={`/${pageName}`}> 
+                            <button className="btn-sec">Continue to your page <FontAwesomeIcon icon={faArrowRight}/></button>
+                        </Link>
+                         
+                    </div>
                 </div>
             </div>
         </section>

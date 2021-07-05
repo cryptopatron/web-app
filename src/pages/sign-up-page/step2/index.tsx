@@ -12,8 +12,9 @@ import UserContext from '../../../contexts/user';
 export default function Step2Component({ step,
     moveToStep,
     accessToken,
-    setPublicKey }) {
-    const [pageName, setPageName] = useState('');
+    setPublicKey,
+    pageName,
+    setPageName }) {
     const [isValid, setValid] = useState(false);
     const [isNeutral, setNeutral] = useState(true);
     const [isNamePresent, setIsNamePresent] = useState(true);
