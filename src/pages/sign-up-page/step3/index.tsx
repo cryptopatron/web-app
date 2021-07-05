@@ -12,6 +12,7 @@ export default function Step3Component({ step, moveToStep, publicKey, pageName }
     useEffect(() => {
         setIsLoggedIn(true)
     }, [])
+    
     return (
         <section className="text-gray-600 body-font">
             <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
