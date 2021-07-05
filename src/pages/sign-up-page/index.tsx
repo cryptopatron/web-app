@@ -18,9 +18,9 @@ export default function SignUpPage() {
 
     }, [history])
 
-    const { publicKey } = useContext(UserContext);
-
+    const { accessToken } = useContext(UserContext);
     const [step, setStep] = useState<number>(1);
+    const [publicKey, setPublicKey] = useState('');
 
     const moveToStep = (nextStep) => {
         setStep(nextStep)
@@ -35,13 +35,13 @@ export default function SignUpPage() {
 
         if (step === 2) {
             return (
-                <Step2Component step={step} publicKey={publicKey} moveToStep={moveToStep} />
+                <Step2Component step={step} accessToken={accessToken} moveToStep={moveToStep} setPublicKey={setPublicKey} />
             )
         }
 
         if (step === 3) {
             return (
-                <Step3Component publicKey={publicKey} step={step} moveToStep={moveToStep} />
+                <Step3Component step={step} moveToStep={moveToStep} publicKey={publicKey}/>
             )
         }
 

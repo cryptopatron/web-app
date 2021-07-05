@@ -2,7 +2,6 @@ import { GoogleLogin, GoogleLogout } from "react-google-login";
 import ImageLoginWoman from "./../../../../assets/images/login-woman.svg";
 import ImageGoogleIcon from "./../../../../assets/images/google-icon.svg";
 import ImageMetamaskIcon from "./../../../../assets/images/metamask-icon.svg";
-import { WalletGenerationService } from "../../../../services/walletGenerationService";
 import { useContext } from "react";
 import UserContext from "../../../../contexts/user";
 
@@ -13,24 +12,12 @@ const clientId =
 const googlePerms = "https://www.googleapis.com/auth/drive.appdata";
 
 export default function LoginOverlayComponent({ setToken }) {
-    const {setPublicKey} = useContext(UserContext);
+    const {setAccessToken} = useContext(UserContext);
 
     const responseGoogleOnSuccess = (response) => {
-        console.log("request to google sents");
         setToken(response.tokenId);
-        generateWallet(response.accessToken).then((walletAddr) => {
-            if (walletAddr) {
-                console.log("Public wallet address", walletAddr);
-                setPublicKey(walletAddr);
-            }
-        });
-        // console.log(response.tokenID)
-        // refreshTokenSetup(response)s
-    };
-
-    const generateWallet = (accessToken) => {
-        let service = new WalletGenerationService();
-        return service.setupMaticWallet(accessToken);
+        setAccessToken(response.accessToken)
+        
     };
 
     const responseGoogleOnFailure = (response) => {
