@@ -1,8 +1,6 @@
 import walletPic from '../../../assets/images/wallet-svg.svg'
 
-export default function Step3Component({step, moveToStep}) {
-
-    let walletNo:string = '0x728***AB6';
+export default function Step3Component({step, moveToStep, publicKey}) {
 
     return (
         <section className="text-gray-600 body-font">
@@ -16,9 +14,9 @@ export default function Step3Component({step, moveToStep}) {
                 </div>
                 <div className="text-center w-auto">
                     <p className="mb-6 relaxed font-semibold">
-                        {walletNo}
+                        {publicKey}
                     </p>
-                    <p className="">You can find your wallet in your <a className="font-semibold text-green-400 hover:text-green-200" href="https://www.google.com">Google Drive</a></p>
+                    <p className="">You can find your wallet in your <a className="font-semibold text-green-400 hover:text-green-200" href="https://drive.google.com">Google Drive</a></p>
                 </div>
             </div>
         </section>

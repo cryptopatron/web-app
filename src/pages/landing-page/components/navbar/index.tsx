@@ -37,7 +37,7 @@ export default function NavbarComponent({
                             <ul className="ml-auto">
                                 <li className="nav-item">
                                     <button
-                                        className="btn-main"
+                                        className="btn-main m-3"
                                         onClick={() => {
                                             clickSignIn()
                                         }}

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 import useToken from "../../hooks/useToken";
 import NavbarComponent from './components/navbar'
@@ -17,23 +17,19 @@ import ImageLookForCreators from './../../assets/images/look_for_creators.svg'
 
 export default function LandingPage() {
 
-    const {token, setToken} = useContext(UserContext)
+    const { token, setToken, isLoggedIn } = useContext(UserContext)
     const [pageName, setPageName] = useState<string>()
     const [showLoginOverlay, setShowLoginOverlay] = useState(false);
 
     const { setResponse } = useAuthUser()
-
-    const googleSignIn = () => {
-        const endpoint=  '/api/vi/google/user/get'
-        setResponse(endpoint)
-    }
 
     const logIn = (jwt) => {
         if (!token) {
             setToken(jwt)
         }
 
-        googleSignIn()
+        const endpoint = '/api/v1/google/users/get'
+        setResponse(endpoint, jwt)
     }
 
     const clickSignIn = () => {
@@ -55,9 +51,17 @@ export default function LandingPage() {
 
     useEffect(() => {
         document.title = 'Kōen';
-        const endpoint = "/api/v1/google/users/get"
-        setResponse(endpoint)
-    }, [token]);
+        console.log("useEffect listener")
+
+        if (token) {
+            console.log("token present - calling api")
+            const endpoint = "/api/v1/google/users/get"
+            setResponse(endpoint, token)
+        }
+
+
+
+    }, []);
 
     return (
         <div>
@@ -77,7 +81,7 @@ export default function LandingPage() {
                         value={pageName}
                         onChange={(e) => setPageName(e.target.value)} />
 
-                    <button className="btn-main w-full sm:w-4/5 md:w-28" >Create</button>
+                    <button className="btn-main w-full mx-3 sm:w-4/5 md:w-28" >Create</button>
 
                 </form>
 

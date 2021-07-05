@@ -3,12 +3,12 @@ import { Metamask_Ropsten_Donation, Metamask_Mumbai_Donation } from
 
 // determines which type of txn is being sent and on what network
 // calls the corresponding function from one of the Web3_Interaction files
-export async function handle_txn(setMsg, setErr, paymentDetails, creatorDetails) {
+export async function handle_txn(setMsg, setErr, paymentDetails) {
     if (paymentDetails.type === 2) {
         // one time payment
         let params = {
-            "recipient_name": creatorDetails.name,
-            "recipient_address": creatorDetails.metaMaskWalletPublicKey,
+            "recipient_name": paymentDetails.name,
+            "recipient_address": paymentDetails.wallet,
             "donation_amount": paymentDetails.amount,
             "network": paymentDetails.network
         };
@@ -28,8 +28,8 @@ export async function handle_txn(setMsg, setErr, paymentDetails, creatorDetails)
     } else if (paymentDetails.type === 1) {
         // streaming payment
         let params = {
-            "recipient_name": creatorDetails.Name,
-            "recipient_address": creatorDetails.MetaMaskWalletPublicKey,
+            "recipient_name": paymentDetails.name,
+            "recipient_address": paymentDetails.wallet,
             "network": paymentDetails.network,
             "base_token_address": paymentDetails.base_token_address,
             "super_token_address": paymentDetails.super_token_address,

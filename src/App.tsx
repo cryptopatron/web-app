@@ -5,7 +5,7 @@ import { LANDINGPAGE } from './constants/routes';
 import UserContext from "./contexts/user"
 import LoggedInUserContext, { defaultCreator } from './contexts/logged-in-user';
 import useToken from './hooks/useToken';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Creator } from './constants/models';
 
@@ -13,11 +13,12 @@ function App() {
 
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
     const [user, setUser] = useState<Creator>(defaultCreator)
-    const { token, setToken } = useToken({ isLoggedIn })
+    const { token, setToken } = useToken();
+    const [accessToken, setAccessToken] = useState('');
 
     return (
 
-        <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn, token, setToken }}>
+        <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn, token, setToken, accessToken, setAccessToken }}>
             <LoggedInUserContext.Provider value={{ user, setUser }}>
                 <Router>
                     <Suspense fallback={<p>Loading....</p>}>

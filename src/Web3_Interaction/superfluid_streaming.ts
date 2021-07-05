@@ -4,7 +4,7 @@ import contracts from './contracts.json'
 import networks from './networks.json';
 
 // Assumes user has supertokens, start streaming them
-export async function Metamask_Mumbai_stream_fDAIx(setMsg, setError) {
+export async function Metamask_Mumbai_stream_fDAIx(setMsg, setError, paymentDetails) {
     const ethereum = (window as any).ethereum;
     const sf = new SuperfluidSDK.Framework({
         web3: new Web3(ethereum),
@@ -25,7 +25,7 @@ export async function Metamask_Mumbai_stream_fDAIx(setMsg, setError) {
     });
 
     await usr.flow({
-        recipient: '0x31470a0A76593D7b1FeF56D8093D8a6E660Ca102', // Anish's address
+        recipient: paymentDetails.wallet, // creator addresss
         flowRate: '10000'
     });
     setMsg("Starting Flow...")

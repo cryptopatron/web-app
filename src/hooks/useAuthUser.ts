@@ -1,54 +1,68 @@
-import { useState } from 'react';
 import { useContext } from "react";
 import UserContext from "../contexts/user";
 import LoggedInUserContext from '../contexts/logged-in-user';
 import { useHistory } from 'react-router';
 import * as PATHS from '../constants/paths'
+import { isConstructorDeclaration } from "typescript";
+
 
 export default function useAuthUser() {
-    const { token, setIsLoggedIn } = useContext(UserContext)
-    const {user, setUser} = useContext(LoggedInUserContext)
-    const [response, saveResponse] = useState<any>();
+    const { setIsLoggedIn } = useContext(UserContext)
+    const { setUser } = useContext(LoggedInUserContext)
     const history = useHistory();
 
-    const setResponse = async (endpoint: string) => {
-        if (token) {
-            const res = await fetch(window.origin + endpoint, {
+    const setResponse = async (endpoint: string, jwt: string) => {
+        console.log("sending authing request")
+        if (jwt) {  //
+            console.log("endpoint: "+ window.origin + endpoint)
+            const res = await fetch( window.origin + endpoint, {
                 method: "POST",
                 body: JSON.stringify({
-                    idToken: token,
+                    idToken: jwt,
                 }),
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
             const status = await res.status
-            const data = await res.json()
             // save auth user info
-            setUser(data)
-            if (status === 200) {
-                setIsLoggedIn(true)
-                console.log('go to user dashboard')
-                history.push(PATHS.DASHBOARD)
-            } else if (status === 404) {
-
-                console.log("go to onboard")
-                history.push(PATHS.ONBOARD)
+            console.log("for use Auth: " +status)
+            if (status !== 200) {
+                setIsLoggedIn(false)
+                localStorage.removeItem('token')
+                console.log("Login failed - deleted token")
+                history.push("/")
             }
             else {
-                // do nothing
-                console.log("some other error")
-                history.push('/')
                 
+                const data = await res.json()
+                
+                if (Object.keys(data).length !== 0) {
+                    console.log("for use Auth data: ")
+                    console.log(data)
+                    setIsLoggedIn(true)
+                    // save auth user info
+                    setUser(data)
+                    console.log('go to user dashboard')
+                    history.push(PATHS.DASHBOARD)
+                }
+                else {
+                    console.log("go to onboard")
+                    // save auth user info
+                    history.replace(PATHS.ONBOARD)
+                }
+
             }
         }
         else {
             // do nothing
             history.push('/')
             console.log("token is null")
-        } 
+        }
 
     }
+
+    
 
     return { setResponse }
 }
