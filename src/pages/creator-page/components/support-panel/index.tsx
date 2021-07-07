@@ -21,7 +21,7 @@ export default function SupportPanelComponent({ creatorDetails }) {
     const [msg, setMsg] = useState();
     const [error, setError] = useState();
     const [status, setStatus] = useState({
-        step: 2,
+        step: 0,
         percent: 0
     });
 
