@@ -24,11 +24,11 @@ export async function Metamask_Mumbai_stream_fDAIx(setMsg, setError, setStatus, 
         address: walletAddress[0],
         token: contracts.fdaix_mumbai_address
     });
-
-    await usr.flow({
-        recipient: paymentDetails.wallet, // creator address
-        flowRate: '10000'
-    });
-    setStatus({percent: 100, step: 3});
-    setMsg("Starting Flow...");
+    console.log(paymentDetails.wallet);
+    // await usr.flow({
+    //     recipient: paymentDetails.wallet, // creator address
+    //     flowRate: '10000'
+    // });
+    // setStatus({percent: 100, step: 3});
+    // setMsg("Starting Flow...");
 }

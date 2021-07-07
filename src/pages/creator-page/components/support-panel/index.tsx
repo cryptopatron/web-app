@@ -21,7 +21,7 @@ export default function SupportPanelComponent({ creatorDetails }) {
     const [msg, setMsg] = useState();
     const [error, setError] = useState();
     const [status, setStatus] = useState({
-        step: 0,
+        step: 2,
         percent: 0
     });
 
@@ -105,7 +105,11 @@ export default function SupportPanelComponent({ creatorDetails }) {
                 {(streamButtomActive)? 'stream ' : 'send '}
                 <span>{(paymentDetails.amount) ? paymentDetails.amount: "" }</span>
             </button>)}
-            <div className="w-40 text-center">{stepprogressbar(status)}</div>
+                {(streamButtomActive)?
+                    (<div className="w-40 text-center">{stepprogressbar(status)}</div>)
+                    : (<div></div>)
+                }
+                <br></br>
             {msg}
             <h6 style={{ color: "red" }}>{error}</h6>
             <br></br>

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import ListboxComponent from '../../../../components/listbox'
 import { tokens } from './tokens'
 
-const minimum = 3 //minimum amount in one-time
+const minimum = 3; // minimum amount in one-time
 
 export default function OneTimerComponent({ addPayment }) {
 
@@ -15,7 +15,7 @@ export default function OneTimerComponent({ addPayment }) {
         if (value) {
             const num = parseFloat(value)
             if (num >= minimum) {
-                setAmount(num)
+                setAmount(num);
             }
             else {
                 setAmount(minimum)

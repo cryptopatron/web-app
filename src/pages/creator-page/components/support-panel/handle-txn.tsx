@@ -10,7 +10,7 @@ export async function handle_txn(setMsg, setErr, setStatus, paymentDetails, crea
         let params = {
             "recipient_name": paymentDetails.name,
             "recipient_address": paymentDetails.wallet,
-            "donation_amount": paymentDetails.amount,
+            "donation_amount": String(paymentDetails.amount) + "0".repeat(18),
             "network": paymentDetails.network
         };
         if (paymentDetails.network === 'ropsten') {

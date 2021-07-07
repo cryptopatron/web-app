@@ -1,0 +1,20 @@
+{
+    "mumbai": {
+        "FDAI": {
+            "address": "0x15f0ca26781c3852f8166ed2ebce5d18265cceb7",
+            "decimals": 18
+        },
+        "FDAIX": {
+            "address": "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f",
+            "decimals": 18
+        },
+        "FUSDC": {
+            "address": "0xbe49ac1EadAc65dccf204D4Df81d650B50122aB2",
+            "decimals": 18
+        },
+        "FUSDCX": {
+            "address": "0x42bb40bF79730451B11f6De1CbA222F17b87Afd7",
+            "decimals": 18
+        }
+    }
+}
