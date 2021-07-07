@@ -76,7 +76,7 @@ async function mint_fDAI(setMsg, setErr, setStatus, web3Provider, accounts, para
             setMsg(txn_link_msg(txn_hash, params["network"], "Minting fDAI..."));
         })
         .on('confirmation', function (confirmationNumber, receipt) {
-            if (confirmationNumber === 2 && (not_called)) {
+            if (confirmationNumber === 0 && (not_called)) {
                 not_called = false;
                 let msg = "fDAI has been minted to your wallet!"
                 setMsg(<h6>{msg}</h6>);
@@ -115,7 +115,7 @@ async function approve_fDAI(setMsg, setErr, setStatus, web3Provider, accounts, p
             setStatus({percent: 20, step: 0});
         })
         .on('confirmation', function (confirmationNumber, receipt) {
-            if (confirmationNumber === 2 && (not_called)) {
+            if (confirmationNumber === 0 && (not_called)) {
                 not_called = false;
                 let msg = "fDAI has been approved to be spent by fDAIx!"
                 setMsg(<h6>{msg}</h6>);
@@ -162,7 +162,7 @@ async function upgrade_base_tokens(setMsg, setErr, setStatus, web3Provider, acco
             setMsg(txn_link_msg(txn_hash, params["network"], "Upgrading Tokens..."));
         })
         .on('confirmation', function (confirmationNumber, receipt) {
-            if (confirmationNumber === 2 && (not_called)) {
+            if (confirmationNumber === 0 && (not_called)) {
                 not_called = false;
                 let msg = "Tokens have been upgraded!";
                 setMsg(<h6>{msg}</h6>);

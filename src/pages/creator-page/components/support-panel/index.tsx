@@ -106,7 +106,7 @@ export default function SupportPanelComponent({ creatorDetails }) {
                 <span>{(paymentDetails.amount) ? paymentDetails.amount: "" }</span>
             </button>)}
                 {(streamButtomActive)?
-                    (<div className="w-40 text-center">{stepprogressbar(status)}</div>)
+                    (<div className="w-40 text-center ml-14">{stepprogressbar(status)}</div>)
                     : (<div></div>)
                 }
                 <br></br>

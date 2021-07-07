@@ -9,7 +9,7 @@ export async function Metamask_Mumbai_stream_fDAIx(setMsg, setError, setStatus, 
     const sf = new SuperfluidSDK.Framework({
         web3: new Web3(ethereum),
     });
-    setStatus({percent: 80, step: 3});
+    setStatus({percent: 80, step: 2});
     await sf.initialize();
     const walletAddress = await ethereum.request({
         method: 'eth_requestAccounts',
@@ -19,6 +19,7 @@ export async function Metamask_Mumbai_stream_fDAIx(setMsg, setError, setStatus, 
             }
         ]
     });
+    setMsg("Sending Txn to Start Flow...");
 
     const usr = sf.user({
         address: walletAddress[0],
@@ -27,8 +28,10 @@ export async function Metamask_Mumbai_stream_fDAIx(setMsg, setError, setStatus, 
     console.log(paymentDetails.wallet);
     await usr.flow({
         recipient: paymentDetails.wallet, // creator address
-        flowRate: '10000'
+        flowRate: '10'
     });
+
+
     setStatus({percent: 100, step: 3});
-    setMsg("Starting Flow...");
+    setMsg("Flow Started!");
 }
