@@ -1,47 +1,40 @@
 import { Metamask_Ropsten_Donation, Metamask_Mumbai_Donation } from
         "../../../../Web3_Interaction/oneTimeDonate";
-import { Metamask_Mumbai_full_stream } from "../../../../Web3_Interaction/streamDonate";
+import { get_erc20_amount_string, get_erc20_address_by_name } from "../../../../Web3_Interaction/Utils";
 
-// determines which type of txn is being sent and on what network
-// calls the corresponding function from one of the Web3_Interaction files
-export async function handle_txn(setMsg, setErr, setStatus, paymentDetails, creatorDetails) {
-    if (paymentDetails.type === 2) {
-        // one time payment
-        let params = {
-            "recipient_name": paymentDetails.name,
-            "recipient_address": paymentDetails.wallet,
-            "donation_amount": String(paymentDetails.amount) + "0".repeat(18),
-            "network": paymentDetails.network
-        };
-        if (paymentDetails.network === 'ropsten') {
-            // Anish's test token:
-            params["payment_token_address"] = "0x313ef98a80f9a07143ccc6ff94b2e6f6669104be"
-            Metamask_Ropsten_Donation(setMsg, setErr, setStatus, params);
-        } else if (paymentDetails.network === 'mumbai') {
-            // fDAI:
-            params["payment_token_address"] = "0x15f0ca26781c3852f8166ed2ebce5d18265cceb7"
-            setErr("not implemented yet...");
-            Metamask_Mumbai_Donation(setMsg, setErr, setStatus, params);
-        } else {
-            console.log("paymentDetails.network that was passed in to" +
-                "handle_txn function is not ropsten or mumbai so it is invalid.");
-        }
-    } else if (paymentDetails.type === 1) {
-        // streaming payment
-        let params = {
-            "recipient_name": paymentDetails.name,
-            "recipient_address": paymentDetails.wallet,
-            "network": paymentDetails.network,
-            "base_token_address": paymentDetails.base_token_address,
-            "super_token_address": paymentDetails.super_token_address,
-            "flow_rate": getFlowRate(paymentDetails)
-        };
-        setErr("not implemented yet...")
+export async function handle_one_time_txn(setMsg, setErr, paymentDetails, creatorDetails) {
+    const amount = get_erc20_amount_string(
+        paymentDetails.network, paymentDetails.currency_name, paymentDetails.amount);
+
+    let params = {
+        "recipient_name": creatorDetails.name,
+        "recipient_address": paymentDetails.to_address,
+        "donation_amount": amount,
+        "network": paymentDetails.network,
+        "payment_token_address": get_erc20_address_by_name(paymentDetails.network, paymentDetails.currency_name)
+    };
+    console.log("Handle one time params:", params);
+
+    if (paymentDetails.network === 'ropsten') {
+        // Anish's test token:
+        Metamask_Ropsten_Donation(setMsg, setErr, params);
+    } else if (paymentDetails.network === 'mumbai') {
+        Metamask_Mumbai_Donation(setMsg, setErr, params);
+    } else {
+        setErr("Invalid Network. Koen Only Supports Mumbai and Ropsten Testnets")
+        console.log("paymentDetails.network that was passed in to" +
+            "handle_txn function is not ropsten or mumbai so it is invalid.");
     }
 }
 
 
-// TODO: Calculate amount to flow per second;
-function getFlowRate(paymentDetails) {
-    return "1";
+// determines which type of txn is being sent and on what network
+// calls the corresponding function from one of the Web3_Interaction files
+export async function handle_streaming_txn(setMsg, setErr, setStatus, paymentDetails, creatorDetails) {
+    let params = {
+        "recipient_name": creatorDetails.name,
+        "recipient_address": paymentDetails.to_address,
+        "network": paymentDetails.network,
+    };
+    setErr("not implemented yet...");
 }

@@ -14,7 +14,7 @@ export const defaultCreator = {
     pageName: "rampage",
     generatedMaticWalletPublicKey: "0x31470a0A76593D7b1FeF56D8093D8a6E660Ca102",
     metaMaskWalletPublicKey: "0x31470a0A76593D7b1FeF56D8093D8a6E660Ca102",
-    bio: "Physics something something",
+    bio: "Really famous on Tiktok",
 }
 
 const LoggedInUserContext = createContext<loggedInUserContextType>({user: defaultCreator, setUser:()=>{}});

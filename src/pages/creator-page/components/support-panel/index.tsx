@@ -2,20 +2,34 @@
 import { useState, useEffect } from 'react'
 import StreamComponent from './stream'
 import OneTimerComponent from './one-timer';
-import { handle_txn } from "./handle-txn";
-import {stepprogressbar} from "./progress_bar";
+import ListboxComponent from '../../../../components/listbox'
 
-import { Metamask_Mumbai_mint_fDAI,
-    Metamask_Mumbai_approve_fDAI,
-    Metamask_Mumbai_upgrade_fdai
-} from "../../../../Web3_Interaction/streamDonate";
-import { Metamask_Mumbai_stream_fDAIx } from "../../../../Web3_Interaction/superfluid_streaming";
+import { OneTimePayment, Subscription } from "../../payment";
+import { networks } from './payment_options'
+
+import { handle_one_time_txn, handle_streaming_txn } from "./handle-txn";
+
 
 export default function SupportPanelComponent({ creatorDetails }) {
 
     const [streamButtomActive, setStreamButtonActive] = useState(true);
-    const [paymentDetails, setPaymentDetails] = useState({
-        amount: 5
+
+    const [network, setNetwork] = useState(networks[0]);
+
+    const [oneTimePaymentDetails,  setOneTimePaymentDetails] = useState({
+        amount: 0,
+        network: "Mumbai Polygon Testnet",
+        to_address: "0x7675289Fbd414acAE84752Bd789483a44B2d1576",
+        currency_name: "DAI"
+    });
+
+    const [subscriptionPaymentDetails, setSubscriptionPaymentDetails] = useState({
+        amount_per_day: 0,
+        frequency_type: 1, // 0 for weekly, 1 for monthly
+        network: "",
+        currency_name: "DAI",
+        expiry: 0,
+        to_address: ""
     });
 
     const [msg, setMsg] = useState();
@@ -25,57 +39,50 @@ export default function SupportPanelComponent({ creatorDetails }) {
         percent: 0
     });
 
-    const addPayment = (value) => {
-        if (creatorDetails.metaMaskWalletPublicKey) {
-            setPaymentDetails({ ...value, name:creatorDetails.name, wallet:creatorDetails.metaMaskWalletPublicKey })
-        }
-        
-        if (creatorDetails.generatedMaticWalletPublicKey) {
-            setPaymentDetails({ ...value, name:creatorDetails.name, wallet:creatorDetails.generatedMaticWalletPublicKey })
+    function network_display_name_to_value(network) {
+        console.log("Network Display name to value", network);
+        if (network === "Mumbai Polygon Testnet") {
+            return "mumbai"
+        } else if (network === "Ropsten Testnet") {
+            return "ropsten"
+        } else {
+            return "unknown"
         }
     }
+
+    function get_to_address(creator_details, network_value) {
+        if (network_value === "mumbai") {
+            return creator_details.generatedMaticWalletPublicKey;
+        } else if (network_value === "ropsten") {
+            return creator_details.metaMaskWalletPublicKey;
+        }
+    }
+
+    function get_full_one_time_details() {
+        const network_value = network_display_name_to_value(network.value);
+        const full_details : OneTimePayment = {
+            ...oneTimePaymentDetails,
+            network: network_value,
+            to_address: get_to_address(creatorDetails, network_value)
+        };
+        return full_details;
+    }
+
+    // do not delete:
+    function get_full_subccription_details() {
+        const network_value = network_display_name_to_value(network.value)
+        const full_details : Subscription = {
+            ...subscriptionPaymentDetails,
+            network: network_value,
+            to_address: get_to_address(creatorDetails, network_value)
+        };
+        return full_details;
+    }
+
 
     useEffect(() => {
-        console.log("paymentDetails")
-        console.log(paymentDetails)
-    }, [paymentDetails])
-
-
-    ///---------------------------------
-
-    function getStreamingButton() {
-        switch (status.step) {
-            case 0: {
-                return (<button className="btn-main m-5" onClick={() => {
-                    Metamask_Mumbai_approve_fDAI(setMsg, setError, setStatus)
-                }}>
-                    Stream: Approve upgrading your fDAI
-                </button>)
-            }
-            case 1: {
-                return (<button className="btn-main m-5" onClick={() => {
-                    Metamask_Mumbai_upgrade_fdai(setMsg, setError, setStatus)
-                }}>
-                    Stream: Upgrade fDAI into fDAIx
-                </button>)
-            }
-            case 2: {
-                return (<button className="btn-main m-5" onClick={() => {
-                    Metamask_Mumbai_stream_fDAIx(setMsg, setError, setStatus, paymentDetails)
-                }}>
-                    Stream: Start Streaming fDAI
-                </button>);
-            }
-            case 3: {
-                return (<button className="btn-main m-5 hover:bg-gray-300 bg-gray-300 text-gray-400 hover:text-gray-400 pointer-events-none">
-                    Stream: Txn to Stream fDAI sent
-                </button>)
-            }
-            default: {
-                return (<h6>-</h6>);
-            }
-        }
-    }
+        //pass
+    }, [oneTimePaymentDetails, subscriptionPaymentDetails]);
 
 
     return (
@@ -91,30 +98,39 @@ export default function SupportPanelComponent({ creatorDetails }) {
                 <button className={(streamButtomActive) ? (" tab-active ") : (" tab-inactive ")} onClick={() => { setStreamButtonActive(true) }}>stream</button>
                 <button className={(streamButtomActive) ? (" tab-inactive ") : (" tab-active ")} onClick={() => { setStreamButtonActive(false) }}> one-timer</button>
                 <div className="bg-white rounded-md col-span-2 h-44 z-20 flex p-4 justify-center text-center shadow-float-800" >
-                    {(streamButtomActive) ? (<StreamComponent addPayment={addPayment} />) : (<OneTimerComponent addPayment={addPayment} />)}
+                    {(streamButtomActive) ? (<StreamComponent addPayment={setSubscriptionPaymentDetails} />) : (<OneTimerComponent addPayment={setOneTimePaymentDetails} />)}
                 </div>
             </div>
 
-            {/* message box */}
 
-            {/* pay button */}
             <div className="w-10/12 mx-auto">
-                {(streamButtomActive)?(getStreamingButton()) : (<button className="btn-main mt-5 w-full" onClick={() => {
-                handle_txn(setMsg, setError, setStatus, paymentDetails, creatorDetails)
-            }}>
-                {(streamButtomActive)? 'stream ' : 'send '}
-                <span>{(paymentDetails.amount) ? paymentDetails.amount: "" }</span>
-            </button>)}
+                {/* pay button */}
                 {(streamButtomActive)?
-                    (<div className="w-40 text-center ml-14">{stepprogressbar(status)}</div>)
-                    : (<div></div>)
+                    (<div>
+                        <button className="btn-main mt-4 w-full" onClick={() => {
+                            handle_streaming_txn(setMsg, setError, setStatus, get_full_subccription_details(), creatorDetails)
+                        }}>
+                            <span>{"Start " + String(subscriptionPaymentDetails.currency_name) + " Subscription"}</span>
+                        </button>
+                    </div>) :
+                    (<div>
+                        <button className="btn-main mt-4 w-full" onClick={() => {
+                            handle_one_time_txn(setMsg, setError, get_full_one_time_details(), creatorDetails)
+                        }}>
+                            <span>{"Send " + String(oneTimePaymentDetails.amount) + " " + oneTimePaymentDetails.currency_name + " Donation" }</span>
+                        </button>
+                    </div>)
                 }
+                {/* select network */}
+                <div className="flex flex-col justify-center mt-3">
+                    <ListboxComponent content={network} setContent={setNetwork} ListboxContent={networks} />
+                </div>
+                {/* Messages: */}
                 <br></br>
-            {msg}
-            <h6 style={{ color: "red" }}>{error}</h6>
-            <br></br>
+                {msg}
+                <h6 style={{ color: "red" }}>{error}</h6>
+                <br></br>
             </div>
-            
         </div>
     )
 }

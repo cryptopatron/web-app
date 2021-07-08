@@ -3,6 +3,7 @@ import {useState, useEffect } from 'react'
 import ListboxComponent from '../../../../components/listbox';
 // import StreamForComponent from './stream-for';
 import { interval } from './intervals';
+import {Subscription} from "../../payment";
 const minimum = 5 //minimum amount in stream
 
 export default function StreamComponent({ addPayment }) {
@@ -46,15 +47,14 @@ export default function StreamComponent({ addPayment }) {
     }
 
     useEffect( () => {
-        addPayment({
-            amount: amount,
+        const subscription = {
+            amount_per_day: amount,
+            frequency_type: 0, // 0 for weekly, 1 for monthly
             network: 'mumbai',
-            base_token_address: '0x15f0ca26781c3852f8166ed2ebce5d18265cceb7', // fDAI on Mumbai
-            super_token_address: '0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f', // fDAIx on Mumbai
-            isStreamIndefinite: isIndefinte,
-            type: 1,
-            streamPer: perSelected.value,
-            streamFor: (!isIndefinte) ? forInterval: 0 })
+            currency_name: "USDC",
+            expiry: 0
+        }
+        addPayment(subscription)
     },[amount, perSelected, isIndefinte, forInterval])
 
     return (
