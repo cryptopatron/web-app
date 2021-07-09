@@ -15,3 +15,15 @@ export const networks = [
         value: "Ropsten Testnet"
     }
 ]
+
+export const n_month_names = [
+    {
+        value: "3 Months"
+    },
+    {
+        value: "6 Months"
+    },
+    {
+        value: "12 Months"
+    }
+]

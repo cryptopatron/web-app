@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
-
-import { OneTimePayment } from "../../payment";
 import ListboxComponent from '../../../../components/listbox'
-import { tokens, networks } from './payment_options'
+import { tokens } from './payment_options'
 
 const minimum = 3; // minimum amount in one-time
 
@@ -66,11 +64,11 @@ export default function OneTimerComponent({ addPayment }) {
                 </div>
             </div>
 
-            {/* text */}
+            {/* Help */}
             <div className="flex flex-col justify-center mt-1">
                 {/*<div className="text-gray-400 text-xs font-light">Have you heard of stream?</div>*/}
                 {/*TODO: Update Link below*/}
-                <a href="/"><div className="text-primary-light text-xs font-light">Help</div></a>
+                <a href="/"><div className="text-primary-light text-sm font-light">Help</div></a>
             </div>
         </div>
     )

@@ -1,0 +1,40 @@
+{
+    "mumbai": {
+        "ERC20s": {
+            "DAI": {
+                "address": "0x15f0ca26781c3852f8166ed2ebce5d18265cceb7",
+                "decimals": 18
+            },
+            "FDAIX": {
+                "address": "0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f",
+                "decimals": 18
+            },
+            "USDC": {
+                "address": "0xbe49ac1EadAc65dccf204D4Df81d650B50122aB2",
+                "decimals": 18
+            },
+            "FUSDCX": {
+                "address": "0x42bb40bF79730451B11f6De1CbA222F17b87Afd7",
+                "decimals": 18
+            }
+        },
+        "Subscription_Contract": {
+            "address": "0x7dc70ca6F5d43A39f455c9ee751c57058eD92813"
+        }
+    },
+    "ropsten": {
+        "ERC20s": {
+            "DAI": {
+                "address": "0x313ef98a80f9a07143ccc6ff94b2e6f6669104be",
+                "decimals": 6
+            },
+            "USDC": {
+                "address": "0x313ef98a80f9a07143ccc6ff94b2e6f6669104be",
+                "decimals": 6
+            }
+        },
+        "Subscription_Contract": {
+            "address": "0x7dc70ca6F5d43A39f455c9ee751c57058eD92813"
+        }
+    }
+}

@@ -24,23 +24,17 @@ export default function SupportPanelComponent({ creatorDetails }) {
     });
 
     const [subscriptionPaymentDetails, setSubscriptionPaymentDetails] = useState({
-        amount_per_day: 0,
-        frequency_type: 1, // 0 for weekly, 1 for monthly
+        amount_per: 0,
         network: "",
         currency_name: "DAI",
-        expiry: 0,
+        payment_schedule: [],
         to_address: ""
     });
 
     const [msg, setMsg] = useState();
     const [error, setError] = useState();
-    const [status, setStatus] = useState({
-        step: 0,
-        percent: 0
-    });
 
     function network_display_name_to_value(network) {
-        console.log("Network Display name to value", network);
         if (network === "Mumbai Polygon Testnet") {
             return "mumbai"
         } else if (network === "Ropsten Testnet") {
@@ -68,9 +62,8 @@ export default function SupportPanelComponent({ creatorDetails }) {
         return full_details;
     }
 
-    // do not delete:
-    function get_full_subccription_details() {
-        const network_value = network_display_name_to_value(network.value)
+    function get_full_subscription_details() {
+        const network_value = network_display_name_to_value(network.value);
         const full_details : Subscription = {
             ...subscriptionPaymentDetails,
             network: network_value,
@@ -108,7 +101,7 @@ export default function SupportPanelComponent({ creatorDetails }) {
                 {(streamButtomActive)?
                     (<div>
                         <button className="btn-main mt-4 w-full" onClick={() => {
-                            handle_streaming_txn(setMsg, setError, setStatus, get_full_subccription_details(), creatorDetails)
+                            handle_streaming_txn(setMsg, setError, get_full_subscription_details(), creatorDetails)
                         }}>
                             <span>{"Start " + String(subscriptionPaymentDetails.currency_name) + " Subscription"}</span>
                         </button>

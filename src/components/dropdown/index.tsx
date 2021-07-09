@@ -1,9 +1,9 @@
-import { Menu, Transition } from '@headlessui/react'
-import { Fragment} from 'react'
+import { Menu, Transition } from '@headlessui/react';
+import { Fragment} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { useHistory } from 'react-router-dom'
-import {useContext} from 'react'
+import { useHistory } from 'react-router-dom';
+import {useContext} from 'react';
 import UserContext from '../../contexts/user';
 
 export default function DropdownComponent({ dropdownContent }) {

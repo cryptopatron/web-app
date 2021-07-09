@@ -1,5 +1,5 @@
 import React from "react";
-const erc20_info = require("./erc20_info.json");
+import contract_info from './contract_info.json';
 
 export function txn_link_msg(txn_hash: string, network: string, msg: string) {
     let link = "/";
@@ -19,22 +19,27 @@ export function txn_link_msg(txn_hash: string, network: string, msg: string) {
         </div>);
 }
 
-export function get_erc20_address_by_name(network, name) {
-    return erc20_info[network][name].address;
+
+export function get_erc20_address_by_symbol(network, symbol) {
+    return contract_info[network]["ERC20s"][symbol].address;
 }
 
+
 export function get_currency_decimals_by_address(network, address) {
-    const network_token_symbols = Object.keys(erc20_info[network]);
-    for (let symbol of network_token_symbols) {
-        if (erc20_info[network][symbol].address === address) {
-            return erc20_info[network][symbol].decimals;
+    const erc20_info = contract_info[network]["ERC20s"]
+    const network_contract_names = Object.keys(erc20_info);
+    for (let symbol of network_contract_names) {
+        if (erc20_info[symbol].address === address) {
+            return erc20_info[symbol].decimals;
         }
     }
 }
 
+
 export function get_currency_decimals(network, name) {
-    return erc20_info[network][name].decimals;
+    return contract_info[network]["ERC20s"][name].decimals;
 }
+
 
 export function get_erc20_amount_string(network, name, amount) {
     const decimals = get_currency_decimals(network, name);
