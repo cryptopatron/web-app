@@ -40,3 +40,46 @@ export const checkIfUserExists = async (pageName) => {
     }
 }
 
+export const updateUserProfile = async (name, bio, token) => {
+
+    const data = {
+        name: name,
+        bio: bio,
+        idToken: token
+    }
+    const endpoint = window.origin + `/api/v1/users/update/profile` //window.origin
+    const res  = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    const status = await res.status
+
+    if(status == 200){
+        return true
+    }
+    else{
+        return false
+    }
+}
+
+
+export const getTransactionByPageName = async (pageName) => {
+
+    const endpoint = window.origin + `/api/v1/users/pageName/${pageName}` //window.origin
+    const res  = await fetch(endpoint, {
+        method: "GET",
+    });
+
+    const status = await res.status
+
+    if(status !== 200){
+        return null
+    }
+
+    const response = await res.json()
+    return response
+}

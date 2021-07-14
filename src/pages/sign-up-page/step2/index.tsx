@@ -1,23 +1,30 @@
 import { useState } from 'react';
-import creatorPic from '../../../assets/images/creator-default-pic.svg';
 import classNames from 'classnames';
-import { checkIfUserExists, getUserByPageName } from '../../../services/backendService';
+import { useContext } from 'react';
+
+import ImageDefaultProfile1 from './../../../assets/images/default_profile_1.svg';
+import { randomPastelColourService } from '../../../services/randomPastelColourService';
+import { checkIfUserExists } from '../../../services/backendService';
 import { registerPage } from '../../../services/registerPageName';
 import { WalletGenerationService } from "../../../services/walletGenerationService";
-import { useContext } from 'react';
 import UserContext from '../../../contexts/user';
 
 export default function Step2Component({ step,
     moveToStep,
     accessToken,
-    setPublicKey }) {
-    const [pageName, setPageName] = useState('');
+    setPublicKey,
+    pageName,
+    setPageName }) {
     const [isValid, setValid] = useState(false);
     const [isNeutral, setNeutral] = useState(true);
     const [isNamePresent, setIsNamePresent] = useState(true);
     const { token } = useContext(UserContext);
 
+    const profileBg = randomPastelColourService()
+
     let pageChangeCSS = classNames({
+        'input-main': true,
+        'py-2': true,
         'w-full': true,
         'bg-gray-100': true,
         'bg-opacity-50': true,
@@ -29,8 +36,6 @@ export default function Step2Component({ step,
         'text-base': true,
         'outline-none': true,
         'text-gray-700': true,
-        'py-1': true,
-        'px-3': true,
         'leading-8': true,
         'transition-colors': true,
         'duration-200': true,
@@ -42,7 +47,7 @@ export default function Step2Component({ step,
     });
 
     let nameLengthCSS = classNames({
-        'text-sm': true,
+        'text-xs': true,
         'text-center': true,
         'hidden': isValid
     });
@@ -55,10 +60,9 @@ export default function Step2Component({ step,
     });
 
     let buttonInactiveCSS = classNames({
-        
-        'inline-flex border-0 py-2 px-6 text-lg btn-main': true,
-        'bg-gray-300': !(isValid),
-        'hover:bg-gray-300': !(isValid),
+
+        'btn-main w-full text-center': true,
+        'bg-gray-200 text-gray-300 hover:bg-gray-300 hover:text-gray-600 pointer-events-none': !(isValid),
 
     });
 
@@ -87,7 +91,7 @@ export default function Step2Component({ step,
     };
 
     const onCreateClick = async () => {
-        if(isValid){
+        if (isValid) {
             if (checkIfUserExists(pageName)) {
                 generateWallet(accessToken).then((walletAddr) => {
                     if (walletAddr) {
@@ -108,19 +112,28 @@ export default function Step2Component({ step,
         <section className="text-gray-600 body-font">
             <div className="container mx-auto flex flex-col px-5 py-24 justify-center items-center">
                 <div className="w-full md:w-2/3 flex flex-col mb-16 items-center text-center">
-                    <h1 className="title-font sm:text-4xl text-3xl mb-10 font-medium text-gray-900">Let's get you Onboard</h1>
-                    <p className="mb-2 leading-relaxed">Choose your page name wisely!</p>
-                    <p className="mb-12 text-gray-400 leading-relaxed">Remember your cringy emailID 10 years ago?</p>
-                    <img className="w-1/6 mb-10 object-cover object-center rounded hover:opacity-30 transition-colors duration-200 ease-in-out" alt="creator picture" src={creatorPic} />
-                    <div className="flex w-full justify-center items-end mb-4 mt-8">
-                        <div className="relative sm:w-2/4 w-full">
-                            <input type="text" value={pageName} id="hero-field" onChange={(e) => handleChange(e.target.value)} name="hero-field" placeholder="Page Name" className={pageChangeCSS} />
-                            <label className={nameLengthCSS}>Page name must have 4 or more characters</label>
-                            <label className={userPresentCSS}>Apologies! This name has already been taken.</label>
+                    <div className="text-center">
+                        <h2 className="title-font mb-6 font-semibold text-gray-900">Let's get you Onboard</h2>
+                        <p className=" text-gray-700 leading-relaxed ">Choose your page name wisely!</p>
+                        <p className=" text-gray-400 leading-relaxed mb-8">Remember your email from ten years ago?</p>
+                    </div>
+                    <div className="my-8 w-2/6 sm:w-40">
+                        <div className=" flex mx-auto justify-center top-16 w-32 h-32 rounded-full" style={{ background: `${profileBg[0]}` }}>
+                            <img className="w-2/5 transform translate-y-3" src={ImageDefaultProfile1} alt="place_holder_image" />
                         </div>
                     </div>
-                    <div className="flex w-full justify-center items-end">
-                        <button className={buttonInactiveCSS} onClick={() => onCreateClick()} >Create</button>
+                    <div className="w-68 sm:w-72 mt-3">
+                        <div className="flex w-full h-20 justify-center items-start mt-5">
+                            <div className="relative w-full">
+                                <input type="text" value={pageName} id="hero-field" onChange={(e) => handleChange(e.target.value)} name="hero-field" placeholder="Page Name" className={pageChangeCSS} />
+                                <label className={nameLengthCSS}>Page name must have 4 or more characters</label>
+                                <label className={userPresentCSS}>Apologies! This name has already been taken.</label>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-center items-center ">
+                            <button className={buttonInactiveCSS} onClick={() => onCreateClick()} >Create</button>
+                        </div>
                     </div>
                 </div>
 

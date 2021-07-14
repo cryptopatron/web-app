@@ -1,16 +1,14 @@
 
 import {useState, useEffect } from 'react'
 import ListboxComponent from '../../../../components/listbox';
-// import StreamForComponent from './stream-for';
-import { interval } from './intervals';
+import { tokens, n_month_names } from './payment_options'
 const minimum = 5 //minimum amount in stream
 
 export default function StreamComponent({ addPayment }) {
 
-    const [amount, setAmount] = useState(5)
-    const [perSelected, setPerSelected] = useState(interval[1])
-    const [isIndefinte, setIsIndefinte] = useState(true)
-    const [forInterval, setForInterval] = useState<number>(4)
+    const [amount, setAmount] = useState(5);
+    const [currency, setCurrency] = useState(tokens[0]);
+    const [nMonths, setNMonths] = useState(n_month_names[0])
     
 
     const getAmount = (value) => {
@@ -41,59 +39,72 @@ export default function StreamComponent({ addPayment }) {
         setAmount(value)
     }
 
-    const changeCheck = () => {
-        { setIsIndefinte(!isIndefinte) }
+    // returns an array of unixes when the
+    // subscription payments go through
+    function get_payment_schedule(month_string) {
+        let schedule: number[] = [];
+        const months_to_expiry = get_n_months(month_string);
+        const today = new Date();
+        for (let i = 0; i < months_to_expiry; i++) {
+            const pay_date = new Date(
+                today.getFullYear() + Math.floor(i / 12),
+                today.getMonth() + i % 12,
+                today.getDate()
+            )
+            schedule.push(Math.floor((pay_date.getTime())/ 1000))
+        }
+        return schedule
     }
 
+
+    function get_n_months(month_string) {
+        return parseInt(month_string.split(" ")[0])
+    }
+
+
     useEffect( () => {
-        addPayment({
-            amount: amount,
-            network: 'mumbai',
-            base_token_address: '0x15f0ca26781c3852f8166ed2ebce5d18265cceb7', // fDAI on Mumbai
-            super_token_address: '0x5d8b4c2554aeb7e86f387b4d6c00ac33499ed01f', // fDAIx on Mumbai
-            isStreamIndefinite: isIndefinte,
-            type: 1,
-            streamPer: perSelected.value,
-            streamFor: (!isIndefinte) ? forInterval: 0 })
-    },[amount, perSelected, isIndefinte, forInterval])
+        const subscription = {
+            amount_per: amount,
+            currency_name: currency.value,
+            payment_schedule: get_payment_schedule(nMonths.value)
+        }
+        addPayment(subscription)
+    },[amount, nMonths, currency])
 
     return (
         <div className="flex flex-col justify-center text-center">
-            <div className="font-light text-xs my-1">An effortless way to support long-term</div>
+            <div className="font-light text-xs my-1">Support with monthly donations</div>
 
-            {/* Input field */}
-            <div className="my-2">
-                <button className=" px-3 py-1 text-gray-500 bg-graywhite-100 rounded-l-md hover:text-gray-700 hover:bg-gray-200 focus:outline-none " onClick={() => { decrementAmount() }}>-</button>
-                <input type="text" className="px-3 py-1 w-3/5 appearance-none  text-center bg-graywhite-100  mx-auto rounded-none focus:outline-none"
-                    value={amount}
-                    onChange={(e) => getAmount(e.target.value)} />
-                <button className=" px-3 py-1 text-gray-500 bg-graywhite-100 hover:bg-gray-200 hover:text-gray-700 focus:outline-none  rounded-r-md" onClick={() => { incrementAmount() }}>+</button>
-            </div>
+            {/* Input Amount/Currency */}
+            <div className="flex flex-row justify-center items-center h-8 my-2">
+                <div className="mx-1">
+                    <button className=" px-3 py-1 text-gray-500 bg-graywhite-100 hover:text-gray-700 hover:bg-gray-200 focus:outline-none rounded-l-md" onClick={() => { decrementAmount() }}>-</button>
+                    <input type="text" className=" px-3 py-1 w-20 text-center focus:outline-none bg-graywhite-100 mx-auto"
+                           value={amount}
+                           onChange={(e) => getAmount(e.target.value)} />
+                    <button className="  px-3 py-1 text-gray-500 bg-graywhite-100 hover:bg-gray-200 hover:text-gray-700 focus:outline-none  rounded-r-md" onClick={() => { incrementAmount() }}>+</button>
+                </div>
 
-            {/* per period */}
-            <div className="flex flex-row justify-center items-center my-4">
-                <div className="text-sm mx-3">per</div>
-
-                <div className="w-24 h-8 mx-3 ">
-                    <ListboxComponent content={perSelected} setContent={setPerSelected} ListboxContent={interval}/>
+                <div style={{ width: '4.5rem' }}>
+                    <ListboxComponent content={currency} setContent={setCurrency} ListboxContent={tokens} />
                 </div>
             </div>
 
-            {/* check indefintely */}
-            {/* <div>
-                {(isIndefinte) ? (
-                    <div>
-                        <FontAwesomeIcon icon={faCheckSquare} onClick={() => changeCheck()} className="text-primary-light w-1 mr-3" />
-                        <span className="text-xs">stream indefinitely</span>
-                    </div>) : (
-                    <div>
-                        <StreamForComponent interval={perSelected} forInterval={forInterval} setForInterval={setForInterval} />
-                        <FontAwesomeIcon icon={faSquare} onClick={() => changeCheck()} className="text-gray-300 w-1 mr-3" />
-                        <span className="text-gray-300 text-xs">stream indefinitely</span>
-                    </div>
-                )
-                }
-            </div> */}
+            {/* Input Length of Subscription */}
+            <div className="flex flex-row justify-center items-center my-4">
+                <div className="text-md mx-1">for</div>
+
+                <div className="w-24 h-8 mx-2 ">
+                    <ListboxComponent content={nMonths} setContent={setNMonths} ListboxContent={n_month_names}/>
+                </div>
+            </div>
+
+            {/* Help */}
+            <div className="flex flex-col justify-center mt-0">
+                {/*<div className="text-gray-400 text-xs font-light">Have you heard of stream?</div>*/}
+                {/*TODO: Update Link below*/}
+                <a href="/"><div className="text-primary-light text-sm font-light">Help</div></a>
+            </div>
         </div>
     )
 }

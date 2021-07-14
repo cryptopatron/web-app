@@ -1,22 +1,20 @@
 import { useState, useEffect } from 'react'
-
 import ListboxComponent from '../../../../components/listbox'
-import { tokens } from './tokens'
+import { tokens } from './payment_options'
 
-const minimum = 3 //minimum amount in one-time
+const minimum = 3; // minimum amount in one-time
 
 export default function OneTimerComponent({ addPayment }) {
 
-    const [amount, setAmount] = useState<number>(3)
+    const [amount, setAmount] = useState<number>(5)
     const [currency, setCurrency] = useState(tokens[0])
 
 
     const getAmount = (value) => {
-
         if (value) {
             const num = parseFloat(value)
             if (num >= minimum) {
-                setAmount(num)
+                setAmount(num);
             }
             else {
                 setAmount(minimum)
@@ -39,16 +37,11 @@ export default function OneTimerComponent({ addPayment }) {
     }
 
     useEffect(() => {
-        addPayment({
+        const payment  = {
             amount: amount,
-            network: 'mumbai',
-            isStreamIndefinite: null,
-            type: 2,
-            streamPer: null,
-            streamFor: null,
-            currency: currency.value,
-            currencyAddress: currency.contractAddress
-        })
+            currency_name: currency.value
+        }
+        addPayment(payment)
     }, [amount, currency])
 
 
@@ -71,15 +64,12 @@ export default function OneTimerComponent({ addPayment }) {
                 </div>
             </div>
 
-            {/* text */}
-            <div className="flex flex-col justify-center mt-8">
-                <div className="text-gray-400 text-xs font-light">Have you heard of stream?</div>
+            {/* Help */}
+            <div className="flex flex-col justify-center mt-1">
+                {/*<div className="text-gray-400 text-xs font-light">Have you heard of stream?</div>*/}
                 {/*TODO: Update Link below*/}
-                <a href="/"><div className="text-primary-light text-xs font-light">Wanna know more?</div></a>
+                <a href="/"><div className="text-primary-light text-sm font-light">Help</div></a>
             </div>
-
-            {/* check indefintely */}
-
         </div>
     )
 }

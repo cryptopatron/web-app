@@ -1,40 +1,15 @@
 import React from 'react';
 import { Metamask_connect_and_execute } from "./walletConnect";
 import { txn_link_msg } from "./Utils";
-import contracts from './contracts.json';
+import abis from './abis.json';
+import contract_info from './contract_info.json';
 import networks from './networks.json';
 
-// mints fDAI to user's wallet with Metamask
-export async function Metamask_Mumbai_mint_fDAI(setMsg, setErr) {
-    const params = {
-        "default_gas_amount": "1000000",
-        "default_gas_price": "20000000000",
-        "network": "mumbai",
-        "amount": "1000000000000000000000"
-    };
-    Metamask_connect_and_execute(setMsg, setErr, networks['mumbai'], mint_fDAI, params);
-}
 
-
-export async function Metamask_Mumbai_approve_fDAI(setMsg, setErr) {
-    const params = {
-        "default_gas_amount": "1000000",
-        "default_gas_price": "20000000000",
-        "network": "mumbai",
-        "amount": "1000000000000000000000"
-    };
-    Metamask_connect_and_execute(setMsg, setErr, networks['mumbai'], approve_fDAI, params);
-}
-
-export async function Metamask_Mumbai_upgrade_fdai(setMsg, setErr) {
-    const params = {
-        "default_gas_amount": "1000000",
-        "default_gas_price": "20000000000",
-        "network": "mumbai",
-        "super_token_address": contracts["fdaix_mumbai_address"],
-        "amount": "10000000000"
-    };
-    Metamask_connect_and_execute(setMsg, setErr, networks['mumbai'], upgrade_base_tokens, params);
+export async function Metamask_start_stream(setMsg, setErr, params) {
+    params["default_gas_amount"] = networks[params.network].default_gas_amount;
+    params["default_gas_price"] = networks[params.network].default_gas_price;
+    Metamask_connect_and_execute(setMsg, setErr, networks[params.network], start_subscription, params);
 }
 
 
@@ -44,12 +19,13 @@ export async function Metamask_Mumbai_upgrade_fdai(setMsg, setErr) {
 //     "default_gas_amount": "200000",
 //     "amount": "100000000000000000000000" // amount of fDAI to mint
 // }
+// WILL NOT WORK RN BC MISSING ABI/CONTRACT INFO
 async function mint_fDAI(setMsg, setErr, web3Provider, accounts, params) {
     web3Provider.eth.defaultAccount = accounts[0];
 
     const fDAI = new web3Provider.eth.Contract(
-        contracts["superfluid_fERC20_contract_abi"],
-        contracts["fdai_mumbai_address"]
+        abis["superfluid_fERC20_contract"],
+        contract_info["fdai_mumbai_address"]
     );
 
     let not_called = true;
@@ -62,96 +38,57 @@ async function mint_fDAI(setMsg, setErr, web3Provider, accounts, params) {
             setErr("Failed to get permission to mint fDAI");
         })
         .on('transactionHash', function (txn_hash) {
-            // TODO: properly show transaction hash
             setMsg(txn_link_msg(txn_hash, params["network"], "Minting fDAI..."));
         })
         .on('confirmation', function (confirmationNumber, receipt) {
-            if (confirmationNumber === 2 && (not_called)) {
+            if (confirmationNumber === 0 && (not_called)) {
                 not_called = false;
                 let msg = "fDAI has been minted to your wallet!"
-                setMsg(<h6>{msg}</h6>)
+                setMsg(<h6>{msg}</h6>);
             }
         })
 }
 
 
-// approve fDAI to be controlled by fDaix.
-// params = {
-//     "default_gas_price": "10000",
-//     "default_gas_amount": "200000",
-//     "amount": "100000000000000000000000" // amount of fDAI to mint
-// }
-async function approve_fDAI(setMsg, setErr, web3Provider, accounts, params) {
-    web3Provider.eth.defaultAccount = accounts[0];
-
-    const fDAI = new web3Provider.eth.Contract(
-        contracts["superfluid_fERC20_contract_abi"],
-        contracts["fdai_mumbai_address"] // fDAI on Mumbai
-    );
-
-    let not_called = true;
-    fDAI.methods.approve(contracts["fdaix_mumbai_address"], params["amount"])
-        .send({
-            from: accounts[0],
-            gasPrice: params["default_gas_price"], gas: params["default_gas_amount"]
-        })
-        .on('error', function (error) {
-            setErr("Failed to get permission to approve fDAI");
-        })
-        .on('transactionHash', function (txn_hash) {
-            // TODO: properly show transaction hash
-            setMsg(txn_link_msg(txn_hash, params["network"], "Approving fDAI..."));
-        })
-        .on('confirmation', function (confirmationNumber, receipt) {
-            if (confirmationNumber === 2 && (not_called)) {
-                not_called = false;
-                let msg = "fDAI has been approved to be spent by fDAIx!"
-                setMsg(<h6>{msg}</h6>)
-            }
-        })
+// given the params which include amount_per and
+// the schedule, return how much the user should
+// approve our smart contract to take
+function get_amount_to_approve(params) {
+    let amount_per = BigInt(params.amount_per);
+    let n_payments = BigInt((params.payment_schedule).length);
+    return (amount_per * n_payments).toString();
 }
 
-// upgrades base_token into super_token
-async function upgrade_base_tokens(setMsg, setErr, web3Provider, accounts, params) {
+
+// starts a subscription
+async function start_subscription(setMsg, setErr, web3Provider, accounts, params) {
     web3Provider.eth.defaultAccount = accounts[0];
-    const host = new web3Provider.eth.Contract(
-        contracts["superfluid_contract_abi"],
-        contracts["superfluid_mumbai_host_address"]
+
+    const payment_token = new web3Provider.eth.Contract(
+        abis["erc20_contract"],
+        params["payment_token_address"]
     );
 
     let not_called = true;
+    const amount_to_approve = get_amount_to_approve(params);
+    const subscription_contract_address = contract_info[params.network]["Subscription_Contract"].address
 
-    const upgrade_operation_data = web3Provider.eth.abi.encodeParameters(['uint256'], [params.amount])
-    const upgrade_operation = {
-        "operationType": 101,
-        "target": params.super_token_address,
-        "data": upgrade_operation_data
-    };
-
-    const operations = [upgrade_operation];
-
-    const operation_tuples = operations.map(
-        (operation) => ([operation.operationType, operation.target, operation.data])
-    );
-
-    host.methods.batchCall(operation_tuples)
+    payment_token.methods.approve(subscription_contract_address, amount_to_approve)
         .send({
             from: accounts[0],
             gasPrice: params["default_gas_price"], gas: params["default_gas_amount"]
         })
         .on('error', function (error) {
-            setErr("Failed to get permission to send donation");
+            setErr("Failed to get permission to start " + params.currency_name + " subscription");
         })
         .on('transactionHash', function (txn_hash) {
-            // TODO: properly show transaction hash
-            setMsg(txn_link_msg(txn_hash, params["network"], "Upgrading Tokens..."));
+            setMsg(txn_link_msg(txn_hash, params["network"], "Starting " + params.currency_name + " Subscription..."));
         })
         .on('confirmation', function (confirmationNumber, receipt) {
-            if (confirmationNumber === 2 && (not_called)) {
+            if (confirmationNumber === 0 && (not_called)) {
                 not_called = false;
-                let msg = "Tokens have been upgraded!";
-                setMsg(<h6>{msg}</h6>)
+                let msg = params.currency_name + " Subscription started!"
+                setMsg(<h6>{msg}</h6>);
             }
         })
-
 }

@@ -15,7 +15,7 @@ export const notLoggedinContent = [
 export const loggedinContent = [
     {
         id: 1,
-        label: "DashBoard",
+        label: "Dashboard",
         path: PATHS.DASHBOARD
     },
     {
@@ -23,11 +23,7 @@ export const loggedinContent = [
         label: "Home",
         path: PATHS.PROFILE
     },
-    {
-        id: 3,
-        label: "About",
-        path: "/"
-    },
+
     {
         id: 4,
         label: "Sign Out",

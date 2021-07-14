@@ -1,11 +1,26 @@
-import { Menu, Transition } from '@headlessui/react'
-import { Fragment} from 'react'
+import { Menu, Transition } from '@headlessui/react';
+import { Fragment} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
+import {useContext} from 'react';
+import UserContext from '../../contexts/user';
 
 export default function DropdownComponent({ dropdownContent }) {
     const history = useHistory()
+    const {setIsLoggedIn} = useContext(UserContext)
+    const reroute = (content) =>{
+
+        if(content.id === 4) {
+
+            setIsLoggedIn(false)
+            localStorage.removeItem('token')
+            
+        }
+
+        history.push(content.path)
+
+    }
     return (
         <div className="text-right top-4 z-50">
             <Menu as="div" className="inline-block text-left">
@@ -33,7 +48,7 @@ export default function DropdownComponent({ dropdownContent }) {
                                             className={`${active ? 'bg-primary-hover text-black' : 'text-gray-900'
                                                 } group flex text-center items-center w-full px-2 py-2 text-sm focus:outline-none`}
                                             
-                                                onClick={() => {history.push(content.path)}}
+                                                onClick={() => { reroute(content) }}
                                         >
                                             {/* {active ? (
                                                 <EditActiveIcon
