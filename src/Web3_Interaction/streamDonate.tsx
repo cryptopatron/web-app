@@ -13,42 +13,6 @@ export async function Metamask_start_stream(setMsg, setErr, params) {
 }
 
 
-// mint fDAI to accounts[0].
-// params = {
-//     "default_gas_price": "10000",
-//     "default_gas_amount": "200000",
-//     "amount": "100000000000000000000000" // amount of fDAI to mint
-// }
-// WILL NOT WORK RN BC MISSING ABI/CONTRACT INFO
-async function mint_fDAI(setMsg, setErr, web3Provider, accounts, params) {
-    web3Provider.eth.defaultAccount = accounts[0];
-
-    const fDAI = new web3Provider.eth.Contract(
-        abis["superfluid_fERC20_contract"],
-        contract_info["fdai_mumbai_address"]
-    );
-
-    let not_called = true;
-    fDAI.methods.mint(accounts[0], params["amount"])
-        .send({
-            from: accounts[0],
-            gasPrice: params["default_gas_price"], gas: params["default_gas_amount"]
-        })
-        .on('error', function (error) {
-            setErr("Failed to get permission to mint fDAI");
-        })
-        .on('transactionHash', function (txn_hash) {
-            setMsg(txn_link_msg(txn_hash, params["network"], "Minting fDAI..."));
-        })
-        .on('confirmation', function (confirmationNumber, receipt) {
-            if (confirmationNumber === 0 && (not_called)) {
-                not_called = false;
-                let msg = "fDAI has been minted to your wallet!"
-                setMsg(<h6>{msg}</h6>);
-            }
-        })
-}
-
 
 // given the params which include amount_per and
 // the schedule, return how much the user should
@@ -61,7 +25,7 @@ function get_amount_to_approve(params) {
 
 
 // starts a subscription
-async function start_subscription(setMsg, setErr, web3Provider, accounts, params) {
+async function start_subscription(setMsg, setErr, web3Provider, ethereum, accounts, params) {
     web3Provider.eth.defaultAccount = accounts[0];
 
     const payment_token = new web3Provider.eth.Contract(

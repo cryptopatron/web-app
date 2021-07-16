@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import ListboxComponent from '../../../../components/listbox'
-import { tokens } from './payment_options'
 
 const minimum = 3; // minimum amount in one-time
 
-export default function OneTimerComponent({ addPayment }) {
+export default function OneTimerComponent({ addPayment, tokens }) {
 
     const [amount, setAmount] = useState<number>(5)
     const [currency, setCurrency] = useState(tokens[0])

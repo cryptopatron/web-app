@@ -1,11 +1,22 @@
-export const tokens = [
-    {
-        value: "USDC",
-    },
-    {
-        value: "DAI",
-    }
-]
+export const tokens = {
+    "mumbai": [
+        {
+            value: "USDC"
+        },
+        {
+            value: "DAI"
+        }
+    ],
+    "ropsten": [
+        {
+            value: "USDC"
+        },
+        {
+            value: "DAI",
+        }
+    ]
+}
+
 
 export const networks = [
     {
