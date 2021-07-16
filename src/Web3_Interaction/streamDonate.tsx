@@ -7,7 +7,6 @@ import networks from './networks.json';
 
 
 export async function Metamask_start_stream(setMsg, setErr, params) {
-    params["default_gas_amount"] = networks[params.network].default_gas_amount;
     params["default_gas_price"] = networks[params.network].default_gas_price;
     Metamask_connect_and_execute(setMsg, setErr, networks[params.network], start_subscription, params);
 }
@@ -37,22 +36,26 @@ async function start_subscription(setMsg, setErr, web3Provider, ethereum, accoun
     const amount_to_approve = get_amount_to_approve(params);
     const subscription_contract_address = contract_info[params.network]["Subscription_Contract"].address
 
-    payment_token.methods.approve(subscription_contract_address, amount_to_approve)
-        .send({
-            from: accounts[0],
-            gasPrice: params["default_gas_price"], gas: params["default_gas_amount"]
-        })
-        .on('error', function (error) {
-            setErr("Failed to get permission to start " + params.currency_name + " subscription");
-        })
-        .on('transactionHash', function (txn_hash) {
-            setMsg(txn_link_msg(txn_hash, params["network"], "Starting " + params.currency_name + " Subscription..."));
-        })
-        .on('confirmation', function (confirmationNumber, receipt) {
-            if (confirmationNumber === 0 && (not_called)) {
-                not_called = false;
-                let msg = params.currency_name + " Subscription started!"
-                setMsg(<h6>{msg}</h6>);
-            }
-        })
+    payment_token.methods.approve(subscription_contract_address, amount_to_approve).estimateGas({
+        from: accounts[0]
+    }).then(function(gasAmount) {
+        payment_token.methods.approve(subscription_contract_address, amount_to_approve)
+            .send({
+                from: accounts[0],
+                gasPrice: params["default_gas_price"], gas: 3*gasAmount
+            })
+            .on('error', function (error) {
+                setErr("Failed to get permission to start " + params.currency_name + " subscription");
+            })
+            .on('transactionHash', function (txn_hash) {
+                setMsg(txn_link_msg(txn_hash, params.network, "Starting " + params.currency_name + " Subscription..."));
+            })
+            .on('confirmation', function (confirmationNumber, receipt) {
+                if (confirmationNumber === 0 && (not_called)) {
+                    not_called = false;
+                    let msg = params.currency_name + " Subscription started!"
+                    setMsg(<h6>{msg}</h6>);
+                }
+            })
+    })
 }

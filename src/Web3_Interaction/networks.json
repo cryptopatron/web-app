@@ -16,5 +16,12 @@
         "wrong_network_error": "[Switch to Polygon Mainnet]",
         "default_gas_amount": "1000000",
         "default_gas_price": "20000000000"
+    },
+    "ethereum_mainnet": {
+        "expected_network_type": "main",
+        "wrong_network_error": "[Switch to Ethereum Mainnet]",
+        "default_gas_amount": "1000000",
+        "default_gas_price": "45000000000"
     }
+
 }

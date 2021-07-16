@@ -30,20 +30,18 @@
         }
     },
     "ethereum_mainnet": {
-        "ropsten": {
-            "ERC20s": {
-                "DAI": {
-                    "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
-                    "decimals": 18
-                },
-                "USDC": {
-                    "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-                    "decimals": 6
-                }
+        "ERC20s": {
+            "DAI": {
+                "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                "decimals": 18
             },
-            "Subscription_Contract": {
-                "address": "0x7dc70ca6F5d43A39f455c9ee751c57058eD92813"
+            "USDC": {
+                "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "decimals": 6
             }
+        },
+        "Subscription_Contract": {
+            "address": "0x7dc70ca6F5d43A39f455c9ee751c57058eD92813"
         }
     }
 }

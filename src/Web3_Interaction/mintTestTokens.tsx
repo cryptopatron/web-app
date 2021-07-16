@@ -7,7 +7,6 @@ const gwei_zeros = "000000000"
 
 
 export async function Metamask_mint_test_tokens(setMsg, setErr, params) {
-    params["default_gas_amount"] = networks[params.network].default_gas_amount;
     params["default_gas_price"] = networks[params.network].default_gas_price;
     if (params.network === "mumbai") {
         let get_promise = await fetch('https://gasstation-mumbai.matic.today');
@@ -30,10 +29,9 @@ async function mint(setMsg, setErr, web3Provider, ethereum, accounts, params) {
     token.methods.mint(accounts[0], params.amount_to_mint).estimateGas({
         from: accounts[0]
     }).then(function(gasAmount) {
-        console.log(gasAmount);
         token.methods.mint(accounts[0], params.amount_to_mint).send({
             from: accounts[0],
-            gasPrice: params["default_gas_price"], gas: gasAmount
+            gasPrice: params["default_gas_price"], gas: 3*gasAmount
         })
             .on('error', function (error) {
                 setErr("Failed to get permission to mint " + params.currency_name);
@@ -62,7 +60,6 @@ async function mint(setMsg, setErr, web3Provider, ethereum, accounts, params) {
                 }
             })
     }).catch((function (e) {
-        console.log("ERror in mintTestTokens", e);
         setErr("Failed to get permission to mint " + params.currency_name);
     }))
 

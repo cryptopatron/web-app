@@ -16,7 +16,6 @@ export async function handle_one_time_txn(setMsg, setErr, paymentDetails : OneTi
         "network": paymentDetails.network,
         "payment_token_address": get_erc20_address_by_symbol(paymentDetails.network, paymentDetails.currency_name)
     };
-    console.log("donation amount", amount);
 
     Metamask_OneTime_Donation(setMsg, setErr, params);
 }
@@ -42,8 +41,6 @@ export async function handle_streaming_txn(setMsg, setErr, paymentDetails : Subs
 
 export async function handle_mint_txn(setMsg, setErr, paymentDetails) {
     const amount_to_mint = get_erc20_amount_to_mint(paymentDetails.network, paymentDetails.currency_name);
-    console.log("Payment Details");
-    console.log(paymentDetails)
     const params = {
         "network": paymentDetails.network,
         "currency_name": paymentDetails.currency_name,

@@ -34,48 +34,36 @@ export default function SupportPanelComponent({ creatorDetails }) {
     const [msg, setMsg] = useState();
     const [error, setError] = useState();
 
-    function network_display_name_to_value(network) {
-        if (network === "Mumbai Polygon Testnet") {
-            return "mumbai"
-        } else if (network === "Ropsten Testnet") {
-            return "ropsten"
-        } else {
-            return "unknown"
-        }
-    }
 
     function get_to_address(creator_details, network_value) {
         if (network_value === "mumbai") {
             return creator_details.generatedMaticWalletPublicKey;
-        } else if (network_value === "ropsten") {
+        } else {
             return creator_details.metaMaskWalletPublicKey;
         }
     }
 
     function get_full_one_time_details() {
-        const network_value = network_display_name_to_value(network.value);
         const full_details : OneTimePayment = {
             ...oneTimePaymentDetails,
-            network: network_value,
-            to_address: get_to_address(creatorDetails, network_value)
+            network: network.id,
+            to_address: get_to_address(creatorDetails, network.id)
         };
         return full_details;
     }
 
     function get_full_subscription_details() {
-        const network_value = network_display_name_to_value(network.value);
         const full_details : Subscription = {
             ...subscriptionPaymentDetails,
-            network: network_value,
-            to_address: get_to_address(creatorDetails, network_value)
+            network: network.id,
+            to_address: get_to_address(creatorDetails, network.id)
         };
         return full_details;
     }
 
     // returns true if the user has selected a testnet network, and false if not
     function isTestnet() {
-        const network_value = network_display_name_to_value(network.value);
-        return ((network_value === "ropsten") || (network_value === "mumbai"));
+        return ((network.id === "ropsten") || (network.id === "mumbai"));
     }
 
     useEffect(() => {
@@ -99,11 +87,11 @@ export default function SupportPanelComponent({ creatorDetails }) {
                     {(streamButtomActive) ?
                         (<StreamComponent
                             addPayment={setSubscriptionPaymentDetails}
-                            tokens={tokens[network_display_name_to_value(network.value)]}
+                            tokens={tokens[network.id]}
                         />) :
                         (<OneTimerComponent
                             addPayment={setOneTimePaymentDetails}
-                            tokens={tokens[network_display_name_to_value(network.value)]}
+                            tokens={tokens[network.id]}
                         />)}
                 </div>
             </div>

@@ -6,7 +6,6 @@ import networks from './networks.json';
 
 // executes one time donation through Metamask.
 export async function Metamask_OneTime_Donation(setMsg, setErr, params) {
-    params["default_gas_amount"] = networks[params.network].default_gas_amount;
     params["default_gas_price"] = networks[params.network].default_gas_price;
     Metamask_connect_and_execute(setMsg, setErr, networks[params.network], donate, params);
 }
@@ -45,19 +44,19 @@ async function donate(setMsg, setErr, web3Provider, ethereum, accounts, params) 
                 payment_token.methods.transfer(params["recipient_address"], params["donation_amount"])
                     .send({
                         from: accounts[0],
-                        gasPrice: params["default_gas_price"], gas: gasAmount*3
+                        gasPrice: params["default_gas_price"], gas: 3*gasAmount
                     })
                     .on('error', function (error) {
                         setErr("Failed to get permission to send donation");
                     })
                     .on('transactionHash', function (txn_hash) {
-                        setMsg(txn_link_msg(txn_hash, params["network"], "Sending Donation..."));
+                        setMsg(txn_link_msg(txn_hash, params.network, "Sending Donation..."));
                     })
                     .on('confirmation', function (confirmationNumber, receipt) {
                         if (confirmationNumber === 2 && (not_called)) {
                             not_called = false;
                             let msg = params["recipient_name"] + " has received your Donation!";
-                            setMsg(txn_link_msg(receipt.transactionHash, params["network"], msg));
+                            setMsg(txn_link_msg(receipt.transactionHash, params.network, msg));
                         }
                     })
             } else {

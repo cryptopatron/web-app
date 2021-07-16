@@ -14,16 +14,31 @@ export const tokens = {
         {
             value: "DAI",
         }
+    ],
+    "ethereum_mainnet": [
+        {
+            value: "USDC"
+        },
+        {
+            value: "DAI",
+        }
     ]
+
 }
 
 
 export const networks = [
     {
-        value: "Mumbai Polygon Testnet"
+        value: "Mumbai Polygon Testnet",
+        id: "mumbai"
     },
     {
-        value: "Ropsten Testnet"
+        value: "Ropsten Testnet",
+        id: "ropsten"
+    },
+    {
+        value: "Ethereum Mainnet",
+        id: "ethereum_mainnet"
     }
 ]
 

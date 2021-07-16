@@ -6,11 +6,12 @@ export function txn_link_msg(txn_hash: string, network: string, msg: string) {
     let link_msg = "";
     if (network === "ropsten") {
         link = "https://ropsten.etherscan.io/tx/" + txn_hash;
-        link_msg = "View Transaction on Etherscan";
     }
     else if (network === "mumbai") {
         link = "https://mumbai.polygonscan.com/tx/" + txn_hash;
-        link_msg = "View Transaction on Polygonscan";
+    }
+    else if (network === "ethereum_mainnet") {
+        link = "https://etherscan.com/tx/" + txn_hash;
     }
     return (<div>
         <a href={link} target="_blank" rel="noopener noreferrer">
