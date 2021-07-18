@@ -1,32 +1,29 @@
 
-import {useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import ListboxComponent from '../../../../components/listbox';
 import { tokens, n_month_names } from './payment_options';
-import Modal from "../../../../components/modal";
 const minimum = 5 //minimum amount in stream
 
 
-export default function StreamComponent({ addPayment, tokens, network }) {
+export default function StreamComponent({ addPayment, tokens, network, setIsOpen }) {
 
     const [amount, setAmount] = useState(5);
     const [currency, setCurrency] = useState(tokens[0]);
     const [nMonths, setNMonths] = useState(n_month_names[0]);
-    const [isOpen, setIsOpen] = useState(false);
-    
 
     const getAmount = (value) => {
-         
+
         if (value) {
             const num = parseFloat(value)
             if (num >= minimum) {
                 setAmount(num)
             }
-            else{
-                setAmount(minimum) 
+            else {
+                setAmount(minimum)
             }
         }
         else {
-            
+
             setAmount(minimum)
         }
     }
@@ -54,7 +51,7 @@ export default function StreamComponent({ addPayment, tokens, network }) {
                 today.getMonth() + i % 12,
                 today.getDate()
             )
-            schedule.push(Math.floor((pay_date.getTime())/ 1000))
+            schedule.push(Math.floor((pay_date.getTime()) / 1000))
         }
         return schedule
     }
@@ -65,14 +62,14 @@ export default function StreamComponent({ addPayment, tokens, network }) {
     }
 
 
-    useEffect( () => {
+    useEffect(() => {
         const subscription = {
             amount_per: amount,
             currency_name: currency.value,
             payment_schedule: get_payment_schedule(nMonths.value)
         }
         addPayment(subscription)
-    },[amount, nMonths, currency])
+    }, [amount, nMonths, currency])
 
     return (
         <div className="flex flex-col justify-center text-center">
@@ -83,8 +80,8 @@ export default function StreamComponent({ addPayment, tokens, network }) {
                 <div className="mx-1">
                     <button className=" px-3 py-1 text-gray-500 bg-graywhite-100 hover:text-gray-700 hover:bg-gray-200 focus:outline-none rounded-l-md" onClick={() => { decrementAmount() }}>-</button>
                     <input type="text" className=" px-3 py-1 w-20 text-center focus:outline-none bg-graywhite-100 mx-auto"
-                           value={amount}
-                           onChange={(e) => getAmount(e.target.value)} />
+                        value={amount}
+                        onChange={(e) => getAmount(e.target.value)} />
                     <button className="  px-3 py-1 text-gray-500 bg-graywhite-100 hover:bg-gray-200 hover:text-gray-700 focus:outline-none  rounded-r-md" onClick={() => { incrementAmount() }}>+</button>
                 </div>
 
@@ -98,7 +95,7 @@ export default function StreamComponent({ addPayment, tokens, network }) {
                 <div className="text-md mx-1">for</div>
 
                 <div className="w-24 h-8 mx-2 ">
-                    <ListboxComponent content={nMonths} setContent={setNMonths} ListboxContent={n_month_names}/>
+                    <ListboxComponent content={nMonths} setContent={setNMonths} ListboxContent={n_month_names} />
                 </div>
             </div>
 
@@ -106,14 +103,13 @@ export default function StreamComponent({ addPayment, tokens, network }) {
             <div className="flex flex-col justify-center mt-0">
                 {/*<div className="text-gray-400 text-xs font-light">Have you heard of stream?</div>*/}
                 <div>
-                    <button onClick={() => setIsOpen(!isOpen)}>
+                    <button onClick={() => {setIsOpen(true)}}>
                         <div className="text-primary-light text-sm font-light">Help</div>
                     </button>
-                    <Modal isOpen={isOpen} setIsOpen={setIsOpen} full_details={{
-                        network: network
-                    }}/>
+
                 </div>
             </div>
+            
         </div>
     )
 }

@@ -34,6 +34,8 @@ export default function SupportPanelComponent({ creatorDetails }) {
 
     const [msg, setMsg] = useState();
     const [error, setError] = useState();
+    // to show or hide Modal
+    const [isOpen, setIsOpen] = useState(false);
 
 
     function get_to_address(creator_details, network_value) {
@@ -91,11 +93,13 @@ export default function SupportPanelComponent({ creatorDetails }) {
                             addPayment={setSubscriptionPaymentDetails}
                             tokens={tokens[network.id]}
                             network={network}
+                            setIsOpen={setIsOpen}
                         />) :
                         (<OneTimerComponent
                             addPayment={setOneTimePaymentDetails}
                             tokens={tokens[network.id]}
                             network={network}
+                            setIsOpen={setIsOpen}
                         />)}
                 </div>
             </div>
@@ -148,6 +152,10 @@ export default function SupportPanelComponent({ creatorDetails }) {
                 <h6 style={{ color: "red" }}>{error}</h6>
                 <br></br>
             </div>
+            // help modal
+            <Modal isOpen={isOpen} setIsOpen={setIsOpen} full_details={{
+                network: network
+            }} />
         </div>
     )
 }
