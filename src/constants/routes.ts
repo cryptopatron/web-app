@@ -12,7 +12,7 @@ export const DASHBOARD = {
     path: PATHS.DASHBOARD,
     component: PAGES.DashboardPage,
     exact: false,
-    protected: true
+    protected: false
 }
 
 export const NOTFOUND = {

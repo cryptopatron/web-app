@@ -28,9 +28,11 @@ export default function DashboardPage() {
     return (
         <div>
             <NavbarComponent />
-            <div className="flex flex-col sm:flex-row">
+            <div className=" containter mx-auto max-w-screen-lg">
+                <div className="flex flex-col sm:flex-row">
                 <SidePanelComponent creator={user} />
                 <MainPanelComponent transaction={transaction} user={user}/>
+                </div>
             </div>
         </div>
     )
