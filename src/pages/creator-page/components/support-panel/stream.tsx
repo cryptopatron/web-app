@@ -1,14 +1,17 @@
 
 import {useState, useEffect } from 'react'
 import ListboxComponent from '../../../../components/listbox';
-import { tokens, n_month_names } from './payment_options'
+import { tokens, n_month_names } from './payment_options';
+import Modal from "../../../../components/modal";
 const minimum = 5 //minimum amount in stream
 
-export default function StreamComponent({ addPayment, tokens }) {
+
+export default function StreamComponent({ addPayment, tokens, network }) {
 
     const [amount, setAmount] = useState(5);
     const [currency, setCurrency] = useState(tokens[0]);
-    const [nMonths, setNMonths] = useState(n_month_names[0])
+    const [nMonths, setNMonths] = useState(n_month_names[0]);
+    const [isOpen, setIsOpen] = useState(false);
     
 
     const getAmount = (value) => {
@@ -102,8 +105,14 @@ export default function StreamComponent({ addPayment, tokens }) {
             {/* Help */}
             <div className="flex flex-col justify-center mt-0">
                 {/*<div className="text-gray-400 text-xs font-light">Have you heard of stream?</div>*/}
-                {/*TODO: Update Link below*/}
-                <a href="/"><div className="text-primary-light text-sm font-light">Help</div></a>
+                <div>
+                    <button onClick={() => setIsOpen(!isOpen)}>
+                        <div className="text-primary-light text-sm font-light">Help</div>
+                    </button>
+                    <Modal isOpen={isOpen} setIsOpen={setIsOpen} full_details={{
+                        network: network
+                    }}/>
+                </div>
             </div>
         </div>
     )

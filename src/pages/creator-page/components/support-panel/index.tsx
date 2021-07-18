@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import StreamComponent from './stream'
 import OneTimerComponent from './one-timer';
 import ListboxComponent from '../../../../components/listbox';
+import Modal from '../../../../components/modal';
 import { tokens, networks } from './payment_options';
 
 import { OneTimePayment, Subscription } from "../../payment";
@@ -71,6 +72,7 @@ export default function SupportPanelComponent({ creatorDetails }) {
     }, [oneTimePaymentDetails, subscriptionPaymentDetails]);
 
 
+    // @ts-ignore
     return (
         <div className="flex flex-col mt-4 shadow-float-900 bg-white rounded-md text-center justify-center" style={{ width: '21rem' }}>
 
@@ -88,10 +90,12 @@ export default function SupportPanelComponent({ creatorDetails }) {
                         (<StreamComponent
                             addPayment={setSubscriptionPaymentDetails}
                             tokens={tokens[network.id]}
+                            network={network}
                         />) :
                         (<OneTimerComponent
                             addPayment={setOneTimePaymentDetails}
                             tokens={tokens[network.id]}
+                            network={network}
                         />)}
                 </div>
             </div>
