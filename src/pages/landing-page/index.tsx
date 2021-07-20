@@ -77,11 +77,9 @@ export default function LandingPage() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 md:mt-6">
-                    <div className="mx-auto w-11/12 md:row-start-2 md:justify-self-end transform md:translate-x-64">
-                        <p className=" my-4 md:mt-8 font-medium text-gray-600 max-w-sm">
-                            Accept financial support, create
-                            economies, and play value-based games with your fans, from
-                            anywhere across the planet.
+                    <div className="md:row-start-2 mx-3 md:mx-0 justify-self-center md:justify-self-end">
+                        <p className=" my-4 md:mt-8 font-medium text-gray-600 max-w-sm transform md:translate-x-10">
+                            Accept financial support, create economies, and play value-based games with your fans from anywhere across the planet.
                         </p>
                     </div>
                     <div className="md:col-span-2 md:row-start-1">
@@ -109,7 +107,7 @@ export default function LandingPage() {
                 
                     <div className="flex justify-center md:justify-self-start">
                         <img
-                            className=" w-48 transform translate-x-14 md:translate-x-60 "
+                            className=" w-48 transform translate-x-14 md:translate-x-48 lg:translate-x-60 "
                             src={ImageStartJourney}
                             alt="start journey"
                         />
