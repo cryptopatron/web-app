@@ -72,7 +72,7 @@ export default function LoginOverlayComponent({ setToken }) {
 
                     <button
                         type="button"
-                        className="flex btn-sec m-4 justify-center sm:mb-14"
+                        className="flex btn-sec m-4 justify-center mb-20"
                     >
                         <span className="block text-left w-4/5 sm:w-11/12 sm:ml-4">
                             <img
@@ -83,11 +83,6 @@ export default function LoginOverlayComponent({ setToken }) {
                             login with MetaMask{" "}
                         </span>
                     </button>
-                    {/* <GoogleLogout
-                        clientId={clientId}
-                        buttonText="Logout"
-                        onLogoutSuccess={logout}
-                    ></GoogleLogout> */}
                 </div>
             </div>
         </>

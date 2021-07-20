@@ -18,7 +18,8 @@ function App() {
 
     // Guard Functions
     const routeGuard = (to, from, next) => {
-        if (to.meta['restricted']) {
+
+        if (to.meta['restricted'] &&  ( !(token) || ( (token) && isLoggedIn))) {
             console.log("restricted route")
             next.redirect('/');
         }
