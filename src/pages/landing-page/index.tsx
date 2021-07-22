@@ -107,7 +107,7 @@ export default function LandingPage() {
                 
                     <div className="flex justify-center md:justify-self-start">
                         <img
-                            className=" w-48 transform translate-x-14 md:translate-x-48 lg:translate-x-60 "
+                            className=" w-48 transform translate-x-14 md:translate-x-48 lg:translate-x-60 opacity-30"
                             src={ImageStartJourney}
                             alt="start journey"
                         />
