@@ -4,7 +4,6 @@ export default function useToken() {
 
     const getToken = () => {
         const tokenString = localStorage.getItem('token');
-        console.log("getting user token " + tokenString)
         return tokenString
     };
 
@@ -12,7 +11,6 @@ export default function useToken() {
 
     const saveToken = userToken => {
         localStorage.setItem('token', userToken);
-        console.log("setting user token +" + userToken)
         setToken(userToken);
     };
 
