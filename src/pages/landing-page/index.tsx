@@ -13,7 +13,7 @@ import ImageLadyBird from "./../../assets/images/ladybird.png";
 import ImageLookForCreators from "./../../assets/images/look_for_creators.svg";
 
 export default function LandingPage() {
-    const { token, setToken, setIsLoggedIn } = useContext(UserContext);
+    const { token, setToken, setIsAuth } = useContext(UserContext);
     const { setUser } = useContext(LoggedInUserContext)
     const [pageName, setPageName] = useState<string>();
     const [showLoginOverlay, setShowLoginOverlay] = useState(false);
@@ -32,7 +32,7 @@ export default function LandingPage() {
             history.push(PATHS.ONBOARD)
         }
         if (response.status === 200) {
-            setIsLoggedIn(true)
+            setIsAuth(true)
             setUser(response.data)
             history.push(PATHS.DASHBOARD)
         }

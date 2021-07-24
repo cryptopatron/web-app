@@ -7,14 +7,14 @@ import Router from "./router";
 
 function App() {
 
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+    const [isAuth, setIsAuth] = useState<boolean>(false)
     const [user, setUser] = useState<Creator>(defaultCreator)
     const { token, setToken } = useToken();
     const [accessToken, setAccessToken] = useState('');
 
     return (
 
-        <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn, token, setToken, accessToken, setAccessToken }}>
+        <UserContext.Provider value={{ isAuth, setIsAuth, token, setToken, accessToken, setAccessToken }}>
             <LoggedInUserContext.Provider value={{ user, setUser }}>
                 <Router/>
             </LoggedInUserContext.Provider>

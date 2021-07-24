@@ -11,44 +11,44 @@ import { getAuthUser } from '../services/backendService';
 import * as PATHS from '../constants/paths'
 
 export default function Router() {
-    const { token, isLoggedIn, setIsLoggedIn } = useContext(UserContext)
+
+    const { token, isAuth, setIsAuth } = useContext(UserContext)
     const { user, setUser } = useContext(LoggedInUserContext)
+
+    // local non-states
+    let _isAuth = false
+    let _user = {pageName: ""}
+
     // Guard Functions
     const routeGuard = async (to, from, next) => {
-
-        console.log("this is user: ")
-        console.log(user)
+        console.log("to: " + to.location.pathname)
+        console.log("from: " + from.location.pathname)
         
-        if (to.location['pathname'] === '/') // if navigating to landing page
-        {
-            if (token) {
-                console.log("token present - calling api");
-                const response = await getAuthUser(token)
+        if (token) {
+            console.log("token present - calling api");
+            const response = await getAuthUser(token)
 
-                if (response.status === 401) {
-                    setIsLoggedIn(false)
-                }
-                if (response.status === 404) {
-                    setIsLoggedIn(false)
-                    next.redirect(PATHS.ONBOARD)
-                }
-                if (response.status === 200) {
-                    setIsLoggedIn(true)
-                    setUser(response.data)
-                    next.redirect(PATHS.DASHBOARD)
-                }
-
-
+            if (response.status == 404) {
+                _isAuth = true
+                setIsAuth(true)
             }
+
+            if (response.status === 200) {
+                _isAuth = true
+                _user = response.data
+                setIsAuth(true)
+                setUser(response.data)
+            }
+
         }
 
-        console.log("isLoggedIn: " + isLoggedIn)
-        if (to.meta['restricted'] && (!(token) || (isLoggedIn))) {
+        if (to.meta['restricted'] && (!(token) || (_user.pageName))) {
             console.log("restricted route")
             next.redirect('/');
         }
 
-        if (to.meta['protected'] && !(isLoggedIn)) {
+        if (to.meta['protected'] && !(_user.pageName)) {
+            console.log("protected route")
             next.redirect('/');
         }
         next();
@@ -61,15 +61,22 @@ export default function Router() {
         )
     }
 
-    const landingPageRedirect = (to, from, next) => {
-
-
+    const LandingPageRedirect = (to, from, next) => {
+        console.log()
+        if (token && to.location['pathname'] === '/') {
+            if (_user.pageName) {
+                next.redirect(PATHS.DASHBOARD)
+            }
+            if (_isAuth) {
+                next.redirect(PATHS.ONBOARD)
+            }
+        }
+        next()
     }
-
 
     return (
         <BrowserRouter>
-            <GuardProvider guards={[routeGuard]} loading={LoadingScreen} error={NOTFOUND.component}>
+            <GuardProvider guards={[routeGuard, LandingPageRedirect]} loading={LoadingScreen} error={NOTFOUND.component}>
                 <Switch>
                     {routes.map((route, index) => (
                         // Added condtions for route guarding  //  
