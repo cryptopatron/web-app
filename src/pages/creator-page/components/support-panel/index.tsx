@@ -2,12 +2,12 @@
 import { useState, useEffect } from 'react'
 import StreamComponent from './stream'
 import OneTimerComponent from './one-timer';
-import ListboxComponent from '../../../../components/listbox'
+import ListboxComponent from '../../../../components/listbox';
+import { tokens, networks } from './payment_options';
 
 import { OneTimePayment, Subscription } from "../../payment";
-import { networks } from './payment_options'
 
-import { handle_one_time_txn, handle_streaming_txn } from "./handle-txn";
+import { handle_one_time_txn, handle_streaming_txn, handle_mint_txn } from "./handle-txn";
 
 
 export default function SupportPanelComponent({ creatorDetails }) {
@@ -34,44 +34,37 @@ export default function SupportPanelComponent({ creatorDetails }) {
     const [msg, setMsg] = useState();
     const [error, setError] = useState();
 
-    function network_display_name_to_value(network) {
-        if (network === "Mumbai Polygon Testnet") {
-            return "mumbai"
-        } else if (network === "Ropsten Testnet") {
-            return "ropsten"
-        } else {
-            return "unknown"
-        }
-    }
 
     function get_to_address(creator_details, network_value) {
         if (network_value === "mumbai") {
             return creator_details.generatedMaticWalletPublicKey;
-        } else if (network_value === "ropsten") {
+        } else {
             return creator_details.metaMaskWalletPublicKey;
         }
     }
 
     function get_full_one_time_details() {
-        const network_value = network_display_name_to_value(network.value);
         const full_details : OneTimePayment = {
             ...oneTimePaymentDetails,
-            network: network_value,
-            to_address: get_to_address(creatorDetails, network_value)
+            network: network.id,
+            to_address: get_to_address(creatorDetails, network.id)
         };
         return full_details;
     }
 
     function get_full_subscription_details() {
-        const network_value = network_display_name_to_value(network.value);
         const full_details : Subscription = {
             ...subscriptionPaymentDetails,
-            network: network_value,
-            to_address: get_to_address(creatorDetails, network_value)
+            network: network.id,
+            to_address: get_to_address(creatorDetails, network.id)
         };
         return full_details;
     }
 
+    // returns true if the user has selected a testnet network, and false if not
+    function isTestnet() {
+        return ((network.id === "ropsten") || (network.id === "mumbai"));
+    }
 
     useEffect(() => {
         //pass
@@ -91,7 +84,15 @@ export default function SupportPanelComponent({ creatorDetails }) {
                 <button className={(streamButtomActive) ? (" tab-active ") : (" tab-inactive ")} onClick={() => { setStreamButtonActive(true) }}>stream</button>
                 <button className={(streamButtomActive) ? (" tab-inactive ") : (" tab-active ")} onClick={() => { setStreamButtonActive(false) }}> one-timer</button>
                 <div className="bg-white rounded-md col-span-2 h-44 z-20 flex p-4 justify-center text-center shadow-float-800" >
-                    {(streamButtomActive) ? (<StreamComponent addPayment={setSubscriptionPaymentDetails} />) : (<OneTimerComponent addPayment={setOneTimePaymentDetails} />)}
+                    {(streamButtomActive) ?
+                        (<StreamComponent
+                            addPayment={setSubscriptionPaymentDetails}
+                            tokens={tokens[network.id]}
+                        />) :
+                        (<OneTimerComponent
+                            addPayment={setOneTimePaymentDetails}
+                            tokens={tokens[network.id]}
+                        />)}
                 </div>
             </div>
 
@@ -113,6 +114,25 @@ export default function SupportPanelComponent({ creatorDetails }) {
                             <span>{"Send " + String(oneTimePaymentDetails.amount) + " " + oneTimePaymentDetails.currency_name + " Donation" }</span>
                         </button>
                     </div>)
+                }
+                {/* mint button */}
+                {(isTestnet())?(
+                    (streamButtomActive)?
+                    (<div>
+                        <button className="btn-main mt-4 w-full" onClick={() => {
+                            handle_mint_txn(setMsg, setError, get_full_subscription_details())
+                        }}>
+                            <span>{"Mint " + String(subscriptionPaymentDetails.currency_name)}</span>
+                        </button>
+                    </div>) :
+                    (<div>
+                        <button className="btn-main mt-4 w-full" onClick={() => {
+                            handle_mint_txn(setMsg, setError, get_full_one_time_details())
+                        }}>
+                            <span>{"Mint " + String(oneTimePaymentDetails.currency_name)}</span>
+                        </button>
+                    </div>)) :
+                    (<div></div>)
                 }
                 {/* select network */}
                 <div className="flex flex-col justify-center mt-3">

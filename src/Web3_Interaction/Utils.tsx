@@ -6,11 +6,12 @@ export function txn_link_msg(txn_hash: string, network: string, msg: string) {
     let link_msg = "";
     if (network === "ropsten") {
         link = "https://ropsten.etherscan.io/tx/" + txn_hash;
-        link_msg = "View Transaction on Etherscan";
     }
     else if (network === "mumbai") {
         link = "https://mumbai.polygonscan.com/tx/" + txn_hash;
-        link_msg = "View Transaction on Polygonscan";
+    }
+    else if (network === "ethereum_mainnet") {
+        link = "https://etherscan.com/tx/" + txn_hash;
     }
     return (<div>
         <a href={link} target="_blank" rel="noopener noreferrer">
@@ -35,6 +36,25 @@ export function get_currency_decimals_by_address(network, address) {
     }
 }
 
+
+// this function just basically hardcodes how much of each test token to mint
+export function get_erc20_amount_to_mint(network, currency_name) {
+    if (network === "ropsten") {
+        if (currency_name === "USDC") {
+            return "500000000"
+        } else if (currency_name === "DAI") {
+            return "500000000000000000000";
+        }
+    } else if (network === "mumbai") {
+        if (currency_name === "USDC") {
+            return "500000000"
+        } else if (currency_name === "DAI") {
+            return "500000000000000000000";
+        }
+    } else {
+        return "500000000";
+    }
+}
 
 export function get_currency_decimals(network, name) {
     return contract_info[network]["ERC20s"][name].decimals;

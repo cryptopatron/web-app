@@ -4,7 +4,7 @@ import ListboxComponent from '../../../../components/listbox';
 import { tokens, n_month_names } from './payment_options'
 const minimum = 5 //minimum amount in stream
 
-export default function StreamComponent({ addPayment }) {
+export default function StreamComponent({ addPayment, tokens }) {
 
     const [amount, setAmount] = useState(5);
     const [currency, setCurrency] = useState(tokens[0]);
