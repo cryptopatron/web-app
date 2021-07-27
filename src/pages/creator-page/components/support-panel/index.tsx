@@ -152,7 +152,6 @@ export default function SupportPanelComponent({ creatorDetails }) {
                 <h6 style={{ color: "red" }}>{error}</h6>
                 <br></br>
             </div>
-            // help modal
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} full_details={{
                 network: network
             }} />
