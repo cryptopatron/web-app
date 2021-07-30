@@ -1,9 +1,11 @@
 import { GoogleLogin, GoogleLogout } from "react-google-login";
+import Web3 from "web3";
 import ImageLoginWoman from "./../../../../assets/images/login-woman.svg";
 import ImageGoogleIcon from "./../../../../assets/images/google-icon.svg";
 import ImageMetamaskIcon from "./../../../../assets/images/metamask-icon.svg";
-import { useContext } from "react";
+import {useContext, useState} from "react";
 import UserContext from "../../../../contexts/user";
+import {defaultCreator} from "../../../../contexts/logged-in-user";
 
 
 
@@ -13,6 +15,8 @@ const googlePerms = "https://www.googleapis.com/auth/drive.appdata";
 
 export default function LoginOverlayComponent({ setToken }) {
     const {setAccessToken} = useContext(UserContext);
+    const [msg, setMsg] = useState('');
+    const [err, setErr] = useState('');
 
     const responseGoogleOnSuccess = (response) => {
         setToken(response.tokenId);
@@ -27,6 +31,39 @@ export default function LoginOverlayComponent({ setToken }) {
     const logout = () => {
         console.log("logged out");
     };
+
+    async function metamask_sign_in() {
+        setMsg('');
+        setErr('');
+
+        if ((window as any).ethereum) {
+            try {
+                const ethereum = (window as any).ethereum;
+                const web3Provider = new Web3(ethereum);
+                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                const account_address = String(accounts[0]);
+                const current_unix = String(Date.now());
+                if (accounts.length > 0) {
+                    web3Provider.eth.personal.sign(current_unix, String(accounts[0]), "test password").then((res) => {
+                        const to_upload = {
+                            "Nonce": current_unix,
+                            "Signature": res,
+                            "MetaMaskWalletPublicKey": account_address
+                        }
+                        console.log("Response from Metamask (to be sent to backend)", to_upload);
+                    });
+                } else {
+                    setErr('No Accounts Found in Metamask')
+                }
+            } catch (error) {
+                setErr('Failed to Connect to Metamask');
+            }
+        } else {
+            setErr('Metamask Not Detected');
+        }
+    }
+
+
 
     return (
         <>
@@ -73,6 +110,7 @@ export default function LoginOverlayComponent({ setToken }) {
                     <button
                         type="button"
                         className="flex btn-sec m-4 justify-center sm:mb-14"
+                        onClick={metamask_sign_in}
                     >
                         <span className="block text-left w-4/5 sm:w-11/12 sm:ml-4">
                             <img
@@ -83,11 +121,17 @@ export default function LoginOverlayComponent({ setToken }) {
                             login with MetaMask{" "}
                         </span>
                     </button>
+                    <div className="text-center">
+                        <h6 style={{alignSelf: "center", textAlign: "center"}}>{msg}</h6>
+                        <h6 style={{color: "red"}}>{err}</h6>
+                    </div>
+                    <br></br><br></br>
                     {/* <GoogleLogout
                         clientId={clientId}
                         buttonText="Logout"
                         onLogoutSuccess={logout}
                     ></GoogleLogout> */}
+
                 </div>
             </div>
         </>

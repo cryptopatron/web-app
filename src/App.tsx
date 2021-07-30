@@ -24,7 +24,7 @@ function App() {
                     <Suspense fallback={<p>Loading....</p>}>
                         <Switch>
                             {routes.map((route) => (
-                                // Added condtions for route guarding  //  
+                                // Added conditions for route guarding  //
                                 (route.protected && !((isLoggedIn) && (user.pageName))) ? (
                                     <Route
                                         path={route.path}
@@ -43,7 +43,6 @@ function App() {
                 </Router>
             </LoggedInUserContext.Provider>
         </UserContext.Provider>
-
     );
 }
 

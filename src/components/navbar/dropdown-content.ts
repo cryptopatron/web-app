@@ -1,5 +1,6 @@
 import * as PATHS from '../../constants/paths'
 
+
 export const notLoggedinContent = [
     {
         id: 1,
@@ -10,7 +11,8 @@ export const notLoggedinContent = [
         id: 2,
         label: "About",
         path: "/"
-    }]
+    }
+]
     
 export const loggedinContent = [
     {
