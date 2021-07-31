@@ -6,6 +6,7 @@ import ImageMetamaskIcon from "./../../../../assets/images/metamask-icon.svg";
 import {useContext, useState} from "react";
 import UserContext from "../../../../contexts/user";
 import {defaultCreator} from "../../../../contexts/logged-in-user";
+import { getWalletAuthUser } from "../../../../services/backendService";
 
 
 
@@ -44,13 +45,14 @@ export default function LoginOverlayComponent({ setToken }) {
                 const account_address = String(accounts[0]);
                 const current_unix = String(Date.now());
                 if (accounts.length > 0) {
-                    web3Provider.eth.personal.sign(current_unix, String(accounts[0]), "test password").then((res) => {
-                        const to_upload = {
+                    web3Provider.eth.personal.sign(current_unix, String(accounts[0]), "test password").then( async (res) => {
+                        const loginParams = {
                             "Nonce": current_unix,
                             "Signature": res,
                             "MetaMaskWalletPublicKey": account_address
                         }
-                        console.log("Response from Metamask (to be sent to backend)", to_upload);
+                        const response = await getWalletAuthUser(loginParams)
+                        
                     });
                 } else {
                     setErr('No Accounts Found in Metamask')
