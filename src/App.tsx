@@ -13,8 +13,8 @@ import { Creator } from './constants/models';
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
     const [user, setUser] = useState<Creator>(defaultCreator)
-    const {token, setToken} = useToken();
     const {wallet, setWallet} = useWallet();
+    const {token, setToken} = useToken();
     const [accessToken, setAccessToken] = useState('');
     return (
         <UserContext.Provider value={{isLoggedIn, setIsLoggedIn, token, setToken, accessToken, setAccessToken, wallet, setWallet}}>

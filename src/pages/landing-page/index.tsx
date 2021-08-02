@@ -22,7 +22,7 @@ export default function LandingPage() {
       setToken(jwt);
     }
 
-    const endpoint = "/api/v1/google/users/get";
+    const endpoint = "/api/v1/users/get";
     setResponse(endpoint, jwt);
   };
 
@@ -48,7 +48,7 @@ export default function LandingPage() {
 
     if (token) {
       console.log("token present - calling api");
-      const endpoint = "/api/v1/google/users/get";
+      const endpoint = "/api/v1/users/get";
       setResponse(endpoint, token);
     }
   }, []);

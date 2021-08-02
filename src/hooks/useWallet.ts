@@ -3,7 +3,7 @@ import { useState } from 'react';
 export default function useWallet() {
 
     const getWallet = () => {
-        const walletJson = JSON.parse(localStorage.getItem('wallet') || '{wallet:"", address:""}');
+        const walletJson = JSON.parse(localStorage.getItem('wallet') || '{"wallet":"", "address":""}');
         return walletJson
 
     };

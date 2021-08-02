@@ -42,25 +42,22 @@ export default function LoginOverlayComponent({ setToken }) {
                 const accountAddress = String(accounts[0]);
                 const currentUnix: string = String(Date.now());
                 if (accounts.length > 0) {
-                    let hash = web3Provider.utils.keccak256(currentUnix)
-                    if (hash)
-                        web3Provider.eth.personal.sign(hash, String(accounts[0]), "").then(async (res) => {
-                            console.log(res)
-                            console.log("hash " + hash)
-                            console.log("nonce " + currentUnix)
+                    web3Provider.eth.personal.sign(currentUnix, String(accounts[0]), "").then(async (res) => {
+                        console.log(res)
+                        console.log("nonce " + currentUnix)
+                        setWallet({ wallet: "metamask", address: accountAddress })
+                        const loginParams = {
+                            nonce: currentUnix,
+                            signature: res,
+                            walletPublicAddress: accountAddress
+                        }
+                        const response = await walletLogin(loginParams)
+                        if (response.status === 200) {
                             setWallet({ wallet: "metamask", address: accountAddress })
-                            const loginParams = {
-                                "nonce": currentUnix,
-                                "signature": res,
-                                "walletPublicAddress": accountAddress
-                            }
-                            const response = await walletLogin(loginParams)
-                            if (response.status == 200) {
-                                setToken(response.data.idToken)
-                                setWallet({ wallet: "metamask", address: accountAddress })
-                            }
+                            setToken(response.data.idToken)
+                        }
 
-                        });
+                    });
 
                 } else {
                     setErr('No Accounts Found in Metamask')
