@@ -7,7 +7,7 @@ import UserContext from '../../../contexts/user';
 import { useContext, useEffect } from 'react';
 
 export default function Step3Component({ step, moveToStep, publicKey, pageName }) {
-    const { setIsLoggedIn } = useContext(UserContext)
+    const { setIsLoggedIn, wallet } = useContext(UserContext)
 
     useEffect(() => {
         setIsLoggedIn(true)
@@ -27,7 +27,8 @@ export default function Step3Component({ step, moveToStep, publicKey, pageName }
 
                 <div className=" flex flex-col sm:w-60 justify-center ">
                     <div className="text-center w-auto">
-                        <p className="mb-4 leading-relaxed">We went ahead and made a wallet for you.</p>
+                    <p className="mb-4 leading-relaxed"> {(wallet.wallet !== "metmask") ? ("We went ahead and made a wallet for you.") : ("We have connected your Metamask wallet.") } </p>
+                        
                     </div>
                     <div className="text-center w-auto">
                         <p className="mb-6 relaxed font-semibold">

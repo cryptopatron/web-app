@@ -3,26 +3,23 @@ import Web3 from "web3";
 import ImageLoginWoman from "./../../../../assets/images/login-woman.svg";
 import ImageGoogleIcon from "./../../../../assets/images/google-icon.svg";
 import ImageMetamaskIcon from "./../../../../assets/images/metamask-icon.svg";
-import {useContext, useState} from "react";
+import { useContext, useState } from "react";
 import UserContext from "../../../../contexts/user";
-import {defaultCreator} from "../../../../contexts/logged-in-user";
 import { walletLogin } from "../../../../services/backendService";
-
-
 
 const clientId =
     "116852492535-37n739s732ui71hkfm19n5r3agv6g9c5.apps.googleusercontent.com";
 const googlePerms = "https://www.googleapis.com/auth/drive.appdata";
 
 export default function LoginOverlayComponent({ setToken }) {
-    const {setAccessToken} = useContext(UserContext);
+    const { setAccessToken, setWallet } = useContext(UserContext);
     const [msg, setMsg] = useState('');
     const [err, setErr] = useState('');
 
     const responseGoogleOnSuccess = (response) => {
         setToken(response.tokenId);
         setAccessToken(response.accessToken)
-        
+
     };
 
     const responseGoogleOnFailure = (response) => {
@@ -34,8 +31,8 @@ export default function LoginOverlayComponent({ setToken }) {
     };
 
     async function metamask_sign_in() {
-        setMsg('');
-        setErr('');
+        setMsg('')
+        setErr('')
 
         if ((window as any).ethereum) {
             try {
@@ -43,19 +40,28 @@ export default function LoginOverlayComponent({ setToken }) {
                 const web3Provider = new Web3(ethereum);
                 const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
                 const accountAddress = String(accounts[0]);
-                const currentUnix = String(Date.now());
+                const currentUnix: string = String(Date.now());
                 if (accounts.length > 0) {
-                    web3Provider.eth.personal.sign(currentUnix, String(accounts[0]), "test password").then( async (res) => {
-                        const loginParams = {
-                            "Nonce": currentUnix,
-                            "Signature": res,
-                            "MetaMaskWalletPublicKey": accountAddress
-                        }
-                        const response = await walletLogin(loginParams)
-                        if (response.status == 200){
-                            setToken(response.data.idToken)
-                        }
-                    });
+                    let hash = web3Provider.utils.keccak256(currentUnix)
+                    if (hash)
+                        web3Provider.eth.personal.sign(hash, String(accounts[0]), "").then(async (res) => {
+                            console.log(res)
+                            console.log("hash " + hash)
+                            console.log("nonce " + currentUnix)
+                            setWallet({wallet:"metamask", address: accountAddress})
+                            const loginParams = {
+                                "nonce": currentUnix,
+                                "signature": res,
+                                "walletPublicAddress": accountAddress
+                            }
+                            const response = await walletLogin(loginParams)
+                            if (response.status == 200) {
+                                setToken(response.data.idToken)
+                                setWallet({wallet:"metamask", address: accountAddress})
+                            }
+
+                        });
+
                 } else {
                     setErr('No Accounts Found in Metamask')
                 }
@@ -126,8 +132,8 @@ export default function LoginOverlayComponent({ setToken }) {
                         </span>
                     </button>
                     <div className="text-center">
-                        <h6 style={{alignSelf: "center", textAlign: "center"}}>{msg}</h6>
-                        <h6 style={{color: "red"}}>{err}</h6>
+                        <h6 style={{ alignSelf: "center", textAlign: "center" }}>{msg}</h6>
+                        <h6 style={{ color: "red" }}>{err}</h6>
                     </div>
                     <br></br><br></br>
                     {/* <GoogleLogout

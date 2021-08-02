@@ -5,21 +5,20 @@ import { LANDINGPAGE } from './constants/routes';
 import UserContext from "./contexts/user"
 import LoggedInUserContext, { defaultCreator } from './contexts/logged-in-user';
 import useToken from './hooks/useToken';
-import { useState, useEffect } from 'react';
+import useWallet from './hooks/useWallet'
+import { useState } from 'react';
 
 import { Creator } from './constants/models';
 
 function App() {
-
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
     const [user, setUser] = useState<Creator>(defaultCreator)
-    const { token, setToken } = useToken();
+    const {token, setToken} = useToken();
+    const {wallet, setWallet} = useWallet();
     const [accessToken, setAccessToken] = useState('');
-
     return (
-
-        <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn, token, setToken, accessToken, setAccessToken }}>
-            <LoggedInUserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{isLoggedIn, setIsLoggedIn, token, setToken, accessToken, setAccessToken, wallet, setWallet}}>
+            <LoggedInUserContext.Provider value={{user, setUser}}>
                 <Router>
                     <Suspense fallback={<p>Loading....</p>}>
                         <Switch>
