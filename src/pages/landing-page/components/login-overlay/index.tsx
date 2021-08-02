@@ -48,7 +48,7 @@ export default function LoginOverlayComponent({ setToken }) {
                             console.log(res)
                             console.log("hash " + hash)
                             console.log("nonce " + currentUnix)
-                            setWallet({wallet:"metamask", address: accountAddress})
+                            setWallet({ wallet: "metamask", address: accountAddress })
                             const loginParams = {
                                 "nonce": currentUnix,
                                 "signature": res,
@@ -57,7 +57,7 @@ export default function LoginOverlayComponent({ setToken }) {
                             const response = await walletLogin(loginParams)
                             if (response.status == 200) {
                                 setToken(response.data.idToken)
-                                setWallet({wallet:"metamask", address: accountAddress})
+                                setWallet({ wallet: "metamask", address: accountAddress })
                             }
 
                         });
@@ -68,12 +68,8 @@ export default function LoginOverlayComponent({ setToken }) {
             } catch (error) {
                 setErr('Failed to Connect to Metamask');
             }
-        } else {
-            setErr('Metamask Not Detected');
         }
     }
-
-
 
     return (
         <>
@@ -137,13 +133,14 @@ export default function LoginOverlayComponent({ setToken }) {
                     </div>
                     <br></br><br></br>
                     {/* <GoogleLogout
+
                         clientId={clientId}
                         buttonText="Logout"
                         onLogoutSuccess={logout}
                     ></GoogleLogout> */}
-
                 </div>
             </div>
         </>
     );
 }
+
