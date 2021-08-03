@@ -9,12 +9,12 @@ export type loggedInUserContextType = {
 }
 
 export const defaultCreator = {
-    email: "divyanshu@gmail.com",
-    name: "Divyanshu",
-    pageName: "rampage",
-    generatedMaticWalletPublicAddress: "0x7675289Fbd414acAE84752Bd789483a44B2d1576",
-    metaMaskWalletPublicAddress: "0x7675289Fbd414acAE84752Bd789483a44B2d1576",
-    bio: "Really famous on Tiktok",
+    email: "",
+    name: "",
+    pageName: "",
+    generatedMaticWalletPublicAddress: "",
+    metaMaskWalletPublicAddress: "",
+    bio: "",
 }
 
 const LoggedInUserContext = createContext<loggedInUserContextType>({user: defaultCreator, setUser:()=>{}});

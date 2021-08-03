@@ -6,6 +6,7 @@ import NavbarComponent from '../../components/navbar'
 import SidePanelComponent from './components/side-panel'
 import MainPanelComponent from './components/main-panel'
 import { getTransactionByPageName } from '../../services/backendService'
+import { loggedInContent } from './navbar-content'
 
 export default function DashboardPage() {
     const [transaction, setTransactions] = useState()
@@ -27,7 +28,7 @@ export default function DashboardPage() {
 
     return (
         <div>
-            <NavbarComponent />
+            <NavbarComponent loggedInContent={loggedInContent(user.pageName)}/>
             <div className="flex flex-col sm:flex-row">
                 <SidePanelComponent creator={user} />
                 <MainPanelComponent transaction={transaction} user={user}/>

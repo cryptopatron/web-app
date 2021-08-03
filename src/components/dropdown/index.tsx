@@ -1,25 +1,23 @@
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment} from 'react';
+import { Fragment, useContext} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
-import {useContext} from 'react';
 import UserContext from '../../contexts/user';
 
 export default function DropdownComponent({ dropdownContent }) {
     const history = useHistory()
-    const {setIsLoggedIn} = useContext(UserContext)
+    const {setToken, setWallet} = useContext(UserContext)
+
     const reroute = (content) =>{
-
-        if(content.id === 4) {
-
-            setIsLoggedIn(false)
-            localStorage.removeItem('token')
-            
+        // id=4 for sign out
+        if (content.id === 4) { 
+            setToken(null)
+            localStorage.removeItem("token")
+            setWallet({wallet:"", address:""})
+            localStorage.removeItem("wallet")
         }
-
         history.push(content.path)
-
     }
     return (
         <div className="text-right top-4 z-50">

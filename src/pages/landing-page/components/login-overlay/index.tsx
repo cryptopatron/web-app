@@ -129,12 +129,6 @@ export default function LoginOverlayComponent({ setToken }) {
                         <h6 style={{ color: "red" }}>{err}</h6>
                     </div>
                     <br></br><br></br>
-                    {/* <GoogleLogout
-
-                        clientId={clientId}
-                        buttonText="Logout"
-                        onLogoutSuccess={logout}
-                    ></GoogleLogout> */}
                 </div>
             </div>
         </>

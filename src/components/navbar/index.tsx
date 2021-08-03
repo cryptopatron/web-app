@@ -1,18 +1,19 @@
 import { useState, useEffect, useContext } from 'react';
 
 import DropdownComponent from "../../components/dropdown"
-import {notLoggedinContent, loggedinContent} from './dropdown-content'
+import {notLoggedinContent} from './dropdown-content'
 import UserContext from '../../contexts/user';
+import LoggedInUserContext from '../../contexts/logged-in-user';
 
-export default function NavbarComponent() {
+export default function NavbarComponent({loggedInContent}) {
 
     let [dropdown, setDropdown] = useState(notLoggedinContent)
-    const {isLoggedIn} = useContext(UserContext)
+    const {user} = useContext(LoggedInUserContext)
 
     useEffect(() => {
         const listener = () =>{
-            if(isLoggedIn){
-                setDropdown(loggedinContent)
+            if(user.pageName){
+                setDropdown(loggedInContent)
             }
             else{
                 setDropdown(notLoggedinContent)
@@ -21,7 +22,7 @@ export default function NavbarComponent() {
 
         listener()
         
-    }, [isLoggedIn])
+    }, [user])
     return (
         <header className="h-14 bg-white">
             <div className="container mx-auto max-w-screen-xl h-full">

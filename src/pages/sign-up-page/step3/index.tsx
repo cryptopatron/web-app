@@ -7,10 +7,10 @@ import UserContext from '../../../contexts/user';
 import { useContext, useEffect } from 'react';
 
 export default function Step3Component({ step, moveToStep, publicAddress, pageName }) {
-    const { setIsLoggedIn, wallet } = useContext(UserContext)
+    const { setIsAuth, wallet } = useContext(UserContext)
 
     useEffect(() => {
-        setIsLoggedIn(true)
+        setIsAuth(true)
     }, [])
     
     return (
