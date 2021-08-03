@@ -1,28 +1,31 @@
+import { faRupeeSign } from "@fortawesome/free-solid-svg-icons";
 
-export const registerPage = async (pageName, publicKey, token) => {
+export const registerPage = async (pageName, publicAddress, token) => {
 
-    const register = {
+    const registerPayload = {
+        ...publicAddress,
         pageName: pageName,
-        metaMaskWalletPublicKey: "",
-        generatedMaticWalletPublicKey: publicKey,
         idToken: token,
-        ref: "" // TODO Need 5 fields for backend decoding --- fix soon 
+        ref: ""
     };
 
+    console.log(registerPayload)
     const endpoint = window.origin + `/api/v1/users/create`;
     const res  = await fetch(endpoint, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(register)
+        body: JSON.stringify(registerPayload)
     });
 
     const status = await res.status
-    
-    if(status !== 200){
-        return false
+    console.log(status)
+
+    if(status === 200){
+        return true
     }
-    return true
-    
+
+    return false
+
 }

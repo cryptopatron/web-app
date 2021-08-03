@@ -31,7 +31,7 @@ export default function MainPanelComponent({transaction, user}) {
             {/* Wallet */}
             <div className="flex flex-row m-2 px-2 py-3 shadow-float-900 bg-white rounded-md text-center justify-between">
             <div className="">Wallet</div>
-            <div>{(user.generatedMaticWalletPublicKey)?(user.generatedMaticWalletPublicKey) : (user.metaMaskWalletPublicKey)}</div>
+            <div>{(user.generatedMaticWalletPublicAddress)?(user.generatedMaticWalletPublicAddress) : (user.metaMaskWalletPublicAddress)}</div>
             </div>
         </div>
     )

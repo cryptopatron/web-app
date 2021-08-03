@@ -12,7 +12,7 @@ import UserContext from '../../../contexts/user';
 export default function Step2Component({ step,
     moveToStep,
     accessToken,
-    setPublicKey,
+    setPublicAddress,
     pageName,
     setPageName }) {
     const [isValid, setValid] = useState(false);
@@ -98,8 +98,8 @@ export default function Step2Component({ step,
 
                 if (wallet.wallet === "metamask") {
                     console.log(wallet)
-                    setPublicKey(wallet.address)
-                    if (registerPage(pageName, wallet.address, token)) {
+                    setPublicAddress(wallet.address)
+                    if (registerPage(pageName, {metaMaskWalletPublicAddress: wallet.address}, token)) {
                         moveToStep(3);
                     }
                 }
@@ -107,8 +107,8 @@ export default function Step2Component({ step,
                     generateWallet(accessToken).then((walletAddr) => {
                         if (walletAddr) {
                             console.log("Public wallet address ", walletAddr);
-                            setPublicKey(walletAddr)
-                            if (registerPage(pageName, walletAddr, token)) {
+                            setPublicAddress(walletAddr)
+                            if (registerPage(pageName, {generatedMaticWalletPublicAddress: walletAddr}, token)) {
                                 moveToStep(3)
                             }
                         }

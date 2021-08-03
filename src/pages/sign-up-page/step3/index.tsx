@@ -6,7 +6,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import UserContext from '../../../contexts/user';
 import { useContext, useEffect } from 'react';
 
-export default function Step3Component({ step, moveToStep, publicKey, pageName }) {
+export default function Step3Component({ step, moveToStep, publicAddress, pageName }) {
     const { setIsLoggedIn, wallet } = useContext(UserContext)
 
     useEffect(() => {
@@ -25,14 +25,14 @@ export default function Step3Component({ step, moveToStep, publicKey, pageName }
                     <img className="w-full object-cover object-center" alt="create page step1 image" src={walletPic} />
                 </div>
 
-                <div className=" flex flex-col sm:w-60 justify-center ">
+                <div className=" flex flex-col justify-center ">
                     <div className="text-center w-auto">
                     <p className="mb-4 leading-relaxed"> {(wallet.wallet === "metamask") ? ("We have connected your Metamask wallet.") : ("We went ahead and made a wallet for you.") } </p>
                         
                     </div>
                     <div className="text-center w-auto">
                         <p className="mb-6 relaxed font-semibold">
-                            {publicKey}
+                            {publicAddress}
                         </p>
                     </div>
                     <div className="mx-auto">
