@@ -1,7 +1,7 @@
 
 export const registerPage = async (pageName, publicKey, token) => {
 
-    const data = {
+    const register = {
         pageName: pageName,
         metaMaskWalletPublicKey: "",
         generatedMaticWalletPublicKey: publicKey,
@@ -15,16 +15,14 @@ export const registerPage = async (pageName, publicKey, token) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(register)
     });
 
     const status = await res.status
-    const da = await res.json()
-    console.log(da)
+    
     if(status !== 200){
-        return null
+        return false
     }
-
-    const response = await res.json()
-    return response
+    return true
+    
 }

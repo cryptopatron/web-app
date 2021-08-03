@@ -27,7 +27,7 @@ export default function Step3Component({ step, moveToStep, publicKey, pageName }
 
                 <div className=" flex flex-col sm:w-60 justify-center ">
                     <div className="text-center w-auto">
-                    <p className="mb-4 leading-relaxed"> {(wallet.wallet !== "metmask") ? ("We went ahead and made a wallet for you.") : ("We have connected your Metamask wallet.") } </p>
+                    <p className="mb-4 leading-relaxed"> {(wallet.wallet === "metamask") ? ("We have connected your Metamask wallet.") : ("We went ahead and made a wallet for you.") } </p>
                         
                     </div>
                     <div className="text-center w-auto">
@@ -35,7 +35,7 @@ export default function Step3Component({ step, moveToStep, publicKey, pageName }
                             {publicKey}
                         </p>
                     </div>
-                    <div className="">
+                    <div className="mx-auto">
                         <Link to={`/${pageName}`}>
                             <button className="btn-sec">Continue to your page <FontAwesomeIcon icon={faArrowRight} /></button>
                         </Link>

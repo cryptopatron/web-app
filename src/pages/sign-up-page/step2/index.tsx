@@ -47,12 +47,14 @@ export default function Step2Component({ step,
     });
 
     let nameLengthCSS = classNames({
+        'mb-1': true,
         'text-xs': true,
         'text-center': true,
         'hidden': isValid
     });
 
     let userPresentCSS = classNames({
+        'mb-1': true,
         'text-sm': true,
         'text-center': true,
         'hidden': isNamePresent,
@@ -97,16 +99,18 @@ export default function Step2Component({ step,
                 if (wallet.wallet === "metamask") {
                     console.log(wallet)
                     setPublicKey(wallet.address)
-                    registerPage(pageName, wallet.address, token);
-                    moveToStep(3);
+                    if (registerPage(pageName, wallet.address, token)) {
+                        moveToStep(3);
+                    }
                 }
                 else {
                     generateWallet(accessToken).then((walletAddr) => {
                         if (walletAddr) {
                             console.log("Public wallet address ", walletAddr);
                             setPublicKey(walletAddr)
-                            registerPage(pageName, walletAddr, token);
-                            moveToStep(3);
+                            if (registerPage(pageName, walletAddr, token)) {
+                                moveToStep(3)
+                            }
                         }
                     });
                 }
@@ -132,15 +136,19 @@ export default function Step2Component({ step,
                         </div>
                     </div>
                     <div className="w-68 sm:w-72 mt-3">
-                        <div className="flex w-full h-20 justify-center items-start mt-5">
+                        <div className="flex w-full h-20 justify-center items-end mt-5">
                             <div className="relative w-full">
-                                <label className={nameLengthCSS}>Page name must have 4 or more characters</label>
-                                <label className={userPresentCSS}>Apologies! This name has already been taken.</label>
-                                <input type="text" value={pageName} id="hero-field" onChange={(e) => handleChange(e.target.value)} name="hero-field" placeholder="Page Name" className={pageChangeCSS} />
+                                <div>
+                                    <label className={nameLengthCSS}>Page name must have 4 or more characters</label>
+                                    <label className={userPresentCSS}>Apologies! This name has already been taken.</label>
+                                </div>
+                                <div>
+                                    <input type="text" value={pageName} id="hero-field" onChange={(e) => handleChange(e.target.value)} name="hero-field" placeholder="Page Name" className={pageChangeCSS} />
+                                </div>
                             </div>
                         </div>
 
-                        <div className="flex justify-center items-center mt-2">
+                        <div className="flex justify-center items-center mt-3">
                             <button className={buttonInactiveCSS} onClick={() => onCreateClick()} >Create</button>
                         </div>
                     </div>
