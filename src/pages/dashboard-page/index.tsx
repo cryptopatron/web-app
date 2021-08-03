@@ -6,6 +6,7 @@ import NavbarComponent from '../../components/navbar'
 import SidePanelComponent from './components/side-panel'
 import MainPanelComponent from './components/main-panel'
 import { getTransactionByPageName } from '../../services/backendService'
+import { loggedInContent } from './navbar-content'
 
 export default function DashboardPage() {
     const [transaction, setTransactions] = useState()

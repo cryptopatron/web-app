@@ -17,7 +17,6 @@ export default function NavbarComponent({
     showLoginOverlay
 
 }) {
-
     return (
         <>
             <nav className="h-14 bg-white">
@@ -101,7 +100,6 @@ export default function NavbarComponent({
                     </div>
                 </Dialog>
             </Transition>
-
         </>
     );
 }

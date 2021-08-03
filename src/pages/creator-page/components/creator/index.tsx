@@ -3,17 +3,18 @@ import { Link } from 'react-router-dom'
 import ImageDefaultProfile1 from './../../../../assets/images/default_profile_1.svg';
 import EditOverlayComponent from './edit-overlay';
 import { randomPastelColourService } from '../../../../services/randomPastelColourService';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import LoggedInUserContext from '../../../../contexts/logged-in-user';
 
-export default function CreatorComponent({ creator, isLoggedIn }) {
+export default function CreatorComponent({ creator }) {
 
     const [showOverlay, setShowOverlay] = useState(false)
-
+    const {user} = useContext(LoggedInUserContext)
     const profileBg = randomPastelColourService()
 
     const closeOverlay = () => {
@@ -24,6 +25,14 @@ export default function CreatorComponent({ creator, isLoggedIn }) {
         setShowOverlay(true)
     }
 
+    const isCurrentUser = () => {
+
+        if (user.pageName === creator.pageName){
+            return true
+        }
+        return false
+
+    }
 
 
     return ((!creator.pageName) ? (<Skeleton count={1} height={200} />) : (
@@ -40,7 +49,7 @@ export default function CreatorComponent({ creator, isLoggedIn }) {
                 </Link>
 
                 <div className="text-center mt-16 mb-4 font-medium">{(creator.name) ? creator.name : creator.pageName}</div>
-                <div className="text-center mx-auto mt-18 font-light w-10/12">{creator.bio} <span>{(isLoggedIn) ? (<div className="cursor-pointer mx-auto text-xs font-light" onClick={() => { openOverlay() }}> <FontAwesomeIcon icon={faEdit}/> Edit Profile</div>) : (<></>)}</span></div>
+                <div className="text-center mx-auto mt-18 font-light w-10/12">{creator.bio} <span>{(isCurrentUser()) ? (<div className="cursor-pointer mx-auto text-xs font-light" onClick={() => { openOverlay() }}> <FontAwesomeIcon icon={faEdit}/> Edit Profile</div>) : (<></>)}</span></div>
                 {/* TODO remove is true */}
 
             </div>

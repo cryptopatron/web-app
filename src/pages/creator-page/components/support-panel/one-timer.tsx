@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react'
 import ListboxComponent from '../../../../components/listbox'
-import { tokens } from './payment_options'
+import Modal from "../../../../components/modal";
 
 const minimum = 3; // minimum amount in one-time
 
-export default function OneTimerComponent({ addPayment }) {
+export default function OneTimerComponent({ addPayment, tokens, network, setIsOpen}) {
 
     const [amount, setAmount] = useState<number>(5)
     const [currency, setCurrency] = useState(tokens[0])
-
 
     const getAmount = (value) => {
         if (value) {
@@ -37,13 +36,12 @@ export default function OneTimerComponent({ addPayment }) {
     }
 
     useEffect(() => {
-        const payment  = {
+        const payment = {
             amount: amount,
             currency_name: currency.value
         }
         addPayment(payment)
     }, [amount, currency])
-
 
     return (
         <div className="flex flex-col justify-center text-center w-full">
@@ -67,9 +65,15 @@ export default function OneTimerComponent({ addPayment }) {
             {/* Help */}
             <div className="flex flex-col justify-center mt-1">
                 {/*<div className="text-gray-400 text-xs font-light">Have you heard of stream?</div>*/}
-                {/*TODO: Update Link below*/}
-                <a href="/"><div className="text-primary-light text-sm font-light">Help</div></a>
+                <div>
+                    <button onClick={() => setIsOpen(true)}>
+                        <div className="text-primary-light text-sm font-light">Help</div>
+                    </button>
+
+                </div>
+
             </div>
+
         </div>
     )
 }

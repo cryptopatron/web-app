@@ -1,9 +1,14 @@
 import { useState, useEffect, useContext } from "react";
 import NavbarComponent from "./components/navbar";
-import useAuthUser from "../../hooks/useAuthUser";
+
 import { howToContent } from "./how-to";
+import { getAuthUser } from "../../services/backendService";
+import { useHistory } from "react-router";
+import * as PATHS from '../../constants/paths'
+
 //context
 import UserContext from "../../contexts/user";
+import LoggedInUserContext from "../../contexts/logged-in-user";
 
 // images
 import ImageStartJourney from "./../../assets/images/start_journey.svg";
@@ -12,19 +17,31 @@ import FooterComponent from "../../components/footer";
 import Rectangle from "./../../assets/images/rect.svg"
 
 export default function LandingPage() {
-    const { token, setToken, isLoggedIn } = useContext(UserContext);
+
+    const { token, setToken, setIsAuth } = useContext(UserContext);
+    const { setUser } = useContext(LoggedInUserContext)
     const [pageName, setPageName] = useState<string>();
     const [showLoginOverlay, setShowLoginOverlay] = useState(false);
+    const history = useHistory()
 
-    const { setResponse } = useAuthUser();
-
-    const logIn = (jwt) => {
+    const logIn = async (jwt) => {
         if (!token) {
             setToken(jwt);
         }
-
-        const endpoint = "/api/v1/google/users/get";
-        setResponse(endpoint, jwt);
+        const response = await getAuthUser(jwt);
+        
+        if (response.status === 401){
+            setToken(null)
+            history.push('/')
+        }
+        if (response.status === 404) {
+            history.push(PATHS.ONBOARD)
+        }
+        if (response.status === 200) {
+            setIsAuth(true)
+            setUser(response.data)
+            history.push(PATHS.DASHBOARD)
+        }
     };
 
     const clickSignIn = () => {
@@ -45,17 +62,10 @@ export default function LandingPage() {
 
     useEffect(() => {
         document.title = "Kōen";
-        console.log("useEffect listener");
-
-        if (token) {
-            console.log("token present - calling api");
-            const endpoint = "/api/v1/google/users/get";
-            setResponse(endpoint, token);
-        }
     }, []);
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div>
             <NavbarComponent
                 setToken={logIn}
                 token={token}
@@ -64,7 +74,6 @@ export default function LandingPage() {
                 closeModal={closeModal}
                 showLoginOverlay={showLoginOverlay}
             />
-
             <div className="container mx-auto sm:px-6 flex-grow">
 
                 <div className="flex justify-center">
@@ -72,6 +81,7 @@ export default function LandingPage() {
                         <p className="mt-10 text-4xl font-semibold  md:text-5xl">
                             {" "}
                             <span className="leading-tight">Get your <div className=" inline-block "> <div className="z-10 relative"> creat</div> <div className="z-0"><img className="absolute transform -translate-y-4 md:-translate-y-5 -translate-x-8 w-32 h-3 md:w-40 md:h-4" src={Rectangle} alt="" /></div></div>ive work funded</span> <br /> <span className="text-4xl font-normal">on a truly global platform</span>{" "}
+
                         </p>
                     </div>
                 </div>
