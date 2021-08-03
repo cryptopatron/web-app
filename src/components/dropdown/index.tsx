@@ -7,13 +7,15 @@ import UserContext from '../../contexts/user';
 
 export default function DropdownComponent({ dropdownContent }) {
     const history = useHistory()
-    const {setToken} = useContext(UserContext)
+    const {setToken, setWallet} = useContext(UserContext)
 
     const reroute = (content) =>{
         // id=4 for sign out
         if (content.id === 4) { 
-            setToken("")
+            setToken(null)
             localStorage.removeItem("token")
+            setWallet({wallet:"", address:""})
+            localStorage.removeItem("wallet")
         }
         history.push(content.path)
     }

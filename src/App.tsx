@@ -13,7 +13,7 @@ function App() {
     const {token, setToken} = useToken();
     const [accessToken, setAccessToken] = useState('');
     return (
-        <UserContext.Provider value={{ isAuth, setIsAuth, token, setToken, accessToken, setAccessToken }}>
+        <UserContext.Provider value={{ isAuth, setIsAuth, token, setToken, accessToken, setAccessToken, wallet, setWallet }}>
             <LoggedInUserContext.Provider value={{ user, setUser }}>
                 <Router/>
             </LoggedInUserContext.Provider>

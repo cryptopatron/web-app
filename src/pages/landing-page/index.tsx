@@ -26,6 +26,7 @@ export default function LandingPage() {
         const response = await getAuthUser(jwt);
         
         if (response.status === 401){
+            setToken(null)
             history.push('/')
         }
         if (response.status === 404) {

@@ -1,5 +1,5 @@
 export const getAuthUser = async (jwt) => {
-    const endpoint = window.origin + '/api/v1/google/users/get'
+    const endpoint = window.origin + '/api/v1/users/get'
     const res = await fetch(endpoint, {
         method: "POST",
         body: JSON.stringify({

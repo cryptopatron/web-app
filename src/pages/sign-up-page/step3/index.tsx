@@ -6,7 +6,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import UserContext from '../../../contexts/user';
 import { useContext, useEffect } from 'react';
 
-export default function Step3Component({ step, moveToStep, publicKey, pageName }) {
+export default function Step3Component({ step, moveToStep, publicAddress, pageName }) {
     const { setIsAuth, wallet } = useContext(UserContext)
 
     useEffect(() => {

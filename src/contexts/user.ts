@@ -21,5 +21,5 @@ const defaultWallet = {
     address: ""
 }
 
-const UserContext = createContext<userContextType>({isLoggedIn:false, setIsLoggedIn:()=>{}, token:"string", setToken:()=>{}, accessToken:'', setAccessToken:() => {}, wallet:defaultWallet, setWallet:()=>{} });
+const UserContext = createContext<userContextType>({isAuth:false, setIsAuth:()=>{}, token:"string", setToken:()=>{}, accessToken:'', setAccessToken:() => {}, wallet:defaultWallet, setWallet:()=>{} });
 export default UserContext;
