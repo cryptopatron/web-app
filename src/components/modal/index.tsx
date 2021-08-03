@@ -18,7 +18,7 @@ function get_help_info(full_details) {
                         How to switch to Mumbai Testnet on Metamask
                     </p>
                 </a>
-                <a href="https://faucet.matic.network/">
+                <a href="https://faucet.matic.network/"  target="_blank">
                     <p className="text-sm m-4">
                         How to get Matic to pay for transactions on Mumbai
                     </p>

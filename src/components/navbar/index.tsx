@@ -27,11 +27,12 @@ export default function NavbarComponent() {
             <div className="container mx-auto max-w-screen-xl h-full">
                 <div className="flex justify-between h-full">
                     <div className="text-gray-700 text-center flex items-center align-items cursor-pointer mx-8">
-                        <h1 className="flex justify-center w-full">
+                       <a href="/">
+                           <h1 className="flex justify-center w-full">
                             koen
                             {/* <img src="/images/logo.png" alt="Instagram" className="mt-2 w-6/12" /> */}
-
-                        </h1>
+                            </h1>
+                       </a>
                     </div>
                     <div className="text-gray-700 text-center flex items-center align-items mx-8">
 
