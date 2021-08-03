@@ -1,5 +1,6 @@
 import * as PATHS from '../../constants/paths'
 
+
 export const notLoggedinContent = [
     {
         id: 1,

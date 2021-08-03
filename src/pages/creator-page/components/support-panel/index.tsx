@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import StreamComponent from './stream'
 import OneTimerComponent from './one-timer';
 import ListboxComponent from '../../../../components/listbox';
+import Modal from '../../../../components/modal';
 import { tokens, networks } from './payment_options';
 
 import { OneTimePayment, Subscription } from "../../payment";
@@ -33,13 +34,15 @@ export default function SupportPanelComponent({ creatorDetails }) {
 
     const [msg, setMsg] = useState();
     const [error, setError] = useState();
+    // to show or hide Modal
+    const [isOpen, setIsOpen] = useState(false);
 
 
     function get_to_address(creator_details, network_value) {
         if (network_value === "mumbai") {
-            return creator_details.generatedMaticWalletPublicKey;
+            return creator_details.generatedMaticWalletPublicAddress;
         } else {
-            return creator_details.metaMaskWalletPublicKey;
+            return creator_details.metaMaskWalletPublicAddress;
         }
     }
 
@@ -71,6 +74,7 @@ export default function SupportPanelComponent({ creatorDetails }) {
     }, [oneTimePaymentDetails, subscriptionPaymentDetails]);
 
 
+    // @ts-ignore
     return (
         <div className="flex flex-col mt-4 shadow-float-900 bg-white rounded-md text-center justify-center" style={{ width: '21rem' }}>
 
@@ -88,10 +92,14 @@ export default function SupportPanelComponent({ creatorDetails }) {
                         (<StreamComponent
                             addPayment={setSubscriptionPaymentDetails}
                             tokens={tokens[network.id]}
+                            network={network}
+                            setIsOpen={setIsOpen}
                         />) :
                         (<OneTimerComponent
                             addPayment={setOneTimePaymentDetails}
                             tokens={tokens[network.id]}
+                            network={network}
+                            setIsOpen={setIsOpen}
                         />)}
                 </div>
             </div>
@@ -144,6 +152,9 @@ export default function SupportPanelComponent({ creatorDetails }) {
                 <h6 style={{ color: "red" }}>{error}</h6>
                 <br></br>
             </div>
+            <Modal isOpen={isOpen} setIsOpen={setIsOpen} full_details={{
+                network: network
+            }} />
         </div>
     )
 }

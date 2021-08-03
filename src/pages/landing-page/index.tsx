@@ -52,6 +52,7 @@ export default function LandingPage() {
 
     function openModal() {
         setShowLoginOverlay(true);
+
     }
 
     useEffect(() => {

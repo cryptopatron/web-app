@@ -12,13 +12,13 @@ import UserContext from '../../../contexts/user';
 export default function Step2Component({ step,
     moveToStep,
     accessToken,
-    setPublicKey,
+    setPublicAddress,
     pageName,
     setPageName }) {
     const [isValid, setValid] = useState(false);
     const [isNeutral, setNeutral] = useState(true);
     const [isNamePresent, setIsNamePresent] = useState(true);
-    const { token } = useContext(UserContext);
+    const { token, wallet } = useContext(UserContext);
 
     const profileBg = randomPastelColourService()
 
@@ -47,12 +47,14 @@ export default function Step2Component({ step,
     });
 
     let nameLengthCSS = classNames({
+        'mb-1': true,
         'text-xs': true,
         'text-center': true,
         'hidden': isValid
     });
 
     let userPresentCSS = classNames({
+        'mb-1': true,
         'text-sm': true,
         'text-center': true,
         'hidden': isNamePresent,
@@ -62,7 +64,7 @@ export default function Step2Component({ step,
     let buttonInactiveCSS = classNames({
 
         'btn-main w-full text-center': true,
-        'bg-gray-200 text-gray-300 hover:bg-gray-300 hover:text-gray-600 pointer-events-none': !(isValid),
+        'opacity-50 hover:opacity-50 pointer-events-none': !(isValid),
 
     });
 
@@ -92,15 +94,29 @@ export default function Step2Component({ step,
 
     const onCreateClick = async () => {
         if (isValid) {
-            if (checkIfUserExists(pageName)) {
-                generateWallet(accessToken).then((walletAddr) => {
-                    if (walletAddr) {
-                        console.log("Public wallet address ", walletAddr);
-                        setPublicKey(walletAddr)
-                        registerPage(pageName, walletAddr, token);
+            const isPresent = await checkIfUserExists(pageName)
+            if (isPresent) {
+
+                if (wallet.wallet === "metamask") {
+                    console.log(wallet)
+                    setPublicAddress(wallet.address)
+                    const status = await registerPage(pageName, {metaMaskWalletPublicAddress: wallet.address}, token)
+                    if (status) {
                         moveToStep(3);
                     }
-                });
+                }
+                else {
+                    generateWallet(accessToken).then( async (walletAddr) => {
+                        if (walletAddr) {
+                            console.log("Public wallet address ", walletAddr);
+                            setPublicAddress(walletAddr)
+                            const status = await registerPage(pageName, {generatedMaticWalletPublicAddress: walletAddr}, token)
+                            if (status) {
+                                moveToStep(3)
+                            }
+                        }
+                    });
+                }
             }
             else {
                 setIsNamePresent(false);
@@ -123,15 +139,19 @@ export default function Step2Component({ step,
                         </div>
                     </div>
                     <div className="w-68 sm:w-72 mt-3">
-                        <div className="flex w-full h-20 justify-center items-start mt-5">
+                        <div className="flex w-full h-20 justify-center items-end mt-5">
                             <div className="relative w-full">
-                                <input type="text" value={pageName} id="hero-field" onChange={(e) => handleChange(e.target.value)} name="hero-field" placeholder="Page Name" className={pageChangeCSS} />
-                                <label className={nameLengthCSS}>Page name must have 4 or more characters</label>
-                                <label className={userPresentCSS}>Apologies! This name has already been taken.</label>
+                                <div>
+                                    <label className={nameLengthCSS}>Page name must have 4 or more characters</label>
+                                    <label className={userPresentCSS}>Apologies! This name has already been taken.</label>
+                                </div>
+                                <div>
+                                    <input type="text" value={pageName} id="hero-field" onChange={(e) => handleChange(e.target.value)} name="hero-field" placeholder="Page Name" className={pageChangeCSS} />
+                                </div>
                             </div>
                         </div>
 
-                        <div className="flex justify-center items-center ">
+                        <div className="flex justify-center items-center mt-3">
                             <button className={buttonInactiveCSS} onClick={() => onCreateClick()} >Create</button>
                         </div>
                     </div>

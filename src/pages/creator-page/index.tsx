@@ -35,7 +35,7 @@ export default function CreatorPage() {
     }, [pagename, history])
 
     return (
-        (creator?.pageName && (creator?.generatedMaticWalletPublicKey || creator?.metaMaskWalletPublicKey)) ? (
+        (creator?.pageName && (creator?.generatedMaticWalletPublicAddress || creator?.metaMaskWalletPublicAddress)) ? (
             <>
                 <NavbarComponent loggedInContent={loggedInContent}/>
                 <CreatorComponent creator={creator}/>
@@ -43,6 +43,5 @@ export default function CreatorPage() {
                     <SupportPanelComponent creatorDetails={creator} />
                 </div>
             </>) : (null)
-
     )
 }
