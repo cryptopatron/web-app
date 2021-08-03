@@ -94,21 +94,24 @@ export default function Step2Component({ step,
 
     const onCreateClick = async () => {
         if (isValid) {
-            if (checkIfUserExists(pageName)) {
+            const isPresent = await checkIfUserExists(pageName)
+            if (isPresent) {
 
                 if (wallet.wallet === "metamask") {
                     console.log(wallet)
                     setPublicAddress(wallet.address)
-                    if (registerPage(pageName, {metaMaskWalletPublicAddress: wallet.address}, token)) {
+                    const status = await registerPage(pageName, {metaMaskWalletPublicAddress: wallet.address}, token)
+                    if (status) {
                         moveToStep(3);
                     }
                 }
                 else {
-                    generateWallet(accessToken).then((walletAddr) => {
+                    generateWallet(accessToken).then( async (walletAddr) => {
                         if (walletAddr) {
                             console.log("Public wallet address ", walletAddr);
                             setPublicAddress(walletAddr)
-                            if (registerPage(pageName, {generatedMaticWalletPublicAddress: walletAddr}, token)) {
+                            const status = await registerPage(pageName, {generatedMaticWalletPublicAddress: walletAddr}, token)
+                            if (status) {
                                 moveToStep(3)
                             }
                         }

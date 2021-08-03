@@ -22,21 +22,14 @@ export const checkIfUserExists = async (pageName) => {
         method: "GET",
     });
     const status = await res.status
-    const response = await res.json();
+    const response = await JSON.stringify(res.json());
     console.log(status);
-    if (status === 200) {
-        return false;
-    }
-    else if (status !== 200 && response != null) {
-        if (response.body.includes('user does not exist')) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    console.log(response)
+    if (status === 200 && response === '{}') {
+        return true
     }
     else {
-
+        return false
     }
 }
 
