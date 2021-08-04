@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import ListboxComponent from '../../../../components/listbox'
-import Modal from "../../../../components/modal";
 
 const minimum = 3; // minimum amount in one-time
 
-export default function OneTimerComponent({ addPayment, tokens, network, setIsOpen}) {
+export default function OneTimerComponent({ addPayment, tokens, network, setIsOpen }) {
 
     const [amount, setAmount] = useState<number>(5)
     const [currency, setCurrency] = useState(tokens[0])
@@ -44,33 +43,30 @@ export default function OneTimerComponent({ addPayment, tokens, network, setIsOp
     }, [amount, currency])
 
     return (
-        <div className="flex flex-col justify-center text-center w-full">
-            <div className="font-light text-xs my-1"> Make a one-time donation.</div>
+        <div className="flex flex-col justify-center items-center text-center w-full">
+            <div className="font-light text-xs mt-8 mb-1"> Make a one-time donation</div>
 
             {/* Input field*/}
-            <div className="flex flex-row justify-center items-center h-8 my-2">
+            <div className="flex flex-row justify-center h-8 my-2">
                 <div className="mx-1">
                     <button className=" px-3 py-1 text-gray-500 bg-graywhite-100 hover:text-gray-700 hover:bg-gray-200 focus:outline-none rounded-l-md" onClick={() => { decrementAmount() }}>-</button>
-                    <input type="text" className=" px-3 py-1 w-20 text-center focus:outline-none bg-graywhite-100 mx-auto"
+                    <input type="text" className=" px-3 py-1 h-8 w-20 text-center focus:outline-none bg-graywhite-100 mx-auto"
                         value={amount}
                         onChange={(e) => getAmount(e.target.value)} />
                     <button className="  px-3 py-1 text-gray-500 bg-graywhite-100 hover:bg-gray-200 hover:text-gray-700 focus:outline-none  rounded-r-md" onClick={() => { incrementAmount() }}>+</button>
                 </div>
 
-                <div style={{ width: '4.5rem' }}>
+                <div className="w-20">
                     <ListboxComponent content={currency} setContent={setCurrency} ListboxContent={tokens} />
                 </div>
             </div>
 
             {/* Help */}
-            <div className="flex flex-col justify-center mt-1">
+            <div className="flex mt-1 flex-grow items-end self-stretch justify-center">
                 {/*<div className="text-gray-400 text-xs font-light">Have you heard of stream?</div>*/}
-                <div>
-                    <button onClick={() => setIsOpen(true)}>
-                        <div className="text-primary-light text-sm font-light">Help</div>
-                    </button>
-
-                </div>
+                <button onClick={() => setIsOpen(true)}>
+                    <div className="text-primary-light text-sm font-light">Help</div>
+                </button>
 
             </div>
 

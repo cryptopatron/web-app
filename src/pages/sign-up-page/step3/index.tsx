@@ -1,6 +1,5 @@
 import walletPic from '../../../assets/images/wallet-svg.svg'
 import { Link } from 'react-router-dom';
-import * as PATHS from '../../../constants/paths'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import UserContext from '../../../contexts/user';

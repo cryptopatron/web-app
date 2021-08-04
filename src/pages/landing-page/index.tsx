@@ -18,7 +18,7 @@ import Rectangle from "./../../assets/images/rect.svg"
 
 export default function LandingPage() {
 
-    const { token, setToken, setIsAuth } = useContext(UserContext);
+    const { token, setToken, setIsAuth, setWallet } = useContext(UserContext);
     const { setUser } = useContext(LoggedInUserContext)
     const [pageName, setPageName] = useState<string>();
     const [showLoginOverlay, setShowLoginOverlay] = useState(false);
@@ -32,6 +32,7 @@ export default function LandingPage() {
         
         if (response.status === 401){
             setToken(null)
+            setWallet({wallet:"", address:""})
             history.push('/')
         }
         if (response.status === 404) {
@@ -40,7 +41,7 @@ export default function LandingPage() {
         if (response.status === 200) {
             setIsAuth(true)
             setUser(response.data)
-            history.push(PATHS.DASHBOARD)
+            history.push(`/${response.data.pageName}`)
         }
     };
 

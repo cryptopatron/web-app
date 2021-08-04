@@ -13,7 +13,7 @@ import { handle_one_time_txn, handle_streaming_txn, handle_mint_txn } from "./ha
 
 export default function SupportPanelComponent({ creatorDetails }) {
 
-    const [streamButtomActive, setStreamButtonActive] = useState(true);
+    const [streamButtomActive, setStreamButtonActive] = useState(false);
 
     const [network, setNetwork] = useState(networks[0]);
 
@@ -76,7 +76,7 @@ export default function SupportPanelComponent({ creatorDetails }) {
 
     // @ts-ignore
     return (
-        <div className="flex flex-col mt-4 shadow-float-900 bg-white rounded-md text-center justify-center" style={{ width: '21rem' }}>
+        <div className="flex flex-col mt-4 shadow-float-900 bg-white rounded-md text-center" style={{ width: '21rem' }}>
 
 
             <div className="font-semibold my-5">
@@ -112,14 +112,14 @@ export default function SupportPanelComponent({ creatorDetails }) {
                         <button className="btn-main mt-4 w-full" onClick={() => {
                             handle_streaming_txn(setMsg, setError, get_full_subscription_details(), creatorDetails)
                         }}>
-                            <span>{"Start " + String(subscriptionPaymentDetails.currency_name) + " Subscription"}</span>
+                            <span>{"Stream " + String(subscriptionPaymentDetails.amount_per) + " " + String(subscriptionPaymentDetails.currency_name)}</span>
                         </button>
                     </div>) :
                     (<div>
                         <button className="btn-main mt-4 w-full" onClick={() => {
                             handle_one_time_txn(setMsg, setError, get_full_one_time_details(), creatorDetails)
                         }}>
-                            <span>{"Send " + String(oneTimePaymentDetails.amount) + " " + oneTimePaymentDetails.currency_name + " Donation" }</span>
+                            <span>{"Send " + String(oneTimePaymentDetails.amount) + " " + oneTimePaymentDetails.currency_name }</span>
                         </button>
                     </div>)
                 }

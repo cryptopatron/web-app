@@ -23,7 +23,7 @@ export default function LoginOverlayComponent({ setToken }) {
     };
 
     const responseGoogleOnFailure = (response) => {
-        console.log(JSON.stringify(response));
+
     };
 
     const logout = () => {
@@ -43,8 +43,6 @@ export default function LoginOverlayComponent({ setToken }) {
                 const currentUnix: string = String(Date.now());
                 if (accounts.length > 0) {
                     web3Provider.eth.personal.sign(currentUnix, String(accounts[0]), "").then(async (res) => {
-                        console.log(res)
-                        console.log("nonce " + currentUnix)
                         setWallet({ wallet: "metamask", address: accountAddress })
                         const loginParams = {
                             nonce: currentUnix,
@@ -81,8 +79,8 @@ export default function LoginOverlayComponent({ setToken }) {
                     </div>
                 </div>
 
-                <div className="flex flex-col mx-auto justify-center w-full max-w-sm sm:w-7/12 px-1 sm:px-8">
-                    <h2 className="text-center my-12">Ready. Set. Koen.</h2>
+                <div className="flex flex-col mx-auto justify-center w-full max-w-sm sm:w-7/12 px-1 sm:px-8 my-16">
+                    <h2 className="text-center mb-6">Ready. Set. Kōen.</h2>
                     <GoogleLogin
                         clientId={clientId}
                         scope={googlePerms}
@@ -112,7 +110,7 @@ export default function LoginOverlayComponent({ setToken }) {
 
                     <button
                         type="button"
-                        className="flex btn-sec m-4 justify-center sm:mb-14"
+                        className="flex btn-sec m-4 justify-center"
                         onClick={metamask_sign_in}
                     >
                         <span className="block text-left w-4/5 sm:w-11/12 sm:ml-4">
