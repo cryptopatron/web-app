@@ -2,42 +2,82 @@
 import { useState, useEffect } from 'react'
 import StreamComponent from './stream'
 import OneTimerComponent from './one-timer';
-import { handle_txn } from "./handle-txn";
-import {
-    Metamask_Mumbai_mint_fDAI,
-    Metamask_Mumbai_approve_fDAI,
-    Metamask_Mumbai_upgrade_fdai
-} from "../../../../Web3_Interaction/streamDonate";
-import { Metamask_Mumbai_stream_fDAIx } from "../../../../Web3_Interaction/superfluid_streaming";
+import ListboxComponent from '../../../../components/listbox';
+import Modal from '../../../../components/modal';
+import { tokens, networks } from './payment_options';
+
+import { OneTimePayment, Subscription } from "../../payment";
+
+import { handle_one_time_txn, handle_streaming_txn, handle_mint_txn } from "./handle-txn";
+
 
 export default function SupportPanelComponent({ creatorDetails }) {
 
     const [streamButtomActive, setStreamButtonActive] = useState(true);
-    const [paymentDetails, setPaymentDetails] = useState({
-        amount: 5
+
+    const [network, setNetwork] = useState(networks[0]);
+
+    const [oneTimePaymentDetails,  setOneTimePaymentDetails] = useState({
+        amount: 0,
+        network: "Mumbai Polygon Testnet",
+        to_address: "0x7675289Fbd414acAE84752Bd789483a44B2d1576",
+        currency_name: "DAI"
+    });
+
+    const [subscriptionPaymentDetails, setSubscriptionPaymentDetails] = useState({
+        amount_per: 0,
+        network: "",
+        currency_name: "DAI",
+        payment_schedule: [],
+        to_address: ""
     });
 
     const [msg, setMsg] = useState();
     const [error, setError] = useState();
+    // to show or hide Modal
+    const [isOpen, setIsOpen] = useState(false);
 
-    const addPayment = (value) => {
-        if (creatorDetails.metaMaskWalletPublicKey) {
-            setPaymentDetails({ ...value, name:creatorDetails.name, wallet:creatorDetails.metaMaskWalletPublicKey })
-        }
-        
-        if (creatorDetails.generatedMaticWalletPublicKey) {
-            setPaymentDetails({ ...value, name:creatorDetails.name, wallet:creatorDetails.generatedMaticWalletPublicKey })
+
+    function get_to_address(creator_details, network_value) {
+        if (network_value === "mumbai") {
+            return creator_details.generatedMaticWalletPublicAddress;
+        } else {
+            return creator_details.metaMaskWalletPublicAddress;
         }
     }
 
-    // useEffect(() => {
-    //     console.log("paymentDetails")
-    //     console.log(paymentDetails)
-    // }, [paymentDetails])
+    function get_full_one_time_details() {
+        const full_details : OneTimePayment = {
+            ...oneTimePaymentDetails,
+            network: network.id,
+            to_address: get_to_address(creatorDetails, network.id)
+        };
+        return full_details;
+    }
+
+    function get_full_subscription_details() {
+        const full_details : Subscription = {
+            ...subscriptionPaymentDetails,
+            network: network.id,
+            to_address: get_to_address(creatorDetails, network.id)
+        };
+        return full_details;
+    }
+
+    // returns true if the user has selected a testnet network, and false if not
+    function isTestnet() {
+        return ((network.id === "ropsten") || (network.id === "mumbai"));
+    }
+
+    useEffect(() => {
+        //pass
+    }, [oneTimePaymentDetails, subscriptionPaymentDetails]);
 
 
+    // @ts-ignore
     return (
         <div className="flex flex-col mt-4 shadow-float-900 bg-white rounded-md text-center justify-center" style={{ width: '21rem' }}>
+
 
             <div className="font-semibold my-5">
                 Support me!
@@ -48,51 +88,73 @@ export default function SupportPanelComponent({ creatorDetails }) {
                 <button className={(streamButtomActive) ? (" tab-active ") : (" tab-inactive ")} onClick={() => { setStreamButtonActive(true) }}>stream</button>
                 <button className={(streamButtomActive) ? (" tab-inactive ") : (" tab-active ")} onClick={() => { setStreamButtonActive(false) }}> one-timer</button>
                 <div className="bg-white rounded-md col-span-2 h-44 z-20 flex p-4 justify-center text-center shadow-float-800" >
-                    {(streamButtomActive) ? (<StreamComponent addPayment={addPayment} />) : (<OneTimerComponent addPayment={addPayment} />)}
+                    {(streamButtomActive) ?
+                        (<StreamComponent
+                            addPayment={setSubscriptionPaymentDetails}
+                            tokens={tokens[network.id]}
+                            network={network}
+                            setIsOpen={setIsOpen}
+                        />) :
+                        (<OneTimerComponent
+                            addPayment={setOneTimePaymentDetails}
+                            tokens={tokens[network.id]}
+                            network={network}
+                            setIsOpen={setIsOpen}
+                        />)}
                 </div>
             </div>
 
-            {/* message box */}
 
-            {/* pay button */}
             <div className="w-10/12 mx-auto">
-                <button className="btn-main mt-5 w-full" onClick={() => {
-                    handle_txn(setMsg, setError, paymentDetails)
-                }}>
-                    {(streamButtomActive) ? 'stream ' : 'send '}
-                    <span>{(paymentDetails.amount) ? paymentDetails.amount : ""}</span>
-                </button>
-                {(streamButtomActive) ? (<div>
-                    <button className="btn-main m-3" onClick={() => {
-                        Metamask_Mumbai_mint_fDAI(setMsg, setError)
-                    }}>
-                        Mint fDAI (on Mumbai)
-                    </button>
-                    <br></br>
-                    <button className="btn-main m-3" onClick={() => {
-                        Metamask_Mumbai_approve_fDAI(setMsg, setError)
-                    }}>
-                        Approve upgrading your fDAI
-                    </button>
-                    <br></br>
-                    <button className="btn-main m-3" onClick={() => {
-                        Metamask_Mumbai_upgrade_fdai(setMsg, setError)
-                    }}>
-                        Upgrade fDAI into fDAIx
-                    </button>
-                    <br></br>
-                    <button className="btn-main m-3" onClick={() => {
-                        Metamask_Mumbai_stream_fDAIx(setMsg, setError, paymentDetails)
-                    }}>
-                        Start Streaming fDAI
-                    </button>
+                {/* pay button */}
+                {(streamButtomActive)?
+                    (<div>
+                        <button className="btn-main mt-4 w-full" onClick={() => {
+                            handle_streaming_txn(setMsg, setError, get_full_subscription_details(), creatorDetails)
+                        }}>
+                            <span>{"Start " + String(subscriptionPaymentDetails.currency_name) + " Subscription"}</span>
+                        </button>
+                    </div>) :
+                    (<div>
+                        <button className="btn-main mt-4 w-full" onClick={() => {
+                            handle_one_time_txn(setMsg, setError, get_full_one_time_details(), creatorDetails)
+                        }}>
+                            <span>{"Send " + String(oneTimePaymentDetails.amount) + " " + oneTimePaymentDetails.currency_name + " Donation" }</span>
+                        </button>
+                    </div>)
+                }
+                {/* mint button */}
+                {(isTestnet())?(
+                    (streamButtomActive)?
+                    (<div>
+                        <button className="btn-main mt-4 w-full" onClick={() => {
+                            handle_mint_txn(setMsg, setError, get_full_subscription_details())
+                        }}>
+                            <span>{"Mint " + String(subscriptionPaymentDetails.currency_name)}</span>
+                        </button>
+                    </div>) :
+                    (<div>
+                        <button className="btn-main mt-4 w-full" onClick={() => {
+                            handle_mint_txn(setMsg, setError, get_full_one_time_details())
+                        }}>
+                            <span>{"Mint " + String(oneTimePaymentDetails.currency_name)}</span>
+                        </button>
+                    </div>)) :
+                    (<div></div>)
+                }
+                {/* select network */}
+                <div className="flex flex-col justify-center mt-3">
+                    <ListboxComponent content={network} setContent={setNetwork} ListboxContent={networks} />
                 </div>
-                ) : (<div></div>)}
+                {/* Messages: */}
+                <br></br>
                 {msg}
                 <h6 style={{ color: "red" }}>{error}</h6>
                 <br></br>
             </div>
+            <Modal isOpen={isOpen} setIsOpen={setIsOpen} full_details={{
+                network: network
+            }} />
         </div>
     )
-
 }

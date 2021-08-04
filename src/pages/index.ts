@@ -1,9 +1,9 @@
 import { lazy } from 'react'
 
-const LandingPage = lazy( () => import('./landing-page'))
-const NotFound = lazy( () => import('./not-found'))
-const ProfilePage = lazy( () => import('./creator-page'))
-const SignUpPage = lazy( () => import('./sign-up-page'))
-const DashboardPage = lazy( () => import('./dashboard-page'))
+import LandingPage from './landing-page'
+import NotFound from './not-found'
+import ProfilePage from './creator-page'
+import SignUpPage from './sign-up-page'
+import DashboardPage from './dashboard-page'
 
 export default { LandingPage, NotFound, ProfilePage, SignUpPage, DashboardPage }

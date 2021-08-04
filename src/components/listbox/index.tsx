@@ -5,8 +5,6 @@ import { faCaretDown, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default function ListboxComponent({ content, setContent, ListboxContent }) {
 
-    console.log(content)
-
     return (
         <Listbox value={content} onChange={setContent}>
             <div className="relative h-8 w-full">

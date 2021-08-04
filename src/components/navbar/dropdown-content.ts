@@ -1,36 +1,17 @@
 import * as PATHS from '../../constants/paths'
 
+
 export const notLoggedinContent = [
     {
         id: 1,
         label: "Sign In",
-        path: "/"
+        path: "/",
+        callback: () => {}
     },
     {
         id: 2,
         label: "About",
-        path: "/"
+        path: "/",
+        callback: () => {}
     }]
     
-export const loggedinContent = [
-    {
-        id: 1,
-        label: "DashBoard",
-        path: PATHS.DASHBOARD
-    },
-    {
-        id: 2,
-        label: "Home",
-        path: PATHS.PROFILE
-    },
-    {
-        id: 3,
-        label: "About",
-        path: "/"
-    },
-    {
-        id: 4,
-        label: "Sign Out",
-        path: "/"
-    },
-]

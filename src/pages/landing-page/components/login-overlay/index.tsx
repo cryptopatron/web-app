@@ -1,23 +1,25 @@
 import { GoogleLogin, GoogleLogout } from "react-google-login";
+import Web3 from "web3";
 import ImageLoginWoman from "./../../../../assets/images/login-woman.svg";
 import ImageGoogleIcon from "./../../../../assets/images/google-icon.svg";
 import ImageMetamaskIcon from "./../../../../assets/images/metamask-icon.svg";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import UserContext from "../../../../contexts/user";
-
-
+import { walletLogin } from "../../../../services/backendService";
 
 const clientId =
     "116852492535-37n739s732ui71hkfm19n5r3agv6g9c5.apps.googleusercontent.com";
 const googlePerms = "https://www.googleapis.com/auth/drive.appdata";
 
 export default function LoginOverlayComponent({ setToken }) {
-    const {setAccessToken} = useContext(UserContext);
+    const { setAccessToken, setWallet } = useContext(UserContext);
+    const [msg, setMsg] = useState('');
+    const [err, setErr] = useState('');
 
     const responseGoogleOnSuccess = (response) => {
         setToken(response.tokenId);
         setAccessToken(response.accessToken)
-        
+
     };
 
     const responseGoogleOnFailure = (response) => {
@@ -27,6 +29,44 @@ export default function LoginOverlayComponent({ setToken }) {
     const logout = () => {
         console.log("logged out");
     };
+
+    async function metamask_sign_in() {
+        setMsg('')
+        setErr('')
+
+        if ((window as any).ethereum) {
+            try {
+                const ethereum = (window as any).ethereum;
+                const web3Provider = new Web3(ethereum);
+                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                const accountAddress = String(accounts[0]);
+                const currentUnix: string = String(Date.now());
+                if (accounts.length > 0) {
+                    web3Provider.eth.personal.sign(currentUnix, String(accounts[0]), "").then(async (res) => {
+                        console.log(res)
+                        console.log("nonce " + currentUnix)
+                        setWallet({ wallet: "metamask", address: accountAddress })
+                        const loginParams = {
+                            nonce: currentUnix,
+                            signature: res,
+                            walletPublicAddress: accountAddress
+                        }
+                        const response = await walletLogin(loginParams)
+                        if (response.status === 200) {
+                            setWallet({ wallet: "metamask", address: accountAddress })
+                            setToken(response.data.idToken)
+                        }
+
+                    });
+
+                } else {
+                    setErr('No Accounts Found in Metamask')
+                }
+            } catch (error) {
+                setErr('Failed to Connect to Metamask');
+            }
+        }
+    }
 
     return (
         <>
@@ -73,6 +113,7 @@ export default function LoginOverlayComponent({ setToken }) {
                     <button
                         type="button"
                         className="flex btn-sec m-4 justify-center sm:mb-14"
+                        onClick={metamask_sign_in}
                     >
                         <span className="block text-left w-4/5 sm:w-11/12 sm:ml-4">
                             <img
@@ -83,13 +124,14 @@ export default function LoginOverlayComponent({ setToken }) {
                             login with MetaMask{" "}
                         </span>
                     </button>
-                    {/* <GoogleLogout
-                        clientId={clientId}
-                        buttonText="Logout"
-                        onLogoutSuccess={logout}
-                    ></GoogleLogout> */}
+                    <div className="text-center">
+                        <h6 style={{ alignSelf: "center", textAlign: "center" }}>{msg}</h6>
+                        <h6 style={{ color: "red" }}>{err}</h6>
+                    </div>
+                    <br></br><br></br>
                 </div>
             </div>
         </>
     );
 }
+

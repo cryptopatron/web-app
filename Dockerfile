@@ -13,7 +13,7 @@ RUN npm run build
 FROM golang:1.14.7-alpine AS GO_BUILD
 RUN apk add git build-base
 ADD https://api.github.com/repos/cryptopatron/koen-backend/git/refs/heads/master version.json
-RUN git clone https://github.com/cryptopatron/koen-backend.git /server
+RUN git clone https://dgan181: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@github.com/cryptopatron/koen-backend.git /server
 WORKDIR /server
 RUN go test -v ./...
 RUN go build -o /go/bin/server

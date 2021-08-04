@@ -12,8 +12,8 @@ export const defaultCreator = {
     email: "",
     name: "",
     pageName: "",
-    generatedMaticWalletPublicKey: "",
-    metaMaskWalletPublicKey: "",
+    generatedMaticWalletPublicAddress: "",
+    metaMaskWalletPublicAddress: "",
     bio: "",
 }
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useParams, useHistory } from "react-router";
 
 import NavbarComponent from "../../components/navbar";
@@ -6,11 +6,11 @@ import CreatorComponent from "./components/creator";
 import SupportPanelComponent from "./components/support-panel";
 import * as PATHS from '../../constants/paths'
 
-
 //test object ---> update the wallet address here
-import {defaultCreator} from '../../contexts/logged-in-user'
-import { getUserByPageName } from "../../services/backendService";
+import {defaultCreator} from './pay-creator'
 
+import { getUserByPageName } from "../../services/backendService";
+import { loggedInContent } from "./navbar-content";
 
 export default function CreatorPage() {
     const { pagename } = useParams<{ pagename?: string }>()
@@ -35,15 +35,13 @@ export default function CreatorPage() {
     }, [pagename, history])
 
     return (
-        // todod -> remove this
-        (creator?.pageName && (creator?.generatedMaticWalletPublicKey || creator?.metaMaskWalletPublicKey)) ? (
+        (creator?.pageName && (creator?.generatedMaticWalletPublicAddress || creator?.metaMaskWalletPublicAddress)) ? (
             <>
-                <NavbarComponent />
-                <CreatorComponent creator={creator} />
+                <NavbarComponent loggedInContent={loggedInContent}/>
+                <CreatorComponent creator={creator}/>
                 <div className="flex justify-center">
                     <SupportPanelComponent creatorDetails={creator} />
                 </div>
             </>) : (null)
-
     )
 }

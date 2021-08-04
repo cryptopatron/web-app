@@ -5,35 +5,51 @@ export const LANDINGPAGE = {
     path: '/',
     component: PAGES.LandingPage,
     exact: true,
-    protected: false
+    meta: {
+        protected: false,
+        restricted: false
+    }
+    
 }
 
 export const DASHBOARD = {
     path: PATHS.DASHBOARD,
     component: PAGES.DashboardPage,
     exact: false,
-    protected: true
+    meta: {
+        protected: true,
+        restricted: false
+    }
 }
 
 export const NOTFOUND = {
     path: PATHS.NOTFOUND,
     component: PAGES.NotFound,
     exact: false,
-    protected: false
+    meta: {
+        protected: false,
+        restricted: false
+    }
 }
 
 export const ONBOARD = {
     path: PATHS.ONBOARD,
     component: PAGES.SignUpPage,
     exact: false,
-    protected: false
+    meta: {
+        protected: false,
+        restricted: true
+    }
 }
 
 export const PROFILE = {
     path: PATHS.PROFILE,
     component: PAGES.ProfilePage,
     exact: false,
-    protected: false
+    meta: {
+        protected: false,
+        restricted: false
+    }
 }
 
 const ROUTES = [LANDINGPAGE, DASHBOARD,  NOTFOUND, ONBOARD, PROFILE]
