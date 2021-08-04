@@ -19,7 +19,7 @@ export default function NavbarComponent({
 }) {
     return (
         <>
-            <nav className="h-14 bg-white">
+            <nav className="h-14 bg-white my-3">
                 <div className="container mx-auto max-w-screen-xl h-full">
                     <div className="flex justify-between h-full">
                         <div className="w-auto flex justify-start items-center mx-5">
@@ -39,19 +39,15 @@ export default function NavbarComponent({
                             </div>
                         </div>
 
-                        <div className="items-center mx-2">
-                            <ul className="ml-auto">
-                                <li className="nav-item">
-                                    <button
-                                        className="btn-main m-3 md:w-28"
-                                        onClick={() => {
-                                            clickSignIn()
-                                        }}
-                                    >
-                                        <span>Sign In</span>
-                                    </button>
-                                </li>
-                            </ul>
+                        <div className="flex items-center mx-5">
+                            <button
+                                className="btn-main md:w-28"
+                                onClick={() => {
+                                    clickSignIn()
+                                }}
+                            >
+                                <span>Sign In</span>
+                            </button>
                         </div>
                     </div>
                 </div>

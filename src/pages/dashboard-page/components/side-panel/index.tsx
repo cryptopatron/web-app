@@ -116,10 +116,10 @@ export default function SidePanelComponent({ creator }) {
 
             {/* supporters count */}
             <div className="my-10">
-                {(creator.metaMaskWalletPublicKey) ? (
-                    <PopoverComponent popoverButton={wallet(METAMASK, creator.metaMaskWalletPublicKey)} popoverContent={walletPannel(METAMASK, creator.metaMaskWalletPublicKey)} />
+                {(creator.metaMaskWalletPublicAddress) ? (
+                    <PopoverComponent popoverButton={wallet(METAMASK, creator.metaMaskWalletPublicAddress)} popoverContent={walletPannel(METAMASK, creator.metaMaskWalletPublicAddress)} />
                 ) : (
-                    <PopoverComponent popoverButton={wallet(GEN_WALLET, creator.generatedMaticWalletPublicKey)} popoverContent={walletPannel(GEN_WALLET, creator.generatedMaticWalletPublicKey)} />
+                    <PopoverComponent popoverButton={wallet(GEN_WALLET, creator.generatedMaticWalletPublicAddress)} popoverContent={walletPannel(GEN_WALLET, creator.generatedMaticWalletPublicAddress)} />
                 )}
             </div>
 

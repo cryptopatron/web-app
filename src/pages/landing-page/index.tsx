@@ -77,8 +77,8 @@ export default function LandingPage() {
             <div className="container mx-auto sm:px-6 flex-grow">
 
                 <div className="flex justify-center">
-                    <div className="text-left w-11/12 max-w-2xl">
-                        <p className="mt-10 text-4xl font-semibold  md:text-5xl">
+                    <div className="text-left w-11/12 max-w-2xl mt-5 sm:mt-12">
+                        <p className="text-4xl font-semibold  md:text-5xl">
                             {" "}
                             <span className="leading-tight">Get your <div className=" inline-block "> <div className="z-10 relative"> creat</div> <div className="z-0"><img className="absolute transform -translate-y-4 md:-translate-y-5 -translate-x-8 w-32 h-3 md:w-40 md:h-4" src={Rectangle} alt="" /></div></div>ive work funded</span> <br /> <span className="text-4xl font-normal">on a truly global platform</span>{" "}
 
