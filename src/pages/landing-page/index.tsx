@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import NavbarComponent from "./components/navbar";
+// import HeadShake from 'react-reveal/HeadShake';
 
 import { howToContent } from "./how-to";
 import { getAuthUser } from "../../services/backendService";
@@ -51,6 +52,14 @@ export default function LandingPage() {
             openModal();
         }
     };
+
+    // only allows you to have a page name with numbers and letters,
+    // no special characters or spaces
+    const setPageNameValidated = (name) => {
+        if (name === "" || name.match("^[a-zA-Z0-9]+$")) {
+            setPageName(name);
+        }
+    }
 
     function closeModal() {
         setShowLoginOverlay(false);
@@ -106,7 +115,7 @@ export default function LandingPage() {
                                 aria-label="Enter your pagename"
                                 placeholder="pagename"
                                 value={pageName}
-                                onChange={(e) => setPageName(e.target.value)}
+                                onChange={(e) => setPageNameValidated(e.target.value)}
                             />
 
                             <button className="btn-main w-full mx-3 mt-3 sm:w-4/5 md:w-28">
@@ -148,8 +157,6 @@ export default function LandingPage() {
                                             </p>
                                         </div>
                                     </div>))}
-
-
                             </div>
 
                             <div className="flex flex-col justify-center mt-8 mb-2">
