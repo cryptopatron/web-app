@@ -10,7 +10,7 @@ import { loggedInContent } from './navbar-content'
 
 export default function DashboardPage() {
     const [transaction, setTransactions] = useState()
-    const { user, setUser } = useContext(LoggedInUserContext)
+    const { user } = useContext(LoggedInUserContext)
     //
     useEffect(() => {
 
@@ -28,10 +28,12 @@ export default function DashboardPage() {
 
     return (
         <div>
-            <NavbarComponent loggedInContent={loggedInContent(user.pageName)}/>
-            <div className="flex flex-col sm:flex-row">
+            <NavbarComponent loggedInContent={loggedInContent}/>
+            <div className=" containter mx-auto max-w-screen-lg">
+                <div className="flex flex-col sm:flex-row">
                 <SidePanelComponent creator={user} />
                 <MainPanelComponent transaction={transaction} user={user}/>
+                </div>
             </div>
         </div>
     )

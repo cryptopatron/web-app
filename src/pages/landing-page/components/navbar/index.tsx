@@ -19,10 +19,10 @@ export default function NavbarComponent({
 }) {
     return (
         <>
-            <nav className="h-14 bg-white">
+            <nav className="h-14 bg-white my-3">
                 <div className="container mx-auto max-w-screen-xl h-full">
                     <div className="flex justify-between h-full">
-                        <div className="w-auto flex justify-start items-center mx-2">
+                        <div className="w-auto flex justify-start items-center mx-5">
                             <div>
                                 <Link
                                     to="/"
@@ -30,21 +30,24 @@ export default function NavbarComponent({
                                     <img src={logo} alt="Navbar Kōen logo" />
                                 </Link>
                             </div>
+                            <div className="text-gray-700 text-center flex items-center align-items cursor-pointer mx-2">
+                                <h1 className="flex justify-center w-full">
+                                    kōen
+                                    {/* <img src="/images/logo.png" alt="Instagram" className="mt-2 w-6/12" /> */}
+
+                                </h1>
+                            </div>
                         </div>
 
-                        <div className="items-center mx-2">
-                            <ul className="ml-auto">
-                                <li className="nav-item">
-                                    <button
-                                        className="btn-main m-3"
-                                        onClick={() => {
-                                            clickSignIn()
-                                        }}
-                                    >
-                                        <span>Sign In</span>
-                                    </button>
-                                </li>
-                            </ul>
+                        <div className="flex items-center mx-5">
+                            <button
+                                className="btn-main md:w-28"
+                                onClick={() => {
+                                    clickSignIn()
+                                }}
+                            >
+                                <span>Sign In</span>
+                            </button>
                         </div>
                     </div>
                 </div>

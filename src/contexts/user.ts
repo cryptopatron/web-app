@@ -8,7 +8,7 @@ export type userContextType = {
     accessToken: string;
     setAccessToken: (accessToken) => void;
     wallet: wallet;
-    setWallet: (wallet) => void
+    setWallet: (arg: wallet) => void
 }
 
 type wallet = {
