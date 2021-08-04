@@ -16,7 +16,6 @@ export const loggedInContent = (pageName) => {
             label: "Sign Out",
             path: "/",
             callback: () => {
-                console.log("removing token")
                 localStorage.removeItem('token')}
         },
     ])

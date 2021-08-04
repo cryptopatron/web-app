@@ -1,9 +1,13 @@
+/* Fonts  */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;500;600;700;800&display=swap');
 
+/* Tailwind basic */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Tailwind custom classes */
 @layer components {
     .btn-main {
         @apply transition duration-200 ease-in-out py-3 px-4 bg-primary-light text-secondary-dark font-semibold rounded-md hover:bg-secondary-light hover:text-primary-light focus:outline-none ;
@@ -26,6 +30,7 @@
 
   }
 
+/* Styling base html tags*/
   @layer base {
     h1 {
       @apply text-3xl font-bold;
@@ -35,5 +40,8 @@
     }
     h3 {
       @apply text-xl font-bold;
+    }
+    a{
+      @apply underline
     }
   }

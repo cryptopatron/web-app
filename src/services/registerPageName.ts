@@ -1,4 +1,3 @@
-import { faRupeeSign } from "@fortawesome/free-solid-svg-icons";
 
 export const registerPage = async (pageName, publicAddress, token) => {
 

@@ -6,7 +6,8 @@ module.exports = {
         extend: {
 
             fontFamily: {
-                body: ['Poppins', 'sans-serif']
+                body: ['Poppins', 'sans-serif'],
+                title: ['"Baloo Thambi 2"', 'cursive']
             },
 
             colors: {

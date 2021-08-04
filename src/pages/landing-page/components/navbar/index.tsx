@@ -2,10 +2,8 @@ import { Fragment } from 'react'
 import { Link } from 'react-router-dom';
 import logo from '../../../../assets/images/Logo(Latest).jpg';
 import { Dialog, Transition } from '@headlessui/react'
-
 import LoginOverlayComponent from './../login-overlay/'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+
 
 
 export default function NavbarComponent({
@@ -27,15 +25,15 @@ export default function NavbarComponent({
                                 <Link
                                     to="/"
                                 >
-                                    <img src={logo} alt="Navbar Kōen logo" />
+                                    {/* <img src={logo} alt="Navbar Kōen logo" /> */}
                                 </Link>
                             </div>
                             <div className="text-gray-700 text-center flex items-center align-items cursor-pointer mx-2">
-                                <h1 className="flex justify-center w-full">
-                                    kōen
+                                <span className="flex justify-center w-full font-title font-bold  text-4xl">
+                                    Kōen
                                     {/* <img src="/images/logo.png" alt="Instagram" className="mt-2 w-6/12" /> */}
 
-                                </h1>
+                                </span>
                             </div>
                         </div>
 

@@ -28,7 +28,7 @@ export default function DashboardPage() {
 
     return (
         <div>
-            <NavbarComponent loggedInContent={loggedInContent}/>
+            <NavbarComponent loggedInContent={((loggedInContent(user.pageName)))}/>
             <div className=" containter mx-auto max-w-screen-lg">
                 <div className="flex flex-col sm:flex-row">
                 <SidePanelComponent creator={user} />
