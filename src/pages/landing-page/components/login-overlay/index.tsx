@@ -7,8 +7,7 @@ import { useContext, useState } from "react";
 import UserContext from "../../../../contexts/user";
 import { walletLogin } from "../../../../services/backendService";
 
-const clientId =
-    "116852492535-37n739s732ui71hkfm19n5r3agv6g9c5.apps.googleusercontent.com";
+const clientId ="116852492535-37n739s732ui71hkfm19n5r3agv6g9c5.apps.googleusercontent.com";
 const googlePerms = "https://www.googleapis.com/auth/drive.appdata";
 
 export default function LoginOverlayComponent({ setToken }) {
@@ -19,11 +18,15 @@ export default function LoginOverlayComponent({ setToken }) {
     const responseGoogleOnSuccess = (response) => {
         setToken(response.tokenId);
         setAccessToken(response.accessToken)
+        if(!response.accessToken){
+            setToken(null)
+            console.error("Google login failed")
+        }
 
     };
 
     const responseGoogleOnFailure = (response) => {
-
+        console.error("Google login failed")
     };
 
     const logout = () => {
