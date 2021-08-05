@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import ListboxComponent from '../../../../components/listbox'
-import Modal from "../../../../components/modal";
 
 const minimum = 3; // minimum amount in one-time
 
@@ -69,9 +68,7 @@ export default function OneTimerComponent({ addPayment, tokens, network, setIsOp
                     <button onClick={() => setIsOpen(true)}>
                         <div className="text-primary-light text-sm font-light">Help</div>
                     </button>
-
                 </div>
-
             </div>
 
         </div>

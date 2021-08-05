@@ -10,42 +10,13 @@ type ModalProps = {
 }
 
 function get_help_info(full_details) {
-    switch (full_details.network.id ) {
-        case "mumbai":
-            return (<div>
-                <a href="https://www.youtube.com/watch?v=FwrFa2_mVIE" target="_blank">
-                    <p className="text-sm m-4">
-                        How to switch to Mumbai Testnet on Metamask
-                    </p>
-                </a>
-                <a href="https://faucet.matic.network/"  target="_blank">
-                    <p className="text-sm m-4">
-                        How to get Matic to pay for transactions on Mumbai
-                    </p>
-                </a>
-            </div>);
-        case "ropsten":
-            return (<div>
-                <a href="https://docs.cargo.build/guides/changing-your-network-with-metamask" target="_blank">
-                    <p className="text-sm m-4">
-                        How to switch to Ropsten Testnet on Metamask
-                    </p>
-                </a>
-                <a href="https://www.youtube.com/watch?v=1B-_CYl9kkg" target="_blank">
-                    <p className="text-sm m-4">
-                        How to get Ropsten Testnet ETH to pay for transactions on Ropsten
-                    </p>
-                </a>
-            </div>);
-        default:
-            return (<div>
-                <a href="https://docs.cargo.build/guides/changing-your-network-with-metamask" target="_blank">
-                    <p className="text-sm m-4">
-                        How to switch to Ethereum Mainnet on Metamask
-                    </p>
-                </a>
-            </div>);
-    }
+    return (<div>
+        <a href="https://medium.com/@thekoenproject/switching-networks-in-metamask-connecting-to-ethereum-mainnet-and-testnets-polygon-binance-smart-4d56b5af4923" target="_blank">
+            <p className="text-sm m-4">
+                Connecting and Switching Networks in Metamask
+            </p>
+        </a>
+    </div>);
 }
 
 

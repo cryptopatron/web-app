@@ -85,7 +85,7 @@ export default function StreamComponent({ addPayment, tokens, network, setIsOpen
                     <button className="  px-3 py-1 text-gray-500 bg-graywhite-100 hover:bg-gray-200 hover:text-gray-700 focus:outline-none  rounded-r-md" onClick={() => { incrementAmount() }}>+</button>
                 </div>
 
-                <div style={{ width: '4.5rem' }}>
+                <div className="z-40" style={{ width: '4.5rem' }}>
                     <ListboxComponent content={currency} setContent={setCurrency} ListboxContent={tokens} />
                 </div>
             </div>

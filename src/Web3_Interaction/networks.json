@@ -1,17 +1,17 @@
 {
-    "ropsten": {
+    "ropsten_testnet": {
         "expected_network_type": "ropsten",
-        "wrong_network_error": "[Switch to the Ethereum Ropsten Testnet]",
+        "wrong_network_error": "[Switch to Ethereum Ropsten Testnet]",
         "default_gas_amount": "1000000",
         "default_gas_price": "30000000000"
     },
-    "mumbai": {
+    "mumbai_testnet": {
         "expected_network_type": "private",
-        "wrong_network_error": "[Switch to the Polygon Mumbai Testnet]",
+        "wrong_network_error": "[Switch to Polygon Mumbai Testnet]",
         "default_gas_amount": "1000000",
         "default_gas_price": "20000000000"
     },
-    "polygon": {
+    "polygon_mainnet": {
         "expected_network_type": "private",
         "wrong_network_error": "[Switch to Polygon Mainnet]",
         "default_gas_amount": "1000000",

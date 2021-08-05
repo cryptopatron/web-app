@@ -19,8 +19,8 @@ export default function SupportPanelComponent({ creatorDetails }) {
 
     const [oneTimePaymentDetails,  setOneTimePaymentDetails] = useState({
         amount: 0,
-        network: "Mumbai Polygon Testnet",
-        to_address: "0x7675289Fbd414acAE84752Bd789483a44B2d1576",
+        network: "",
+        to_address: "",
         currency_name: "DAI"
     });
 
@@ -39,7 +39,7 @@ export default function SupportPanelComponent({ creatorDetails }) {
 
 
     function get_to_address(creator_details, network_value) {
-        if (network_value === "mumbai") {
+        if ((network_value === "mumbai_testnet") || (network_value === "polygon_mainnet")) {
             return creator_details.generatedMaticWalletPublicAddress;
         } else {
             return creator_details.metaMaskWalletPublicAddress;
@@ -66,7 +66,7 @@ export default function SupportPanelComponent({ creatorDetails }) {
 
     // returns true if the user has selected a testnet network, and false if not
     function isTestnet() {
-        return ((network.id === "ropsten") || (network.id === "mumbai"));
+        return network.id.includes("testnet");
     }
 
     useEffect(() => {

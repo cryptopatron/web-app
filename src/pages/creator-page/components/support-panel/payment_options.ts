@@ -1,44 +1,55 @@
 export const tokens = {
-    "mumbai": [
-        {
-            value: "USDC"
-        },
-        {
-            value: "DAI"
-        }
-    ],
-    "ropsten": [
-        {
-            value: "USDC"
-        },
-        {
-            value: "DAI",
-        }
-    ],
     "ethereum_mainnet": [
         {
-            value: "USDC"
+            value: "DAI",
         },
         {
+            value: "USDC"
+        }
+    ],
+    "polygon_mainnet": [
+        {
             value: "DAI",
+        },
+        {
+            value: "USDC"
+        }
+    ],
+    "ropsten_testnet": [
+        {
+            value: "DAI",
+        },
+        {
+            value: "USDC"
+        }
+    ],
+    "mumbai_testnet": [
+        {
+            value: "DAI"
+        },
+        {
+            value: "USDC"
         }
     ]
-
 }
 
 
 export const networks = [
     {
-        value: "Mumbai Polygon Testnet",
-        id: "mumbai"
-    },
-    {
-        value: "Ropsten Testnet",
-        id: "ropsten"
-    },
-    {
         value: "Ethereum Mainnet",
         id: "ethereum_mainnet"
+    },
+    {
+        value: "Polygon Mainnet",
+        id: "polygon_mainnet"
+    },
+    {
+        value: "Ropsten Ethereum Testnet",
+        id: "ropsten_testnet"
+    },
+    {
+        value: "Mumbai Polygon Testnet",
+        id: "mumbai_testnet"
     }
 ]
 

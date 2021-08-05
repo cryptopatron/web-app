@@ -1,5 +1,5 @@
 {
-    "mumbai": {
+    "mumbai_testnet": {
         "ERC20s": {
             "DAI": {
                 "address": "0x491493511ab9c7F5fE732d6d76FBeB820023Fe58",
@@ -11,10 +11,10 @@
             }
         },
         "Subscription_Contract": {
-            "address": "0x7dc70ca6F5d43A39f455c9ee751c57058eD92813"
+            "address": "0x7675289Fbd414acAE84752Bd789483a44B2d1576"
         }
     },
-    "ropsten": {
+    "ropsten_testnet": {
         "ERC20s": {
             "DAI": {
                 "address": "0xBA64993F0C0A2BBc5dD32a1580F3BE6b3c9E70CA",
@@ -26,7 +26,7 @@
             }
         },
         "Subscription_Contract": {
-            "address": "0x7dc70ca6F5d43A39f455c9ee751c57058eD92813"
+            "address": "0x7675289Fbd414acAE84752Bd789483a44B2d1576"
         }
     },
     "ethereum_mainnet": {
@@ -41,7 +41,22 @@
             }
         },
         "Subscription_Contract": {
-            "address": "0x7dc70ca6F5d43A39f455c9ee751c57058eD92813"
+            "address": "0x7675289Fbd414acAE84752Bd789483a44B2d1576"
+        }
+    },
+    "polygon_mainnet": {
+        "ERC20s": {
+            "DAI": {
+                "address": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+                "decimals": 4
+            },
+            "USDC": {
+                "address": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+                "decimals": 6
+            }
+        },
+        "Subscription_Contract": {
+            "address": "0x7675289Fbd414acAE84752Bd789483a44B2d1576"
         }
     }
 }

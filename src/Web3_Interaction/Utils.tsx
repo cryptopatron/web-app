@@ -3,16 +3,23 @@ import contract_info from './contract_info.json';
 
 export function txn_link_msg(txn_hash: string, network: string, msg: string) {
     let link = "/";
-    let link_msg = "";
-    if (network === "ropsten") {
-        link = "https://ropsten.etherscan.io/tx/" + txn_hash;
-    }
-    else if (network === "mumbai") {
-        link = "https://mumbai.polygonscan.com/tx/" + txn_hash;
-    }
-    else if (network === "ethereum_mainnet") {
-        link = "https://etherscan.com/tx/" + txn_hash;
-    }
+    switch (network) {
+        case "ropsten_testnet":
+            link = "https://ropsten.etherscan.io/tx/" + txn_hash;
+            break;
+        case "mumbai_testnet":
+            link = "https://mumbai.polygonscan.com/tx/" + txn_hash;
+            break;
+        case "ethereum_mainnet":
+            link = "https://etherscan.com/tx/" + txn_hash;
+            break;
+        case "polygon_mainnet":
+            link = "https://polygonscan.com/tx/" + txn_hash;
+            break;
+        default:
+            link = ""
+    };
+
     return (<div>
         <a href={link} target="_blank" rel="noopener noreferrer">
             <h6>{msg}</h6>
@@ -39,13 +46,13 @@ export function get_currency_decimals_by_address(network, address) {
 
 // this function just basically hardcodes how much of each test token to mint
 export function get_erc20_amount_to_mint(network, currency_name) {
-    if (network === "ropsten") {
+    if (network === "ropsten_testnet") {
         if (currency_name === "USDC") {
             return "500000000"
         } else if (currency_name === "DAI") {
             return "500000000000000000000";
         }
-    } else if (network === "mumbai") {
+    } else if (network === "mumbai_testnet") {
         if (currency_name === "USDC") {
             return "500000000"
         } else if (currency_name === "DAI") {
