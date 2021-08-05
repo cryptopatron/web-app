@@ -11,8 +11,6 @@ export default function SignUpPage() {
     const history = useHistory()
 
     useEffect(() => {
-        console.log(history)
-        console.log("added replace")
         history.push(PATHS.ONBOARD)
         console.log(history.action)
 

@@ -20,13 +20,9 @@ export const getAuthUser = async (jwt) => {
     else {
         const data = await res.json()
         if (Object.keys(data).length !== 0) {
-            console.log("status 200 ")
-            console.log("for use Auth data: ")
-            console.log(data)
             return { status: 200, data: data }
         }
         else {
-            console.log("status 404 ")
             return { status: 404, data: data }
         }
         // save auth user info
@@ -58,8 +54,6 @@ export const checkIfUserExists = async (pageName) => {
     });
     const status = await res.status
     const response = await JSON.stringify(res.json());
-    console.log(status);
-    console.log(response)
     if (status === 200 && response === '{}') {
         return true
     }
@@ -86,7 +80,7 @@ export const updateUserProfile = async (name, bio, token) => {
 
     const status = await res.status
 
-    if (status == 200) {
+    if (status === 200) {
         return true
     }
     else {

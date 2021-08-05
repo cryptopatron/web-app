@@ -69,7 +69,7 @@ export default function Step2Component({ step,
     });
 
     const handleChange = (name) => {
-        if (name.length == 0) {
+        if (name.length === 0) {
             setValid(false);
             setNeutral(true);
             setPageName(name);
@@ -98,7 +98,6 @@ export default function Step2Component({ step,
             if (isPresent) {
 
                 if (wallet.wallet === "metamask") {
-                    console.log(wallet)
                     setPublicAddress(wallet.address)
                     const status = await registerPage(pageName, {metaMaskWalletPublicAddress: wallet.address}, token)
                     if (status) {

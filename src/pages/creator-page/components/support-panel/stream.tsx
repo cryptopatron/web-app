@@ -72,42 +72,40 @@ export default function StreamComponent({ addPayment, tokens, network, setIsOpen
     }, [amount, nMonths, currency])
 
     return (
-        <div className="flex flex-col justify-center text-center">
-            <div className="font-light text-xs my-1">Support with monthly donations</div>
+        <div className="flex flex-col justify-center items-center text-center w-full">
+            <div className="font-light text-xs mt-2 mb-1">Support with monthly donations</div>
 
             {/* Input Amount/Currency */}
             <div className="flex flex-row justify-center items-center h-8 my-2">
                 <div className="mx-1">
                     <button className=" px-3 py-1 text-gray-500 bg-graywhite-100 hover:text-gray-700 hover:bg-gray-200 focus:outline-none rounded-l-md" onClick={() => { decrementAmount() }}>-</button>
-                    <input type="text" className=" px-3 py-1 w-20 text-center focus:outline-none bg-graywhite-100 mx-auto"
+                    <input type="text" className=" px-3 py-1 h-8 w-20 text-center focus:outline-none bg-graywhite-100 mx-auto"
                         value={amount}
                         onChange={(e) => getAmount(e.target.value)} />
                     <button className="  px-3 py-1 text-gray-500 bg-graywhite-100 hover:bg-gray-200 hover:text-gray-700 focus:outline-none  rounded-r-md" onClick={() => { incrementAmount() }}>+</button>
                 </div>
 
-                <div className="z-40" style={{ width: '4.5rem' }}>
+                <div className="w-20">
                     <ListboxComponent content={currency} setContent={setCurrency} ListboxContent={tokens} />
                 </div>
             </div>
 
             {/* Input Length of Subscription */}
-            <div className="flex flex-row justify-center items-center my-4">
+            <div className="flex flex-row justify-center items-center">
                 <div className="text-md mx-1">for</div>
 
-                <div className="w-24 h-8 mx-2 ">
+                <div className="w-28 h-8 mx-2 ">
                     <ListboxComponent content={nMonths} setContent={setNMonths} ListboxContent={n_month_names} />
                 </div>
             </div>
 
             {/* Help */}
-            <div className="flex flex-col justify-center mt-0">
+            <div className="flex mt-1 flex-grow items-end self-stretch justify-center">
                 {/*<div className="text-gray-400 text-xs font-light">Have you heard of stream?</div>*/}
-                <div>
-                    <button onClick={() => {setIsOpen(true)}}>
+                    <button onClick={() => setIsOpen(true)}>
                         <div className="text-primary-light text-sm font-light">Help</div>
                     </button>
 
-                </div>
             </div>
             
         </div>

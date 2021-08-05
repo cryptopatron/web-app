@@ -1,4 +1,3 @@
-import { faDove } from "@fortawesome/free-solid-svg-icons";
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../../../../contexts/user";

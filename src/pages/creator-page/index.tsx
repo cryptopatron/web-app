@@ -21,13 +21,10 @@ export default function CreatorPage() {
         const checkPageExists = async () => {
             // check usename is present in db
             const page = await getUserByPageName(pagename)
-
-            console.log(page)
             if (page && page.pageName) {
                 setCreator(page)
             } else {
                 //route to not-found
-                console.log("not found")
                 history.push(PATHS.NOTFOUND)
             }
         }
