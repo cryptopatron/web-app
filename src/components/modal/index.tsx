@@ -11,41 +11,13 @@ type ModalProps = {
 }
 
 function get_help_info(full_details) {
-    switch (full_details.network.id) {
-        case "mumbai":
-            return (<div className="my-8">
-                <ul className="list-disc list-inside text-sm leading-8">
-                    <li><a href="https://www.youtube.com/watch?v=FwrFa2_mVIE" target="_blank">
-                        How to switch to Mumbai Testnet on Metamask?
-                    </a></li>
-                    <li><a href="https://faucet.matic.network/" target="_blank">
-                        How to get Matic to pay for transactions on Mumbai?
-                    </a>
-                    </li>
-                </ul>
-            </div>);
-        case "ropsten":
-            return (<div className="my-8">
-                <ul className="list-disc list-inside text-sm leading-8">
-                    <li><a href="https://docs.cargo.build/guides/changing-your-network-with-metamask" target="_blank">
-                        How to switch to Ropsten Testnet on Metamask?
-
-                    </a></li>
-                    <li><a href="https://www.youtube.com/watch?v=1B-_CYl9kkg" target="_blank">
-                        How to get Ropsten Testnet ETH to pay for transactions on Ropsten?
-                    </a></li>
-                </ul>
-            </div>);
-        default:
-            return (<div className="my-8">
-                <ul className="list-disc list-inside text-sm leading-8">
-                    <li><a href="https://docs.cargo.build/guides/changing-your-network-with-metamask" target="_blank">
-                        How to switch to Ethereum Mainnet on Metamask?
-                    </a></li>
-                </ul>
-
-            </div>);
-    }
+    return (<div className="my-8">
+        <ul className="list-disc list-inside text-sm leading-8">
+            <li><a href="https://medium.com/@thekoenproject/switching-networks-in-metamask-connecting-to-ethereum-mainnet-and-testnets-polygon-binance-smart-4d56b5af4923" target="_blank">
+                Switching Networks on Metamask
+            </a></li>
+        </ul>
+    </div>);
 }
 
 
