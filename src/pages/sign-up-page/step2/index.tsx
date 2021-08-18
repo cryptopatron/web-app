@@ -18,6 +18,7 @@ export default function Step2Component({ step,
     const [isValid, setValid] = useState(false);
     const [isNeutral, setNeutral] = useState(true);
     const [isNamePresent, setIsNamePresent] = useState(true);
+    const [isThereSpace, setIsThereSpace] = useState(false);
     const { token, wallet } = useContext(UserContext);
 
     const profileBg = randomPastelColourService()
@@ -53,6 +54,13 @@ export default function Step2Component({ step,
         'hidden': isValid
     });
 
+    let spaceInNameCSS = classNames({
+        'mb-1': true,
+        'text-xs': true,
+        'text-center': true,
+        'hidden': isThereSpace
+    });
+
     let userPresentCSS = classNames({
         'mb-1': true,
         'text-sm': true,
@@ -72,11 +80,20 @@ export default function Step2Component({ step,
         if (name.length === 0) {
             setValid(false);
             setNeutral(true);
+            setIsThereSpace(false);
             setPageName(name);
         }
         else if (name.length < 4 && name.length > 0) {
             setValid(false);
             setNeutral(false);
+            setPageName(name);
+            if (name.indexOf(' ') >= 0) {
+                setIsThereSpace(true);
+            }
+        }
+        else if (name.indexOf(' ') >= 0){
+            setValid(false);
+            setIsThereSpace(true);
             setPageName(name);
         }
         else {
@@ -143,6 +160,7 @@ export default function Step2Component({ step,
                                 <div>
                                     <label className={nameLengthCSS}>Page name must have 4 or more characters</label>
                                     <label className={userPresentCSS}>Apologies! This name has already been taken.</label>
+                                    <label className={spaceInNameCSS}>Kindly replace spaces in the name with underscores</label>
                                 </div>
                                 <div>
                                     <input type="text" value={pageName} id="hero-field" onChange={(e) => handleChange(e.target.value)} name="hero-field" placeholder="Page Name" className={pageChangeCSS} />
