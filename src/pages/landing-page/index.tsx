@@ -19,7 +19,7 @@ import Rectangle from "./../../assets/images/rect.svg"
 
 export default function LandingPage() {
 
-    const { token, setToken, setIsAuth, setWallet } = useContext(UserContext);
+    const { token, setToken, setIsAuth, setWallet, accessToken } = useContext(UserContext);
     const { setUser } = useContext(LoggedInUserContext)
     const [pageName, setPageName] = useState<string>();
     const [showLoginOverlay, setShowLoginOverlay] = useState(false);
